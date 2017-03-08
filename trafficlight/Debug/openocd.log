@@ -1,0 +1,13 @@
+2017-03-08T05:12:42 INFO src/common.c: Loading device parameters....
+2017-03-08T05:12:42 INFO src/common.c: Device connected is: F3 device, id 0x10036422
+2017-03-08T05:12:42 INFO src/common.c: SRAM size: 0xa000 bytes (40 KiB), Flash: 0x40000 bytes (256 KiB) in pages of 2048 bytes
+2017-03-08T05:12:42 INFO src/gdbserver/gdb-server.c: Chip ID is 00000422, Core ID is  2ba01477.
+2017-03-08T05:12:42 INFO src/gdbserver/gdb-server.c: Listening at *:4242...
+2017-03-08T05:13:11 INFO src/gdbserver/gdb-server.c: Found 6 hw breakpoint registers
+2017-03-08T05:13:11 INFO src/gdbserver/gdb-server.c: GDB connected.
+2017-03-08T05:14:00 INFO src/common.c: Loading device parameters....
+2017-03-08T05:14:00 INFO src/common.c: Device connected is: F3 device, id 0x10036422
+2017-03-08T05:14:00 INFO src/common.c: SRAM size: 0xa000 bytes (40 KiB), Flash: 0x40000 bytes (256 KiB) in pages of 2048 bytes
+2017-03-08T05:14:00 INFO src/gdbserver/gdb-server.c: Found 6 hw breakpoint registers
+2017-03-08T05:14:00 ERROR src/gdbserver/gdb-server.c: cannot recv: -2
+st-util 1.3.1

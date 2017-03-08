@@ -1,0 +1,1462 @@
+2017-03-08T05:14:45 INFO src/common.c: Loading device parameters....
+2017-03-08T05:14:45 INFO src/common.c: Device connected is: F3 device, id 0x10036422
+2017-03-08T05:14:45 INFO src/common.c: SRAM size: 0xa000 bytes (40 KiB), Flash: 0x40000 bytes (256 KiB) in pages of 2048 bytes
+2017-03-08T05:14:45 INFO src/gdbserver/gdb-server.c: Chip ID is 00000422, Core ID is  2ba01477.
+2017-03-08T05:14:45 INFO src/gdbserver/gdb-server.c: Listening at *:4242...
+2017-03-08T05:15:16 INFO src/gdbserver/gdb-server.c: Found 6 hw breakpoint registers
+2017-03-08T05:15:16 INFO src/gdbserver/gdb-server.c: GDB connected.
+2017-03-08T05:15:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+st-util 1.3.1
+Flash page at addr: 0x08000000 erased2017-03-08T05:15:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:18 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:18 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:15:18 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:18 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:18 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:18 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:19 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:19 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:19 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:15:19 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:19 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:19 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:15:20 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:20 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:20 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:20 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:20 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:20 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:15:21 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:21 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:21 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:21 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:21 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:15:21 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:15:21 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:15:21 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:15:21 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:15:21 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:15:21 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:17:01 ERROR src/gdbserver/gdb-server.c: cannot recv: -2
+2017-03-08T05:17:02 INFO src/gdbserver/gdb-server.c: Listening at *:4242...
+2017-03-08T05:21:15 INFO src/gdbserver/gdb-server.c: Found 6 hw breakpoint registers
+2017-03-08T05:21:15 INFO src/gdbserver/gdb-server.c: GDB connected.
+2017-03-08T05:21:43 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:21:43 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:43 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:43 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:43 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:43 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:43 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:21:43 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:43 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:43 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:43 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:43 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:43 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:21:43 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:43 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:43 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:43 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:43 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:43 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:21:44 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:44 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:44 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:44 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:44 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:44 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:21:45 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:45 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:45 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:45 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:45 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:45 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:46 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:46 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:46 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:46 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:46 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:21:46 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:46 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:46 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:46 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:46 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:54 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:54 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:54 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:21:54 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:54 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:54 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:55 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:55 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:55 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:21:55 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:55 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:55 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:56 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:56 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:21:56 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:56 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:56 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:56 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:57 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:21:57 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:21:57 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:21:57 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:21:57 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:21:57 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:21:57 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:01 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:22:01 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:01 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:01 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:01 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:01 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:01 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:22:01 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:01 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:01 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:01 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:01 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:01 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:22:02 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:02 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:02 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:02 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:02 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:02 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:22:03 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:03 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:03 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:03 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:03 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:03 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:04 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:22:04 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:04 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:04 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:04 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:04 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:22:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:22:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:22:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:22:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:22:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:26 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:22:26 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:26 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:26 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:26 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:26 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:26 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:22:26 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:26 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:26 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:26 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:26 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:26 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:22:26 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:26 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:26 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:26 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:26 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:26 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:22:26 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:26 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:26 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:26 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:26 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:26 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:22:26 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:26 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:26 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:27 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:27 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:27 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:22:27 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:27 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:27 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:28 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:28 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:28 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:22:28 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:28 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:28 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:29 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:29 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:29 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:22:29 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:29 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:29 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:29 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:29 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:29 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:22:29 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:29 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:29 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:29 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:29 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:29 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:22:29 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:29 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:29 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:29 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:29 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:29 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:22:29 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:29 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:29 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:29 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:29 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:22:59 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:22:59 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:22:59 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:22:59 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:22:59 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:22:59 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134217728 (0x8000000)
+
+
+Flash page at addr: 0x08000000 erased2017-03-08T05:23:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:14 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:14 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:14 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134219776 (0x8000800)
+
+
+Flash page at addr: 0x08000800 erased2017-03-08T05:23:14 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:14 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:14 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134221824 (0x8001000)
+
+
+Flash page at addr: 0x08001000 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134223872 (0x8001800)
+
+
+Flash page at addr: 0x08001800 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134225920 (0x8002000)
+
+
+Flash page at addr: 0x08002000 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134227968 (0x8002800)
+
+
+Flash page at addr: 0x08002800 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134230016 (0x8003000)
+
+
+Flash page at addr: 0x08003000 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134232064 (0x8003800)
+
+
+Flash page at addr: 0x08003800 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134234112 (0x8004000)
+
+
+Flash page at addr: 0x08004000 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:15 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:15 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:15 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134236160 (0x8004800)
+
+
+Flash page at addr: 0x08004800 erased2017-03-08T05:23:15 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:15 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:15 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134238208 (0x8005000)
+
+
+Flash page at addr: 0x08005000 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134240256 (0x8005800)
+
+
+Flash page at addr: 0x08005800 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134242304 (0x8006000)
+
+
+Flash page at addr: 0x08006000 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134244352 (0x8006800)
+
+
+Flash page at addr: 0x08006800 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134246400 (0x8007000)
+
+
+Flash page at addr: 0x08007000 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134248448 (0x8007800)
+
+
+Flash page at addr: 0x08007800 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134250496 (0x8008000)
+
+
+Flash page at addr: 0x08008000 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:16 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:16 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:16 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134252544 (0x8008800)
+
+
+Flash page at addr: 0x08008800 erased2017-03-08T05:23:16 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:16 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:16 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134254592 (0x8009000)
+
+
+Flash page at addr: 0x08009000 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134256640 (0x8009800)
+
+
+Flash page at addr: 0x08009800 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134258688 (0x800a000)
+
+
+Flash page at addr: 0x0800a000 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134260736 (0x800a800)
+
+
+Flash page at addr: 0x0800a800 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134262784 (0x800b000)
+
+
+Flash page at addr: 0x0800b000 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134264832 (0x800b800)
+
+
+Flash page at addr: 0x0800b800 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:17 INFO src/common.c: Attempting to write 2048 (0x800) bytes to stm32 address: 134266880 (0x800c000)
+
+
+Flash page at addr: 0x0800c000 erased2017-03-08T05:23:17 INFO src/common.c: Finished erasing 1 pages of 2048 (0x800) bytes
+2017-03-08T05:23:17 INFO src/common.c: Starting Flash write for VL/F0/F3 core id
+2017-03-08T05:23:17 INFO src/flash_loader.c: Successfully loaded flash loader in sram
+2017-03-08T05:23:17 INFO src/common.c: Starting verification of write complete
+2017-03-08T05:23:17 INFO src/common.c: Flash written and verified! jolly good!
+2017-03-08T05:23:22 ERROR src/gdbserver/gdb-server.c: cannot recv: -2
+2017-03-08T05:23:23 INFO src/gdbserver/gdb-server.c: Listening at *:4242...
+
+

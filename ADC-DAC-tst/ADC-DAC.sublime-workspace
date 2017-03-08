@@ -1,0 +1,583 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"HAL_GPIO_",
+				"HAL_GPIO_Init\tvoid HAL_GPIO_Init(int *GPIOx, GPIO_InitTypeDef *GPIO_Init)"
+			],
+			[
+				"OPR",
+				"OPRATOR"
+			],
+			[
+				"str",
+				"strbuf"
+			],
+			[
+				"all",
+				"all_correct〔variable〕"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Src/main.c",
+			"settings":
+			{
+				"buffer_size": 13407,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 187.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"run",
+				"SublimeREPL: Python - RUN current file"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo",
+				"BracketHighlighter: Remove Brackets"
+			],
+			[
+				"isntal",
+				"Package Control: Install Package"
+			],
+			[
+				"temove",
+				"Package Control: Remove Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"ip",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"p y h ton",
+				"SublimeREPL: Python - RUN current file"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"shell",
+				"SublimeREPL: Shell"
+			],
+			[
+				"line",
+				"Line Endings Unify"
+			],
+			[
+				"reshel",
+				"SublimeREPL: Shell"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"lisp",
+				"SublimeREPL: SBCL"
+			],
+			[
+				"python",
+				"SublimeREPL: Python"
+			],
+			[
+				"ipython",
+				"SublimeREPL: Python_tst"
+			],
+			[
+				"py",
+				"SublimeREPL: IPython"
+			],
+			[
+				"matlab",
+				"SublimeREPL: Matlab"
+			],
+			[
+				"s",
+				"SublimeREPL: ABCL"
+			],
+			[
+				"p y t h",
+				"SublimeREPL: Python"
+			],
+			[
+				"ipy",
+				"SublimeREPL: Ruby"
+			],
+			[
+				"rep",
+				"SublimeREPL: Python - virtualenv"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"pack",
+				"Package Control: Add Channel"
+			]
+		],
+		"width": 521.0
+	},
+	"console":
+	{
+		"height": 206.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Src"
+	],
+	"file_history":
+	[
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/User/STM32-Debug.sublime-build",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/ADC-DAC.sublime-project",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/ani.py",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Debug/makefile",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc_ex.h",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/.clang_complete",
+		"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Src/main.c",
+		"/Users/koala/Dropbox/NYU/gradProj/pytorch/NN_MNIST/main.py",
+		"/Users/koala/Dropbox/NYU/Classes/AML/HW/hw3/q1.py",
+		"/Users/koala/Dropbox/NYU/Classes/AML/HW/hw3/dataset.t7b",
+		"/Users/koala/Dropbox/NYU/Classes/AML/HW/hw3/a",
+		"/Users/koala/Dropbox/NYU/Classes/AML/HW/hw3/q1",
+		"/Users/koala/Dropbox/NYU/Classes/RTES/project/env/EL6483_EmbeddedSystems/build_tools/feisty_feline/setup_scripts/setup.sh",
+		"/Applications/Eclipse.app/Contents/MacOS/gc.log",
+		"/Applications/Eclipse.app/Contents/Eclipse/eclipse.ini",
+		"/Users/koala/Dropbox/NYU/Classes/gradProj/workspace/train-images-idx3-ubyte",
+		"/Users/koala/Dropbox/NYU/Classes/gradProj/workspace/train-labels-idx1-ubyte",
+		"/Users/koala/Dropbox/NYU/Classes/Programming/env/calculator.lex",
+		"/Users/koala/Dropbox/Mac Sync/id_rsa.pub",
+		"/Users/koala/Documents/WORKSPACE/lampy_1.1/README",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Src/main.c",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Cubetest.sublime-project",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Cubetst.sublime-project",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Inc/main.h",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/.clang_complete",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio.h",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.c",
+		"/Users/koala/STM32Cube/Repository/STM32Cube_FW_F3_V1.7.0/Projects/STM32F3-Discovery/Demonstrations/Src/main.c",
+		"/Users/koala/Dropbox/Mac Sync/pypdf.py",
+		"/Users/koala/STM32Cube/Repository/STM32Cube_FW_F3_V1.7.0/Drivers/STM32F3xx_HAL_Driver/STM32F303xC_User_Manual.chm",
+		"/Users/koala/STM32Cube/Repository/STM32Cube_FW_F3_V1.7.0/Documentation/STM32CubeF3GettingStarted.pdf",
+		"/Users/koala/Dropbox/NYU/Classes/RTES/project/env/build_tools/arctic_awesomeness/mkproject.sh",
+		"/Users/koala/Desktop/a.c",
+		"/Users/koala/Desktop/a",
+		"/Users/koala/Documents/WORKSPACE/Cubetst/Debug/Cubetst.elf",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB3/tg1553/branchsimulator.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/HW3/Q3_3.py",
+		"/Users/koala/.spyder-py3/temp.py",
+		"/Users/koala/Downloads/HW09%28print_this%29-with-numbers.pdf",
+		"/Users/koala/Dropbox/NYU/Classes/CA/ca/cachesimulator.cpp",
+		"/Users/koala/Dropbox/NYU/Classes/DSP/HW/HW09/ca/README.txt",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/orignal files/trace.txt",
+		"/Users/koala/Downloads/Matlab R2016a Crack/matcrack.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/trace.txt",
+		"/Users/koala/Downloads/R2016a_maci64/install",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/trace.txt.out",
+		"/Users/koala/Desktop/recursive_filters_demo.m",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/check_answer.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/check_answer.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/loading.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/cachesimulator.cpp",
+		"/Users/koala/Desktop/TODO.cpp",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/koala/Desktop/a.cpp",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Shell/Main.sublime-menu",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Python/User.sublime-menu",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Python/Main.sublime-menu",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Python/Default.sublime-commands",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Main.sublime-menu.template",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Matlab/Main.sublime-menu",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/config/Matlab/Default.sublime-commands",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/Users/koala/Documents/WORKSPACE/hw.py",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/Gauss_tg/check_answer.py",
+		"/Users/koala/PycharmProjects/tst/check.txt",
+		"/Users/koala/PycharmProjects/tst/check.csv",
+		"/Users/koala/PycharmProjects/tst/trace_out.txt",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB1/tg1553/MIPS.cpp",
+		"/Users/koala/.ssh/id_rsa.pub",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB2/tg1553/copy.txt.out",
+		"/Users/koala/Dropbox/NYU/Classes/DSP/HW/HW07/Speech_Filtering_Exercise/Speech_Filtering_Exercise.m",
+		"/Users/koala/Downloads/by677_tg1553/MIPS.cpp",
+		"/Users/koala/Downloads/LAB1__Bo_by677_Tianyu_tg1553/by677_tg1553/MIPS.cpp",
+		"/Users/koala/Downloads/LAB1__Bo_by677_Tianyu_tg1553/MIPS.cpp",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/LAB1/MIPS.cpp",
+		"/Users/koala/Library/Application Support/factorio/mods/bobconfig_0.13.1/config.lua",
+		"/Users/koala/Downloads/MIPS.cpp",
+		"/Users/koala/Dropbox/NYU/Classes/CA/HW&LAB/HW1/HW1_Solutions.rtf",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/koala/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/koala/Downloads/Backup-codes-mushkoala.txt",
+		"/Users/koala/Downloads/Backup-codes-mushkoala (1).txt"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"full",
+			"perm",
+			"X<-",
+			"except",
+			"(\"**",
+			"{\n",
+			" ",
+			"λ",
+			"();",
+			"i",
+			"0xb509e1d",
+			"pdb",
+			"RH.*M",
+			"RH.*H",
+			"WH.*WH",
+			"WM.*WH",
+			"WH.*WH",
+			"WH.*NA",
+			"WH.*WH",
+			"WH",
+			"L2.*256.*[RW].",
+			"L2.*256.*R.",
+			" 256",
+			"4 3",
+			"w",
+			"[$]",
+			"$",
+			"[r][std]",
+			"tab"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"/",
+			"",
+			"$[r][std]"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Src/main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4084,
+								4084
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4287,
+										4288
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										4037,
+										4038
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1689.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "Packages/User/STM32-Debug.sublime-build",
+	"project": "ADC-DAC.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 226.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

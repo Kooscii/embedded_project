@@ -1,0 +1,2 @@
+#!/bin/sh
+/Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/arm-none-eabi-gdb $1
