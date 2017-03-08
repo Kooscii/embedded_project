@@ -108,7 +108,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start(&htim6);
 	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1,(uint32_t*)ecg12, 9519, DAC_ALIGN_12B_R);
+	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1,(uint32_t*)hr_data, 9650, DAC_ALIGN_8B_R);
 //	HAL_ADC_Start_IT(&hadc1);
   /* USER CODE END 2 */
 

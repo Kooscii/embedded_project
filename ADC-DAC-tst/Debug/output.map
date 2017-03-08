@@ -4597,54 +4597,52 @@ LOAD /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools
 .iplt           0x00000000080032a4        0x0
  .iplt          0x00000000080032a4        0x0 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.rodata         0x00000000080032a4     0x94f8
+.rodata         0x00000000080032a4     0x4e58
                 0x00000000080032a4                . = ALIGN (0x4)
  *(.rodata)
  .rodata        0x00000000080032a4       0x20 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o
                 0x00000000080032a4                aPLLMULFactorTable
                 0x00000000080032b4                aPredivFactorTable
- .rodata        0x00000000080032c4     0x94be Src/main.o
-                0x00000000080032c4                ecg12
-                0x0000000008007d24                ecg8
- *fill*         0x000000000800c782        0x2 
- .rodata        0x000000000800c784       0x18 Src/system_stm32f3xx.o
-                0x000000000800c784                AHBPrescTable
-                0x000000000800c794                APBPrescTable
+ .rodata        0x00000000080032c4     0x4e20 Src/main.o
+                0x00000000080032c4                hr_data
+ .rodata        0x00000000080080e4       0x18 Src/system_stm32f3xx.o
+                0x00000000080080e4                AHBPrescTable
+                0x00000000080080f4                APBPrescTable
  *(.rodata*)
-                0x000000000800c79c                . = ALIGN (0x4)
+                0x00000000080080fc                . = ALIGN (0x4)
 
-.rel.dyn        0x000000000800c79c        0x0
- .rel.iplt      0x000000000800c79c        0x0 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.rel.dyn        0x00000000080080fc        0x0
+ .rel.iplt      0x00000000080080fc        0x0 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000800c79c        0x0
-                0x000000000800c79c                __exidx_start = .
+.ARM            0x00000000080080fc        0x0
+                0x00000000080080fc                __exidx_start = .
  *(.ARM.exidx*)
-                0x000000000800c79c                __exidx_end = .
+                0x00000000080080fc                __exidx_end = .
 
-.preinit_array  0x000000000800c79c        0x0
-                0x000000000800c79c                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x00000000080080fc        0x0
+                0x00000000080080fc                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x000000000800c79c                PROVIDE (__preinit_array_end, .)
+                0x00000000080080fc                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x000000000800c79c        0x4
-                0x000000000800c79c                PROVIDE (__init_array_start, .)
+.init_array     0x00000000080080fc        0x4
+                0x00000000080080fc                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x000000000800c79c        0x4 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x000000000800c7a0                PROVIDE (__init_array_end, .)
+ .init_array    0x00000000080080fc        0x4 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x0000000008008100                PROVIDE (__init_array_end, .)
 
-.fini_array     0x000000000800c7a0        0x4
+.fini_array     0x0000000008008100        0x4
                 [!provide]                        PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x000000000800c7a0        0x4 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .fini_array    0x0000000008008100        0x4 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end, .)
-                0x000000000800c7a4                _sidata = LOADADDR (.data)
+                0x0000000008008104                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000        0x4 load address 0x000000000800c7a4
+.data           0x0000000020000000        0x4 load address 0x0000000008008104
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -4653,15 +4651,15 @@ LOAD /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools
  *(.data*)
                 0x0000000020000004                . = ALIGN (0x4)
                 0x0000000020000004                _edata = .
-                0x000000000800c7a8                _siccmram = LOADADDR (.ccmram)
+                0x0000000008008108                _siccmram = LOADADDR (.ccmram)
 
-.jcr            0x0000000020000004        0x0 load address 0x000000000800c7a8
+.jcr            0x0000000020000004        0x0 load address 0x0000000008008108
  .jcr           0x0000000020000004        0x0 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.igot.plt       0x0000000020000004        0x0 load address 0x000000000800c7a8
+.igot.plt       0x0000000020000004        0x0 load address 0x0000000008008108
  .igot.plt      0x0000000020000004        0x0 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.ccmram         0x0000000010000000        0x0 load address 0x000000000800c7a8
+.ccmram         0x0000000010000000        0x0 load address 0x0000000008008108
                 0x0000000010000000                . = ALIGN (0x4)
                 0x0000000010000000                _sccmram = .
  *(.ccmram)
@@ -4759,7 +4757,7 @@ LOAD /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools
                 0x0000000000000474       0x22 /Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(tst.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x11261
+.debug_info     0x0000000000000000    0x1124b
  .debug_info    0x0000000000000000      0x700 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
  .debug_info    0x0000000000000700      0xafe Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.o
  .debug_info    0x00000000000011fe     0x1a69 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc_ex.o
@@ -4773,11 +4771,11 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_info    0x000000000000772c     0x2dff Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.o
  .debug_info    0x000000000000a52b     0x1613 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o
  .debug_info    0x000000000000bb3e     0x1985 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
- .debug_info    0x000000000000d4c3     0x1c82 Src/main.o
- .debug_info    0x000000000000f145     0x1591 Src/stm32f3xx_hal_msp.o
- .debug_info    0x00000000000106d6      0x6fe Src/stm32f3xx_it.o
- .debug_info    0x0000000000010dd4      0x404 Src/system_stm32f3xx.o
- .debug_info    0x00000000000111d8       0x89 startup/startup_stm32f303xc.o
+ .debug_info    0x000000000000d4c3     0x1c6c Src/main.o
+ .debug_info    0x000000000000f12f     0x1591 Src/stm32f3xx_hal_msp.o
+ .debug_info    0x00000000000106c0      0x6fe Src/stm32f3xx_it.o
+ .debug_info    0x0000000000010dbe      0x404 Src/system_stm32f3xx.o
+ .debug_info    0x00000000000111c2       0x89 startup/startup_stm32f303xc.o
 
 .debug_abbrev   0x0000000000000000     0x2225
  .debug_abbrev  0x0000000000000000      0x1c1 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
@@ -4960,7 +4958,7 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_macro   0x000000000001f717      0x349 Src/stm32f3xx_it.o
  .debug_macro   0x000000000001fa60      0x345 Src/system_stm32f3xx.o
 
-.debug_line     0x0000000000000000     0xe1d2
+.debug_line     0x0000000000000000     0xe1d1
  .debug_line    0x0000000000000000      0xa47 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
  .debug_line    0x0000000000000a47      0xa7b Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.o
  .debug_line    0x00000000000014c2     0x1a46 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc_ex.o
@@ -4974,13 +4972,13 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_line    0x0000000000007e25     0x19f1 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.o
  .debug_line    0x0000000000009816     0x1017 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o
  .debug_line    0x000000000000a82d     0x12fd Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
- .debug_line    0x000000000000bb2a      0xa42 Src/main.o
- .debug_line    0x000000000000c56c      0x9af Src/stm32f3xx_hal_msp.o
- .debug_line    0x000000000000cf1b      0x927 Src/stm32f3xx_it.o
- .debug_line    0x000000000000d842      0x911 Src/system_stm32f3xx.o
- .debug_line    0x000000000000e153       0x7f startup/startup_stm32f303xc.o
+ .debug_line    0x000000000000bb2a      0xa41 Src/main.o
+ .debug_line    0x000000000000c56b      0x9af Src/stm32f3xx_hal_msp.o
+ .debug_line    0x000000000000cf1a      0x927 Src/stm32f3xx_it.o
+ .debug_line    0x000000000000d841      0x911 Src/system_stm32f3xx.o
+ .debug_line    0x000000000000e152       0x7f startup/startup_stm32f303xc.o
 
-.debug_str      0x0000000000000000    0xba552
+.debug_str      0x0000000000000000    0xba54f
  .debug_str     0x0000000000000000    0xb6567 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
                                       0xb69d1 (size before relaxing)
  .debug_str     0x00000000000b6567      0x5f4 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.o
@@ -5007,13 +5005,13 @@ OUTPUT(tst.elf elf32-littlearm)
                                       0xb6db6 (size before relaxing)
  .debug_str     0x00000000000b99fd      0x985 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
                                       0xb6e6c (size before relaxing)
- .debug_str     0x00000000000ba382       0xe5 Src/main.o
-                                      0xb76e3 (size before relaxing)
- .debug_str     0x00000000000ba467       0x25 Src/stm32f3xx_hal_msp.o
+ .debug_str     0x00000000000ba382       0xe2 Src/main.o
+                                      0xb76e0 (size before relaxing)
+ .debug_str     0x00000000000ba464       0x25 Src/stm32f3xx_hal_msp.o
                                       0xb71a7 (size before relaxing)
- .debug_str     0x00000000000ba48c       0x62 Src/stm32f3xx_it.o
+ .debug_str     0x00000000000ba489       0x62 Src/stm32f3xx_it.o
                                       0xb6657 (size before relaxing)
- .debug_str     0x00000000000ba4ee       0x64 Src/system_stm32f3xx.o
+ .debug_str     0x00000000000ba4eb       0x64 Src/system_stm32f3xx.o
                                       0xb629b (size before relaxing)
 
 .comment        0x0000000000000000       0x6e
