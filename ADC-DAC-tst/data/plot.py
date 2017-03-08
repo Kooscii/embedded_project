@@ -2,7 +2,7 @@ import serial
 import numpy as np
 from matplotlib import pyplot as plt
 
-div=10
+div=1
 
 st = serial.Serial('/dev/tty.usbmodem1413', 115200)
 save_idx = 0;
