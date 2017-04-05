@@ -46,6 +46,7 @@ DAC_HandleTypeDef hdac;
 DMA_HandleTypeDef hdma_dac_ch1;
 
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim7;
 
 UART_HandleTypeDef huart1;
 
@@ -64,6 +65,7 @@ static void MX_TIM6_Init(void);
 static void MX_DAC_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_TIM7_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -72,6 +74,9 @@ static void MX_ADC1_Init(void);
 
 /* USER CODE BEGIN 0 */
 int i=0;
+uint16_t msTimCnt = 0;
+uint16_t sysTickCnt = 0;
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(hadc);
 	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
@@ -80,6 +85,17 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	dl = dl?0:1;
 }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
+	if (htim->Instance == TIM7) {
+		msTimCnt++;
+	}
+	else if (htim->Instance == TIM6) {
+		HAL_ADC_Start_IT(&hadc1);
+	}
+}
+
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -104,12 +120,18 @@ int main(void)
   MX_DAC_Init();
   MX_USART1_UART_Init();
   MX_ADC1_Init();
+  MX_TIM7_Init();
 
   /* USER CODE BEGIN 2 */
-	HAL_TIM_Base_Start(&htim6);
+
+  /* using DAC CH1 to simulate the heart pulse wave at PA4*/
+  /* do not modify */
+	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
 	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1,(uint32_t*)hr_data, 9650, DAC_ALIGN_8B_R);
-//	HAL_ADC_Start_IT(&hadc1);
+
+	HAL_TIM_Base_Start_IT(&htim7);
+	// HAL_ADC_Start_IT(&hadc1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,12 +141,12 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	HAL_ADC_Start(&hadc1);
-	HAL_ADC_PollForConversion(&hadc1, 10);
-	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(&hadc1);
-	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
-	if (dl)
-		HAL_Delay(dl);
+//	HAL_ADC_Start(&hadc1);
+//	HAL_ADC_PollForConversion(&hadc1, 10);
+//	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(&hadc1);
+//	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
+//	if (dl)
+//		HAL_Delay(dl);
   }
   /* USER CODE END 3 */
 
@@ -282,6 +304,31 @@ static void MX_TIM6_Init(void)
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
+
+/* TIM7 init function */
+static void MX_TIM7_Init(void)
+{
+
+  TIM_MasterConfigTypeDef sMasterConfig;
+
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 71;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 1000;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
