@@ -78,6 +78,7 @@ uint16_t msTimCnt = 0;
 uint16_t sysTickCnt = 0;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+	HAL_ADC_Stop_IT(hadc);
 	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(hadc);
 	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
 }
