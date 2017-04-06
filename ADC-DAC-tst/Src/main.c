@@ -85,9 +85,11 @@ static void MX_SPI1_Init(void);
 /* USER CODE BEGIN 0 */
 int i = 0;
 uint16_t msTimCnt = 0;
-uint16_t sysTickCnt = 0;
 uint8_t rawHR = 0;
-uint8_t rawStep = 0;
+uint8_t rawStep_rms = 0;
+uint8_t rawStep_x = 0;
+uint8_t rawStep_y = 0;
+uint8_t rawStep_z = 0;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 //	int16_t x,y,z;
@@ -95,21 +97,25 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	float32_t facc[3];
 	float32_t f_acc_rms;
 
+	/* get heart pulse data */
 	HAL_ADC_Stop_IT(hadc);
 	rawHR = (uint8_t) HAL_ADC_GetValue(hadc);
+
+	/* get accelero data */
 //	z = ACCELERO_MEMS_GetData(ACC_Z);
 	BSP_ACCELERO_GetXYZ(acc);
+	// calc rms
 	facc[0] = (float32_t)acc[0];
 	facc[1] = (float32_t)acc[1];
 	facc[2] = (float32_t)acc[2];
-
 	arm_rms_f32(facc, 3, &f_acc_rms);
+	rawStep_rms = (uint8_t) (f_acc_rms/16);
+	// calc x y z
+	rawStep_x = ((acc[0]+4096)>>5) & 0xff;
+	rawStep_y = ((acc[1]+4096)>>5) & 0xff;
+	rawStep_z = ((acc[2]+4096)>>5) & 0xff;
 
-//	accdata += 4096;
-//	tmp = (accdata>>5) & 0xff;
-	rawStep = (uint8_t) (f_acc_rms/16);
-
-	HAL_UART_Transmit(&huart1, (uint8_t*) &rawStep, 1, 1);
+	HAL_UART_Transmit(&huart1, (uint8_t*) &rawStep_rms, 1, 1);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {

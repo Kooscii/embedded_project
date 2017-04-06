@@ -23454,7 +23454,7 @@ LOAD /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1
                 0x08000000                g_pfnVectors
                 0x08000188                . = ALIGN (0x4)
 
-.text           0x08000188     0x7b7c
+.text           0x08000188     0x7bb8
                 0x08000188                . = ALIGN (0x4)
  *(.text)
  .text          0x08000188       0x5c /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
@@ -23828,248 +23828,248 @@ LOAD /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1
                 0x08006f78       0x18 Src/MEMS_init.o
                 0x08006f78                ACCELERO_MEMS_Init
  .text.HAL_ADC_ConvCpltCallback
-                0x08006f90       0xa4 Src/main.o
+                0x08006f90       0xe0 Src/main.o
                 0x08006f90                HAL_ADC_ConvCpltCallback
  .text.HAL_GPIO_EXTI_Callback
-                0x08007034       0x18 Src/main.o
-                0x08007034                HAL_GPIO_EXTI_Callback
+                0x08007070       0x18 Src/main.o
+                0x08007070                HAL_GPIO_EXTI_Callback
  .text.HAL_TIM_PeriodElapsedCallback
-                0x0800704c       0x48 Src/main.o
-                0x0800704c                HAL_TIM_PeriodElapsedCallback
- .text.main     0x08007094       0x70 Src/main.o
-                0x08007094                main
+                0x08007088       0x48 Src/main.o
+                0x08007088                HAL_TIM_PeriodElapsedCallback
+ .text.main     0x080070d0       0x70 Src/main.o
+                0x080070d0                main
  .text.SystemClock_Config
-                0x08007104       0xc4 Src/main.o
-                0x08007104                SystemClock_Config
+                0x08007140       0xc4 Src/main.o
+                0x08007140                SystemClock_Config
  .text.MX_ADC1_Init
-                0x080071c8       0xc4 Src/main.o
+                0x08007204       0xc4 Src/main.o
  .text.MX_DAC_Init
-                0x0800728c       0x4c Src/main.o
+                0x080072c8       0x4c Src/main.o
  .text.MX_I2C1_Init
-                0x080072d8       0x6c Src/main.o
+                0x08007314       0x6c Src/main.o
  .text.MX_SPI1_Init
-                0x08007344       0x7c Src/main.o
+                0x08007380       0x7c Src/main.o
  .text.MX_TIM6_Init
-                0x080073c0       0x64 Src/main.o
+                0x080073fc       0x64 Src/main.o
  .text.MX_TIM7_Init
-                0x08007424       0x64 Src/main.o
+                0x08007460       0x64 Src/main.o
  .text.MX_USART1_UART_Init
-                0x08007488       0x60 Src/main.o
+                0x080074c4       0x60 Src/main.o
  .text.MX_DMA_Init
-                0x080074e8       0x3c Src/main.o
+                0x08007524       0x3c Src/main.o
  .text.MX_GPIO_Init
-                0x08007524      0x128 Src/main.o
+                0x08007560      0x128 Src/main.o
  .text.Error_Handler
-                0x0800764c        0x8 Src/main.o
-                0x0800764c                Error_Handler
+                0x08007688        0x8 Src/main.o
+                0x08007688                Error_Handler
  .text.HAL_MspInit
-                0x08007654       0x84 Src/stm32f3xx_hal_msp.o
-                0x08007654                HAL_MspInit
+                0x08007690       0x84 Src/stm32f3xx_hal_msp.o
+                0x08007690                HAL_MspInit
  .text.HAL_ADC_MspInit
-                0x080076d8       0x60 Src/stm32f3xx_hal_msp.o
-                0x080076d8                HAL_ADC_MspInit
+                0x08007714       0x60 Src/stm32f3xx_hal_msp.o
+                0x08007714                HAL_ADC_MspInit
  .text.HAL_DAC_MspInit
-                0x08007738       0xcc Src/stm32f3xx_hal_msp.o
-                0x08007738                HAL_DAC_MspInit
+                0x08007774       0xcc Src/stm32f3xx_hal_msp.o
+                0x08007774                HAL_DAC_MspInit
  .text.HAL_I2C_MspInit
-                0x08007804       0x60 Src/stm32f3xx_hal_msp.o
-                0x08007804                HAL_I2C_MspInit
+                0x08007840       0x60 Src/stm32f3xx_hal_msp.o
+                0x08007840                HAL_I2C_MspInit
  .text.HAL_I2C_MspDeInit
-                0x08007864       0x3c Src/stm32f3xx_hal_msp.o
-                0x08007864                HAL_I2C_MspDeInit
+                0x080078a0       0x3c Src/stm32f3xx_hal_msp.o
+                0x080078a0                HAL_I2C_MspDeInit
  .text.HAL_SPI_MspInit
-                0x080078a0       0x5c Src/stm32f3xx_hal_msp.o
-                0x080078a0                HAL_SPI_MspInit
+                0x080078dc       0x5c Src/stm32f3xx_hal_msp.o
+                0x080078dc                HAL_SPI_MspInit
  .text.HAL_TIM_Base_MspInit
-                0x080078fc       0x84 Src/stm32f3xx_hal_msp.o
-                0x080078fc                HAL_TIM_Base_MspInit
+                0x08007938       0x84 Src/stm32f3xx_hal_msp.o
+                0x08007938                HAL_TIM_Base_MspInit
  .text.HAL_UART_MspInit
-                0x08007980       0x60 Src/stm32f3xx_hal_msp.o
-                0x08007980                HAL_UART_MspInit
+                0x080079bc       0x60 Src/stm32f3xx_hal_msp.o
+                0x080079bc                HAL_UART_MspInit
  .text.SysTick_Handler
-                0x080079e0       0x10 Src/stm32f3xx_it.o
-                0x080079e0                SysTick_Handler
+                0x08007a1c       0x10 Src/stm32f3xx_it.o
+                0x08007a1c                SysTick_Handler
  .text.EXTI0_IRQHandler
-                0x080079f0       0x10 Src/stm32f3xx_it.o
-                0x080079f0                EXTI0_IRQHandler
+                0x08007a2c       0x10 Src/stm32f3xx_it.o
+                0x08007a2c                EXTI0_IRQHandler
  .text.DMA1_Channel3_IRQHandler
-                0x08007a00       0x14 Src/stm32f3xx_it.o
-                0x08007a00                DMA1_Channel3_IRQHandler
+                0x08007a3c       0x14 Src/stm32f3xx_it.o
+                0x08007a3c                DMA1_Channel3_IRQHandler
  .text.ADC1_2_IRQHandler
-                0x08007a14       0x14 Src/stm32f3xx_it.o
-                0x08007a14                ADC1_2_IRQHandler
+                0x08007a50       0x14 Src/stm32f3xx_it.o
+                0x08007a50                ADC1_2_IRQHandler
  .text.TIM6_DAC_IRQHandler
-                0x08007a28       0x1c Src/stm32f3xx_it.o
-                0x08007a28                TIM6_DAC_IRQHandler
+                0x08007a64       0x1c Src/stm32f3xx_it.o
+                0x08007a64                TIM6_DAC_IRQHandler
  .text.TIM7_IRQHandler
-                0x08007a44       0x14 Src/stm32f3xx_it.o
-                0x08007a44                TIM7_IRQHandler
+                0x08007a80       0x14 Src/stm32f3xx_it.o
+                0x08007a80                TIM7_IRQHandler
  .text.SystemInit
-                0x08007a58       0x94 Src/system_stm32f3xx.o
-                0x08007a58                SystemInit
+                0x08007a94       0x94 Src/system_stm32f3xx.o
+                0x08007a94                SystemInit
  .text.Reset_Handler
-                0x08007aec       0x50 startup/startup_stm32f303xc.o
-                0x08007aec                Reset_Handler
+                0x08007b28       0x50 startup/startup_stm32f303xc.o
+                0x08007b28                Reset_Handler
  .text.Default_Handler
-                0x08007b3c        0x2 startup/startup_stm32f303xc.o
-                0x08007b3c                RTC_Alarm_IRQHandler
-                0x08007b3c                TIM8_TRG_COM_IRQHandler
-                0x08007b3c                TIM8_CC_IRQHandler
-                0x08007b3c                DebugMon_Handler
-                0x08007b3c                TIM1_CC_IRQHandler
-                0x08007b3c                HardFault_Handler
-                0x08007b3c                USB_HP_IRQHandler
-                0x08007b3c                PVD_IRQHandler
-                0x08007b3c                TAMP_STAMP_IRQHandler
-                0x08007b3c                PendSV_Handler
-                0x08007b3c                NMI_Handler
-                0x08007b3c                EXTI3_IRQHandler
-                0x08007b3c                USB_HP_CAN_TX_IRQHandler
-                0x08007b3c                I2C2_EV_IRQHandler
-                0x08007b3c                FPU_IRQHandler
-                0x08007b3c                TIM1_UP_TIM16_IRQHandler
-                0x08007b3c                UsageFault_Handler
-                0x08007b3c                SPI1_IRQHandler
-                0x08007b3c                CAN_SCE_IRQHandler
-                0x08007b3c                TIM8_UP_IRQHandler
-                0x08007b3c                DMA2_Channel2_IRQHandler
-                0x08007b3c                DMA1_Channel4_IRQHandler
-                0x08007b3c                USART3_IRQHandler
-                0x08007b3c                DMA1_Channel7_IRQHandler
-                0x08007b3c                UART5_IRQHandler
-                0x08007b3c                ADC3_IRQHandler
-                0x08007b3c                TIM4_IRQHandler
-                0x08007b3c                CAN_RX1_IRQHandler
-                0x08007b3c                DMA2_Channel1_IRQHandler
-                0x08007b3c                I2C1_EV_IRQHandler
-                0x08007b3c                DMA1_Channel6_IRQHandler
-                0x08007b3c                UART4_IRQHandler
-                0x08007b3c                DMA2_Channel4_IRQHandler
-                0x08007b3c                TIM3_IRQHandler
-                0x08007b3c                RCC_IRQHandler
-                0x08007b3c                DMA1_Channel1_IRQHandler
-                0x08007b3c                Default_Handler
-                0x08007b3c                USBWakeUp_RMP_IRQHandler
-                0x08007b3c                EXTI15_10_IRQHandler
-                0x08007b3c                EXTI9_5_IRQHandler
-                0x08007b3c                RTC_WKUP_IRQHandler
-                0x08007b3c                SPI2_IRQHandler
-                0x08007b3c                USB_LP_CAN_RX0_IRQHandler
-                0x08007b3c                MemManage_Handler
-                0x08007b3c                SVC_Handler
-                0x08007b3c                DMA2_Channel5_IRQHandler
-                0x08007b3c                DMA1_Channel5_IRQHandler
-                0x08007b3c                USB_LP_IRQHandler
-                0x08007b3c                EXTI4_IRQHandler
-                0x08007b3c                TIM1_TRG_COM_TIM17_IRQHandler
-                0x08007b3c                ADC4_IRQHandler
-                0x08007b3c                WWDG_IRQHandler
-                0x08007b3c                TIM2_IRQHandler
-                0x08007b3c                COMP7_IRQHandler
-                0x08007b3c                COMP1_2_3_IRQHandler
-                0x08007b3c                EXTI1_IRQHandler
-                0x08007b3c                USART2_IRQHandler
-                0x08007b3c                COMP4_5_6_IRQHandler
-                0x08007b3c                I2C2_ER_IRQHandler
-                0x08007b3c                DMA1_Channel2_IRQHandler
-                0x08007b3c                TIM8_BRK_IRQHandler
-                0x08007b3c                FLASH_IRQHandler
-                0x08007b3c                BusFault_Handler
-                0x08007b3c                USART1_IRQHandler
-                0x08007b3c                SPI3_IRQHandler
-                0x08007b3c                I2C1_ER_IRQHandler
-                0x08007b3c                USBWakeUp_IRQHandler
-                0x08007b3c                DMA2_Channel3_IRQHandler
-                0x08007b3c                EXTI2_TSC_IRQHandler
-                0x08007b3c                TIM1_BRK_TIM15_IRQHandler
- *fill*         0x08007b3e        0x2 
+                0x08007b78        0x2 startup/startup_stm32f303xc.o
+                0x08007b78                RTC_Alarm_IRQHandler
+                0x08007b78                TIM8_TRG_COM_IRQHandler
+                0x08007b78                TIM8_CC_IRQHandler
+                0x08007b78                DebugMon_Handler
+                0x08007b78                TIM1_CC_IRQHandler
+                0x08007b78                HardFault_Handler
+                0x08007b78                USB_HP_IRQHandler
+                0x08007b78                PVD_IRQHandler
+                0x08007b78                TAMP_STAMP_IRQHandler
+                0x08007b78                PendSV_Handler
+                0x08007b78                NMI_Handler
+                0x08007b78                EXTI3_IRQHandler
+                0x08007b78                USB_HP_CAN_TX_IRQHandler
+                0x08007b78                I2C2_EV_IRQHandler
+                0x08007b78                FPU_IRQHandler
+                0x08007b78                TIM1_UP_TIM16_IRQHandler
+                0x08007b78                UsageFault_Handler
+                0x08007b78                SPI1_IRQHandler
+                0x08007b78                CAN_SCE_IRQHandler
+                0x08007b78                TIM8_UP_IRQHandler
+                0x08007b78                DMA2_Channel2_IRQHandler
+                0x08007b78                DMA1_Channel4_IRQHandler
+                0x08007b78                USART3_IRQHandler
+                0x08007b78                DMA1_Channel7_IRQHandler
+                0x08007b78                UART5_IRQHandler
+                0x08007b78                ADC3_IRQHandler
+                0x08007b78                TIM4_IRQHandler
+                0x08007b78                CAN_RX1_IRQHandler
+                0x08007b78                DMA2_Channel1_IRQHandler
+                0x08007b78                I2C1_EV_IRQHandler
+                0x08007b78                DMA1_Channel6_IRQHandler
+                0x08007b78                UART4_IRQHandler
+                0x08007b78                DMA2_Channel4_IRQHandler
+                0x08007b78                TIM3_IRQHandler
+                0x08007b78                RCC_IRQHandler
+                0x08007b78                DMA1_Channel1_IRQHandler
+                0x08007b78                Default_Handler
+                0x08007b78                USBWakeUp_RMP_IRQHandler
+                0x08007b78                EXTI15_10_IRQHandler
+                0x08007b78                EXTI9_5_IRQHandler
+                0x08007b78                RTC_WKUP_IRQHandler
+                0x08007b78                SPI2_IRQHandler
+                0x08007b78                USB_LP_CAN_RX0_IRQHandler
+                0x08007b78                MemManage_Handler
+                0x08007b78                SVC_Handler
+                0x08007b78                DMA2_Channel5_IRQHandler
+                0x08007b78                DMA1_Channel5_IRQHandler
+                0x08007b78                USB_LP_IRQHandler
+                0x08007b78                EXTI4_IRQHandler
+                0x08007b78                TIM1_TRG_COM_TIM17_IRQHandler
+                0x08007b78                ADC4_IRQHandler
+                0x08007b78                WWDG_IRQHandler
+                0x08007b78                TIM2_IRQHandler
+                0x08007b78                COMP7_IRQHandler
+                0x08007b78                COMP1_2_3_IRQHandler
+                0x08007b78                EXTI1_IRQHandler
+                0x08007b78                USART2_IRQHandler
+                0x08007b78                COMP4_5_6_IRQHandler
+                0x08007b78                I2C2_ER_IRQHandler
+                0x08007b78                DMA1_Channel2_IRQHandler
+                0x08007b78                TIM8_BRK_IRQHandler
+                0x08007b78                FLASH_IRQHandler
+                0x08007b78                BusFault_Handler
+                0x08007b78                USART1_IRQHandler
+                0x08007b78                SPI3_IRQHandler
+                0x08007b78                I2C1_ER_IRQHandler
+                0x08007b78                USBWakeUp_IRQHandler
+                0x08007b78                DMA2_Channel3_IRQHandler
+                0x08007b78                EXTI2_TSC_IRQHandler
+                0x08007b78                TIM1_BRK_TIM15_IRQHandler
+ *fill*         0x08007b7a        0x2 
  .text.__libc_init_array
-                0x08007b40       0x4c /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
-                0x08007b40                __libc_init_array
- .text.sqrtf    0x08007b8c       0xac /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-wf_sqrt.o)
-                0x08007b8c                sqrtf
+                0x08007b7c       0x4c /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-init.o)
+                0x08007b7c                __libc_init_array
+ .text.sqrtf    0x08007bc8       0xac /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-wf_sqrt.o)
+                0x08007bc8                sqrtf
  .text.__ieee754_sqrtf
-                0x08007c38       0xa4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-ef_sqrt.o)
-                0x08007c38                __ieee754_sqrtf
- .text.matherr  0x08007cdc        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-s_matherr.o)
-                0x08007cdc                matherr
- .text.__errno  0x08007ce0        0xc /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-errno.o)
-                0x08007ce0                __errno
+                0x08007c74       0xa4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-ef_sqrt.o)
+                0x08007c74                __ieee754_sqrtf
+ .text.matherr  0x08007d18        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-s_matherr.o)
+                0x08007d18                matherr
+ .text.__errno  0x08007d1c        0xc /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc_nano.a(lib_a-errno.o)
+                0x08007d1c                __errno
  *(.glue_7)
- .glue_7        0x08007cec        0x0 linker stubs
+ .glue_7        0x08007d28        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08007cec        0x0 linker stubs
+ .glue_7t       0x08007d28        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08007cec        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .eh_frame      0x08007d28        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(.init)
- .init          0x08007cec        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x08007cec                _init
- .init          0x08007cf0        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+ .init          0x08007d28        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08007d28                _init
+ .init          0x08007d2c        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
  *(.fini)
- .fini          0x08007cf8        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x08007cf8                _fini
- .fini          0x08007cfc        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
-                0x08007d04                . = ALIGN (0x4)
-                0x08007d04                _etext = .
+ .fini          0x08007d34        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x08007d34                _fini
+ .fini          0x08007d38        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x08007d40                . = ALIGN (0x4)
+                0x08007d40                _etext = .
 
-.vfp11_veneer   0x08007d04        0x0
- .vfp11_veneer  0x08007d04        0x0 linker stubs
+.vfp11_veneer   0x08007d40        0x0
+ .vfp11_veneer  0x08007d40        0x0 linker stubs
 
-.v4_bx          0x08007d04        0x0
- .v4_bx         0x08007d04        0x0 linker stubs
+.v4_bx          0x08007d40        0x0
+ .v4_bx         0x08007d40        0x0 linker stubs
 
-.iplt           0x08007d04        0x0
- .iplt          0x08007d04        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.iplt           0x08007d40        0x0
+ .iplt          0x08007d40        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.rodata         0x08007d04     0x4e60
-                0x08007d04                . = ALIGN (0x4)
+.rodata         0x08007d40     0x4e60
+                0x08007d40                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x08007d04       0x20 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o
-                0x08007d04                aPLLMULFactorTable
-                0x08007d14                aPredivFactorTable
- .rodata        0x08007d24     0x4e20 Src/main.o
-                0x08007d24                hr_data
- .rodata        0x0800cb44       0x18 Src/system_stm32f3xx.o
-                0x0800cb44                AHBPrescTable
-                0x0800cb54                APBPrescTable
+ .rodata        0x08007d40       0x20 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o
+                0x08007d40                aPLLMULFactorTable
+                0x08007d50                aPredivFactorTable
+ .rodata        0x08007d60     0x4e20 Src/main.o
+                0x08007d60                hr_data
+ .rodata        0x0800cb80       0x18 Src/system_stm32f3xx.o
+                0x0800cb80                AHBPrescTable
+                0x0800cb90                APBPrescTable
  *(.rodata*)
  .rodata.str1.4
-                0x0800cb5c        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-wf_sqrt.o)
+                0x0800cb98        0x8 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libm.a(lib_a-wf_sqrt.o)
                                   0x6 (size before relaxing)
-                0x0800cb64                . = ALIGN (0x4)
+                0x0800cba0                . = ALIGN (0x4)
 
-.rel.dyn        0x0800cb64        0x0
- .rel.iplt      0x0800cb64        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.rel.dyn        0x0800cba0        0x0
+ .rel.iplt      0x0800cba0        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0800cb64        0x0
-                0x0800cb64                __exidx_start = .
+.ARM            0x0800cba0        0x0
+                0x0800cba0                __exidx_start = .
  *(.ARM.exidx*)
-                0x0800cb64                __exidx_end = .
+                0x0800cba0                __exidx_end = .
 
-.preinit_array  0x0800cb64        0x0
-                0x0800cb64                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0800cba0        0x0
+                0x0800cba0                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x0800cb64                PROVIDE (__preinit_array_end, .)
+                0x0800cba0                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x0800cb64        0x4
-                0x0800cb64                PROVIDE (__init_array_start, .)
+.init_array     0x0800cba0        0x4
+                0x0800cba0                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x0800cb64        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x0800cb68                PROVIDE (__init_array_end, .)
+ .init_array    0x0800cba0        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x0800cba4                PROVIDE (__init_array_end, .)
 
-.fini_array     0x0800cb68        0x4
+.fini_array     0x0800cba4        0x4
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0800cb68        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .fini_array    0x0800cba4        0x4 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end, .)
-                0x0800cb6c                _sidata = LOADADDR (.data)
+                0x0800cba8                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0xcc load address 0x0800cb6c
+.data           0x20000000       0xcc load address 0x0800cba8
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -24094,15 +24094,15 @@ LOAD /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1
                 0x200000cc                . = ALIGN (0x4)
  *fill*         0x200000c9        0x3 
                 0x200000cc                _edata = .
-                0x0800cc38                _siccmram = LOADADDR (.ccmram)
+                0x0800cc74                _siccmram = LOADADDR (.ccmram)
 
-.jcr            0x200000cc        0x0 load address 0x0800cc38
+.jcr            0x200000cc        0x0 load address 0x0800cc74
  .jcr           0x200000cc        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.igot.plt       0x200000cc        0x0 load address 0x0800cc38
+.igot.plt       0x200000cc        0x0 load address 0x0800cc74
  .igot.plt      0x200000cc        0x0 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.ccmram         0x10000000        0x0 load address 0x0800cc38
+.ccmram         0x10000000        0x0 load address 0x0800cc74
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _sccmram = .
  *(.ccmram)
@@ -24118,15 +24118,18 @@ LOAD /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1
  .bss           0x200000cc       0x1c /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  .bss           0x200000e8       0xb0 Drivers/STM32F3-Discovery/stm32f3_discovery.o
  .bss           0x20000198        0x4 Drivers/STM32F3-Discovery/stm32f3_discovery_accelerometer.o
- .bss           0x2000019c       0x10 Src/main.o
+ .bss           0x2000019c        0xf Src/main.o
                 0x2000019c                dl
                 0x200001a0                i
                 0x200001a4                msTimCnt
-                0x200001a6                sysTickCnt
-                0x200001a8                heartpulse
-                0x200001aa                accdata
+                0x200001a6                rawHR
+                0x200001a7                rawStep_rms
+                0x200001a8                rawStep_x
+                0x200001a9                rawStep_y
+                0x200001aa                rawStep_z
  *(.bss*)
  *(COMMON)
+ *fill*         0x200001ab        0x1 
  COMMON         0x200001ac        0x4 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o
                 0x200001ac                uwTick
  COMMON         0x200001b0      0x2b0 Src/main.o
@@ -24242,7 +24245,7 @@ LOAD /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1
                 0x000007da       0x22 /home/koala/App/eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.13.0.201701121612/tools/compiler/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(tst.elf elf32-littlearm)
 
-.debug_info     0x00000000    0x15817
+.debug_info     0x00000000    0x15811
  .debug_info    0x00000000      0x19c Drivers/CMSIS/DSP_Lib/Source/StatisticsFunctions/arm_rms_f32.o
  .debug_info    0x0000019c      0x610 Drivers/Components/lsm303dlhc/lsm303dlhc.o
  .debug_info    0x000007ac     0x1403 Drivers/STM32F3-Discovery/stm32f3_discovery.o
@@ -24264,13 +24267,13 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_info    0x0000ea3a     0x121b Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o
  .debug_info    0x0000fc55     0x13f6 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
  .debug_info    0x0001104b      0x168 Src/MEMS_init.o
- .debug_info    0x000111b3     0x1daa Src/main.o
- .debug_info    0x00012f5d     0x197b Src/stm32f3xx_hal_msp.o
- .debug_info    0x000148d8      0xac1 Src/stm32f3xx_it.o
- .debug_info    0x00015399      0x400 Src/system_stm32f3xx.o
- .debug_info    0x00015799       0x7e startup/startup_stm32f303xc.o
+ .debug_info    0x000111b3     0x1da4 Src/main.o
+ .debug_info    0x00012f57     0x197b Src/stm32f3xx_hal_msp.o
+ .debug_info    0x000148d2      0xac1 Src/stm32f3xx_it.o
+ .debug_info    0x00015393      0x400 Src/system_stm32f3xx.o
+ .debug_info    0x00015793       0x7e startup/startup_stm32f303xc.o
 
-.debug_abbrev   0x00000000     0x2b6d
+.debug_abbrev   0x00000000     0x2b60
  .debug_abbrev  0x00000000       0xee Drivers/CMSIS/DSP_Lib/Source/StatisticsFunctions/arm_rms_f32.o
  .debug_abbrev  0x000000ee      0x178 Drivers/Components/lsm303dlhc/lsm303dlhc.o
  .debug_abbrev  0x00000266      0x24b Drivers/STM32F3-Discovery/stm32f3_discovery.o
@@ -24292,11 +24295,11 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_abbrev  0x00002050      0x202 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o
  .debug_abbrev  0x00002252      0x1bf Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
  .debug_abbrev  0x00002411       0xce Src/MEMS_init.o
- .debug_abbrev  0x000024df      0x26c Src/main.o
- .debug_abbrev  0x0000274b      0x1c6 Src/stm32f3xx_hal_msp.o
- .debug_abbrev  0x00002911      0x146 Src/stm32f3xx_it.o
- .debug_abbrev  0x00002a57      0x104 Src/system_stm32f3xx.o
- .debug_abbrev  0x00002b5b       0x12 startup/startup_stm32f303xc.o
+ .debug_abbrev  0x000024df      0x25f Src/main.o
+ .debug_abbrev  0x0000273e      0x1c6 Src/stm32f3xx_hal_msp.o
+ .debug_abbrev  0x00002904      0x146 Src/stm32f3xx_it.o
+ .debug_abbrev  0x00002a4a      0x104 Src/system_stm32f3xx.o
+ .debug_abbrev  0x00002b4e       0x12 startup/startup_stm32f303xc.o
 
 .debug_aranges  0x00000000     0x15e8
  .debug_aranges
@@ -24458,7 +24461,7 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_macro   0x0002089b      0x35e Src/stm32f3xx_it.o
  .debug_macro   0x00020bf9      0x35a Src/system_stm32f3xx.o
 
-.debug_line     0x00000000    0x14911
+.debug_line     0x00000000    0x14912
  .debug_line    0x00000000      0x485 Drivers/CMSIS/DSP_Lib/Source/StatisticsFunctions/arm_rms_f32.o
  .debug_line    0x00000485      0x504 Drivers/Components/lsm303dlhc/lsm303dlhc.o
  .debug_line    0x00000989      0xb22 Drivers/STM32F3-Discovery/stm32f3_discovery.o
@@ -24480,13 +24483,13 @@ OUTPUT(tst.elf elf32-littlearm)
  .debug_line    0x0000f405      0xfe1 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o
  .debug_line    0x000103e6     0x12dc Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o
  .debug_line    0x000116c2      0xa34 Src/MEMS_init.o
- .debug_line    0x000120f6      0xc0e Src/main.o
- .debug_line    0x00012d04      0x9c9 Src/stm32f3xx_hal_msp.o
- .debug_line    0x000136cd      0x8fe Src/stm32f3xx_it.o
- .debug_line    0x00013fcb      0x8c7 Src/system_stm32f3xx.o
- .debug_line    0x00014892       0x7f startup/startup_stm32f303xc.o
+ .debug_line    0x000120f6      0xc0f Src/main.o
+ .debug_line    0x00012d05      0x9c9 Src/stm32f3xx_hal_msp.o
+ .debug_line    0x000136ce      0x8fe Src/stm32f3xx_it.o
+ .debug_line    0x00013fcc      0x8c7 Src/system_stm32f3xx.o
+ .debug_line    0x00014893       0x7f startup/startup_stm32f303xc.o
 
-.debug_str      0x00000000    0xc190d
+.debug_str      0x00000000    0xc191f
  .debug_str     0x00000000     0x70a3 Drivers/CMSIS/DSP_Lib/Source/StatisticsFunctions/arm_rms_f32.o
                                0x72b1 (size before relaxing)
  .debug_str     0x000070a3     0x1a8c Drivers/Components/lsm303dlhc/lsm303dlhc.o
@@ -24529,13 +24532,13 @@ OUTPUT(tst.elf elf32-littlearm)
                               0xb874c (size before relaxing)
  .debug_str     0x000c1698       0x65 Src/MEMS_init.o
                               0xba4f0 (size before relaxing)
- .debug_str     0x000c16fd      0x125 Src/main.o
-                              0xbcb06 (size before relaxing)
- .debug_str     0x000c1822       0x25 Src/stm32f3xx_hal_msp.o
+ .debug_str     0x000c16fd      0x137 Src/main.o
+                              0xbcb18 (size before relaxing)
+ .debug_str     0x000c1834       0x25 Src/stm32f3xx_hal_msp.o
                               0xb8f10 (size before relaxing)
- .debug_str     0x000c1847       0x62 Src/stm32f3xx_it.o
+ .debug_str     0x000c1859       0x62 Src/stm32f3xx_it.o
                               0xb82a8 (size before relaxing)
- .debug_str     0x000c18a9       0x64 Src/system_stm32f3xx.o
+ .debug_str     0x000c18bb       0x64 Src/system_stm32f3xx.o
                               0xb7c13 (size before relaxing)
 
 .comment        0x00000000       0x6e
