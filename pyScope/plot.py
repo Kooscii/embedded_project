@@ -25,10 +25,10 @@ class Scope(object):
             self.tdata.extend(t)
         else:
             self.ydata = self.ydata[10:]
-        ymax = max(self.ydata)
-        ymin = min(self.ydata)
-        margin = (ymax-ymin)/20.0
-        self.ax.set_ylim(ymin-margin, ymax+margin)
+        # ymax = max(self.ydata)
+        # ymin = min(self.ydata)
+        # margin = (ymax-ymin)/20.0
+        # self.ax.set_ylim(ymin-margin, ymax+margin)
         self.line.set_data(self.tdata, self.ydata)
         return self.line,
 
