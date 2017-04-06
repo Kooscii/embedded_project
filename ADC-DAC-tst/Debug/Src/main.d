@@ -30,11 +30,20 @@ Src/main.o: ../Src/main.c \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_i2c_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- /home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/data.h
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/data.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/MEMS_init.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/stm32f3_discovery_accelerometer.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/stm32f3_discovery.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/../Components/lsm303dlhc/lsm303dlhc.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/../Components/lsm303dlhc/../Common/accelero.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Include/arm_math.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Include/core_cm4.h
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/main.h:
 
@@ -98,6 +107,10 @@ Src/main.o: ../Src/main.c \
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h:
 
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h:
+
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h:
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h:
@@ -107,3 +120,17 @@ Src/main.o: ../Src/main.c \
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/data.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Inc/MEMS_init.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/stm32f3_discovery_accelerometer.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/stm32f3_discovery.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/../Components/lsm303dlhc/lsm303dlhc.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery/../Components/lsm303dlhc/../Common/accelero.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Include/arm_math.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Include/core_cm4.h:

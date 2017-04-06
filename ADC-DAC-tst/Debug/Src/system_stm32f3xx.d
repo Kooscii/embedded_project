@@ -29,6 +29,8 @@ Src/system_stm32f3xx.o: ../Src/system_stm32f3xx.c \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_i2c_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi.h \
+ /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
@@ -93,6 +95,10 @@ Src/system_stm32f3xx.o: ../Src/system_stm32f3xx.c \
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h:
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi.h:
+
+/home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h:
 
 /home/koala/Documents/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h:
 
