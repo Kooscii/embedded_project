@@ -38,8 +38,6 @@
 #include "string.h"
 #include "data.h"
 #include "MEMS_init.h"
-
-#define ARM_MATH_CM4
 #include "arm_math.h"
 /* USER CODE END Includes */
 
@@ -91,11 +89,16 @@ uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
 uint8_t rawStep_z = 0;
 
+void HAL_UART_TxCpltCallback (UART_HandleTypeDef * huart) {
+	UNUSED(huart);
+}
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 //	int16_t x,y,z;
 	int16_t acc[3];
 	float32_t facc[3];
 	float32_t f_acc_rms;
+	uint32_t t1, t2, t3;
 
 	/* get heart pulse data */
 	HAL_ADC_Stop_IT(hadc);
@@ -104,6 +107,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	/* get accelero data */
 //	z = ACCELERO_MEMS_GetData(ACC_Z);
 	BSP_ACCELERO_GetXYZ(acc);
+//		t3 = SysTick->VAL;
 	// calc rms
 	facc[0] = (float32_t)acc[0];
 	facc[1] = (float32_t)acc[1];
@@ -115,11 +119,13 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	rawStep_y = ((acc[1]+4096)>>5) & 0xff;
 	rawStep_z = ((acc[2]+4096)>>5) & 0xff;
 
-	HAL_UART_Transmit(&huart1, (uint8_t*) &rawStep_rms, 1, 1);
+
+//	HAL_UART_Transmit(&huart1, (uint8_t*) &rawStep_rms, 1, 0);
+	HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
+	UNUSED(GPIO_Pin);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
@@ -316,7 +322,7 @@ static void MX_DAC_Init(void)
 
     /**DAC channel OUT1 config 
     */
-  sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
+  sConfig.DAC_Trigger = DAC_TRIGGER_T7_TRGO;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
   {
@@ -386,14 +392,14 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 71;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1000;
+  htim6.Init.Period = 10000;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
     Error_Handler();
   }
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
   {
@@ -418,7 +424,7 @@ static void MX_TIM7_Init(void)
     Error_Handler();
   }
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
   {

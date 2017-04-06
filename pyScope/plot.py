@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import serial
 
+batch = 1
+
 
 class Scope(object):
-    def __init__(self, ax, maxt=3, dt=0.001):
+    def __init__(self, ax, maxt=5, dt=0.01):
         self.ax = ax
         self.dt = dt
         self.maxt = maxt
@@ -21,10 +23,10 @@ class Scope(object):
     def update(self, y):
         self.ydata.extend(y)
         if len(self.tdata)<self.maxt/self.dt:
-            t = [i*self.dt for i in range(len(self.tdata), len(self.tdata)+10)]
+            t = [i*self.dt for i in range(len(self.tdata), len(self.tdata)+batch)]
             self.tdata.extend(t)
         else:
-            self.ydata = self.ydata[10:]
+            self.ydata = self.ydata[batch:]
         # ymax = max(self.ydata)
         # ymin = min(self.ydata)
         # margin = (ymax-ymin)/20.0
@@ -35,7 +37,7 @@ class Scope(object):
 
 def emitter(p=0.03):
     while True:
-        data = st.read(10)
+        data = st.read(batch)
         yield [i for i in data]
 
 

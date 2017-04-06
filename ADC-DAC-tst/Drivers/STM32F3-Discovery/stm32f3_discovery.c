@@ -397,7 +397,7 @@ static uint8_t I2Cx_ReadData(uint16_t Addr, uint8_t Reg)
   uint8_t value = 0;
   
   status = HAL_I2C_Mem_Read(&I2cHandle, Addr, Reg, I2C_MEMADD_SIZE_8BIT, &value, 1, I2cxTimeout);
- 
+
   /* Check the communication status */
   if(status != HAL_OK)
   {

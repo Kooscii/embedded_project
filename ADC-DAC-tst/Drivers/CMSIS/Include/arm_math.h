@@ -298,8 +298,6 @@
 
 #define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
 
-#define ARM_MATH_CM4
-
 #if defined(ARM_MATH_CM7)
   #include "core_cm7.h"
 #elif defined (ARM_MATH_CM4)
