@@ -58,8 +58,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-char tx_buf[100];
-int dl = 0;
+#define FLASH_BASE_ADDR 0x8030000
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,24 +80,58 @@ static void MX_SPI1_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-int i = 0;
+typedef enum
+{
+  STEP,
+  STEPX,
+  STEPY,
+  STEPZ,
+  HR,
+  LOG
+}TransDataTypeDef;
+
 uint16_t msTimCnt = 0;
 uint8_t rawHR = 0;
 uint8_t rawStep_rms = 0;
 uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
 uint8_t rawStep_z = 0;
+uint8_t rawFlash = 0;
+TransDataTypeDef transdata = HR;
 
+
+HAL_StatusTypeDef logData2Flash(uint64_t _data) {
+	HAL_StatusTypeDef status = HAL_OK;
+	static uint32_t _offset=0;
+
+	if (_offset<6000) {
+		status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, FLASH_BASE_ADDR+_offset, _data);
+		_offset += 2;
+	}
+	else {
+		HAL_FLASH_Lock();
+		HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 0);
+	}
+
+	return status;
+}
+
+/*
+ * Interrupt Callback
+ */
+
+/* UART Callback */
 void HAL_UART_TxCpltCallback (UART_HandleTypeDef * huart) {
 	UNUSED(huart);
 }
 
+/* ADC Convert Cplt Callback */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 //	int16_t x,y,z;
 	int16_t acc[3];
 	float32_t facc[3];
 	float32_t f_acc_rms;
-	uint32_t t1, t2, t3;
+	static uint16_t offset = 0;
 
 	/* get heart pulse data */
 	HAL_ADC_Stop_IT(hadc);
@@ -107,7 +140,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	/* get accelero data */
 //	z = ACCELERO_MEMS_GetData(ACC_Z);
 	BSP_ACCELERO_GetXYZ(acc);
-//		t3 = SysTick->VAL;
 	// calc rms
 	facc[0] = (float32_t)acc[0];
 	facc[1] = (float32_t)acc[1];
@@ -119,20 +151,72 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	rawStep_y = ((acc[1]+4096)>>5) & 0xff;
 	rawStep_z = ((acc[2]+4096)>>5) & 0xff;
 
-
-//	HAL_UART_Transmit(&huart1, (uint8_t*) &rawStep_rms, 1, 0);
-	HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
+	/* get logged data in flash */
+	rawFlash = *((uint16_t *)(FLASH_BASE_ADDR+offset));
+	offset = (offset+2)%6000;
 }
 
+/* USER Button Callback */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	UNUSED(GPIO_Pin);
+	if (GPIO_Pin == B1_Pin) {
+		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==0) {
+			switch(transdata) {
+			case HR:
+				transdata = STEP;
+				break;
+			case STEP:
+				transdata = STEPX;
+				break;
+			case STEPX:
+				transdata = STEPY;
+				break;
+			case STEPY:
+				transdata = STEPZ;
+				break;
+			case STEPZ:
+				transdata = LOG;
+				break;
+			case LOG:
+				transdata = HR;
+				break;
+			}
+		}
+	}
 }
 
+/* ADC TimeBase 6,7 Callback */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM7) {
 		msTimCnt++;
 	} else if (htim->Instance == TIM6) {
 		HAL_ADC_Start_IT(&hadc1);
+
+		switch(transdata) {
+		case HR:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
+			break;
+		case STEP:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+			break;
+		case STEPX:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_x, 1);
+			break;
+		case STEPY:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_y, 1);
+			break;
+		case STEPZ:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_z, 1);
+			break;
+		case LOG:
+			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+			else
+				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawFlash, 1);
+			break;
+		}
+
+		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+			logData2Flash(rawStep_rms);
 	}
 }
 
@@ -142,7 +226,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	FLASH_EraseInitTypeDef eri;
+	uint32_t err;
+	uint8_t i;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -166,6 +252,34 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  /*
+   * check if entering data collecting mode
+   * hold User button to enter
+   */
+  if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 1) {
+	HAL_GPIO_WritePin(LD10_GPIO_Port, LD10_Pin, 1);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
+
+	/* erase flash */
+	HAL_FLASH_Unlock();
+	eri.NbPages = 4;
+	eri.PageAddress=FLASH_BASE_ADDR;
+	eri.TypeErase=FLASH_TYPEERASE_PAGES;
+	HAL_FLASHEx_Erase(&eri, &err);
+
+	for (i=0; i<30; i++) {
+		HAL_GPIO_TogglePin(LD10_GPIO_Port, LD10_Pin);
+		HAL_Delay(100);
+	}
+
+	transdata = LOG;
+	HAL_GPIO_WritePin(LD10_GPIO_Port, LD10_Pin, 0);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
+  }
+
+
+
 	/* Init ACCELERO MEMS */
 //  	BSP_ACCELERO_Reset();
 	ACCELERO_MEMS_Init();
@@ -173,12 +287,13 @@ int main(void)
 	/* Using DAC CH1 to simulate the heart pulse wave at PA4 */
 	/* DO NOT MODIFY */
 	HAL_TIM_Base_Start_IT(&htim6);
-	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 9650,
-			DAC_ALIGN_8B_R);
-
-	/* Start ms timbase */
 	HAL_TIM_Base_Start_IT(&htim7);
+
+	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 965,
+			DAC_ALIGN_8B_R);
+//	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) FLASH_BASE_ADDR, 3000,
+//				DAC_ALIGN_8B_R);
 
   /* USER CODE END 2 */
 
@@ -190,6 +305,7 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
 	}
+	HAL_FLASH_Lock();
   /* USER CODE END 3 */
 
 }
@@ -322,7 +438,7 @@ static void MX_DAC_Init(void)
 
     /**DAC channel OUT1 config 
     */
-  sConfig.DAC_Trigger = DAC_TRIGGER_T7_TRGO;
+  sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
   {
@@ -399,7 +515,7 @@ static void MX_TIM6_Init(void)
     Error_Handler();
   }
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
   {
@@ -527,7 +643,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 2);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
 }
