@@ -37,6 +37,8 @@
 /* USER CODE BEGIN Includes */
 #include "string.h"
 #include "data.h"
+#include "MEMS_init.h"
+#include "arm_math.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -45,6 +47,10 @@ ADC_HandleTypeDef hadc1;
 DAC_HandleTypeDef hdac;
 DMA_HandleTypeDef hdma_dac_ch1;
 
+I2C_HandleTypeDef hi2c1;
+
+SPI_HandleTypeDef hspi1;
+
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
 
@@ -52,8 +58,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-char tx_buf[100];
-int dl = 0;
+#define FLASH_BASE_ADDR 0x8030000
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,6 +71,8 @@ static void MX_DAC_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM7_Init(void);
+static void MX_I2C1_Init(void);
+static void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -73,31 +80,145 @@ static void MX_TIM7_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-int i=0;
-uint16_t msTimCnt = 0;
-uint16_t sysTickCnt = 0;
-uint8_t tmp;
+typedef enum
+{
+  STEP,
+  STEPX,
+  STEPY,
+  STEPZ,
+  HR,
+  LOG
+}TransDataTypeDef;
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-	HAL_ADC_Stop_IT(hadc);
-//	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(hadc);
-	tmp = (uint8_t)HAL_ADC_GetValue(hadc);
-//	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
+uint16_t msTimCnt = 0;
+uint8_t rawHR = 0;
+uint8_t rawStep_rms = 0;
+uint8_t rawStep_x = 0;
+uint8_t rawStep_y = 0;
+uint8_t rawStep_z = 0;
+uint8_t rawFlash = 0;
+TransDataTypeDef transdata = HR;
+
+
+HAL_StatusTypeDef logData2Flash(uint64_t _data) {
+	HAL_StatusTypeDef status = HAL_OK;
+	static uint32_t _offset=0;
+
+	if (_offset<6000) {
+		status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, FLASH_BASE_ADDR+_offset, _data);
+		_offset += 2;
+	}
+	else {
+		HAL_FLASH_Lock();
+		HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 0);
+	}
+
+	return status;
 }
 
-//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-//	dl = dl?0:1;
-//}
+/*
+ * Interrupt Callback
+ */
 
+/* UART Callback */
+void HAL_UART_TxCpltCallback (UART_HandleTypeDef * huart) {
+	UNUSED(huart);
+}
+
+/* ADC Convert Cplt Callback */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+//	int16_t x,y,z;
+	int16_t acc[3];
+	float32_t facc[3];
+	float32_t f_acc_rms;
+	static uint16_t offset = 0;
+
+	/* get heart pulse data */
+	HAL_ADC_Stop_IT(hadc);
+	rawHR = (uint8_t) HAL_ADC_GetValue(hadc);
+
+	/* get accelero data */
+//	z = ACCELERO_MEMS_GetData(ACC_Z);
+	BSP_ACCELERO_GetXYZ(acc);
+	// calc rms
+	facc[0] = (float32_t)acc[0];
+	facc[1] = (float32_t)acc[1];
+	facc[2] = (float32_t)acc[2];
+	arm_rms_f32(facc, 3, &f_acc_rms);
+	rawStep_rms = (uint8_t) (f_acc_rms/16);
+	// calc x y z
+	rawStep_x = ((acc[0]+4096)>>5) & 0xff;
+	rawStep_y = ((acc[1]+4096)>>5) & 0xff;
+	rawStep_z = ((acc[2]+4096)>>5) & 0xff;
+
+	/* get logged data in flash */
+	rawFlash = *((uint16_t *)(FLASH_BASE_ADDR+offset));
+	offset = (offset+2)%6000;
+}
+
+/* USER Button Callback */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == B1_Pin) {
+		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==0) {
+			switch(transdata) {
+			case HR:
+				transdata = STEP;
+				break;
+			case STEP:
+				transdata = STEPX;
+				break;
+			case STEPX:
+				transdata = STEPY;
+				break;
+			case STEPY:
+				transdata = STEPZ;
+				break;
+			case STEPZ:
+				transdata = LOG;
+				break;
+			case LOG:
+				transdata = HR;
+				break;
+			}
+		}
+	}
+}
+
+/* ADC TimeBase 6,7 Callback */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM7) {
 		msTimCnt++;
-	}
-	else if (htim->Instance == TIM6) {
+	} else if (htim->Instance == TIM6) {
 		HAL_ADC_Start_IT(&hadc1);
+
+		switch(transdata) {
+		case HR:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
+			break;
+		case STEP:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+			break;
+		case STEPX:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_x, 1);
+			break;
+		case STEPY:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_y, 1);
+			break;
+		case STEPZ:
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_z, 1);
+			break;
+		case LOG:
+			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+			else
+				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawFlash, 1);
+			break;
+		}
+
+		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+			logData2Flash(rawStep_rms);
 	}
 }
-
 
 /* USER CODE END 0 */
 
@@ -105,7 +226,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	FLASH_EraseInitTypeDef eri;
+	uint32_t err;
+	uint8_t i;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -124,23 +247,59 @@ int main(void)
   MX_USART1_UART_Init();
   MX_ADC1_Init();
   MX_TIM7_Init();
+  MX_I2C1_Init();
+  MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
 
-  /* using DAC CH1 to simulate the heart pulse wave at PA4*/
-  /* do not modify */
-	HAL_TIM_Base_Start_IT(&htim6);
-	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1,(uint32_t*)hr_data, 9650, DAC_ALIGN_8B_R);
+  /*
+   * check if entering data collecting mode
+   * hold User button to enter
+   */
+  if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 1) {
+	HAL_GPIO_WritePin(LD10_GPIO_Port, LD10_Pin, 1);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
 
+	/* erase flash */
+	HAL_FLASH_Unlock();
+	eri.NbPages = 4;
+	eri.PageAddress=FLASH_BASE_ADDR;
+	eri.TypeErase=FLASH_TYPEERASE_PAGES;
+	HAL_FLASHEx_Erase(&eri, &err);
+
+	for (i=0; i<30; i++) {
+		HAL_GPIO_TogglePin(LD10_GPIO_Port, LD10_Pin);
+		HAL_Delay(100);
+	}
+
+	transdata = LOG;
+	HAL_GPIO_WritePin(LD10_GPIO_Port, LD10_Pin, 0);
+	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
+  }
+
+
+
+	/* Init ACCELERO MEMS */
+//  	BSP_ACCELERO_Reset();
+	ACCELERO_MEMS_Init();
+
+	/* Using DAC CH1 to simulate the heart pulse wave at PA4 */
+	/* DO NOT MODIFY */
+	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_TIM_Base_Start_IT(&htim7);
-	// HAL_ADC_Start_IT(&hadc1);
+
+	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 965,
+			DAC_ALIGN_8B_R);
+//	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) FLASH_BASE_ADDR, 3000,
+//				DAC_ALIGN_8B_R);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+	while (1) {
   /* USER CODE END WHILE */
 	  if (tmp > 150) {
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
@@ -149,13 +308,9 @@ int main(void)
 		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 	  }
   /* USER CODE BEGIN 3 */
-//	HAL_ADC_Start(&hadc1);
-//	HAL_ADC_PollForConversion(&hadc1, 10);
-//	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(&hadc1);
-//	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
-//	if (dl)
-//		HAL_Delay(dl);
-  }
+
+	}
+	HAL_FLASH_Lock();
   /* USER CODE END 3 */
 
 }
@@ -171,9 +326,11 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = 16;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -196,9 +353,11 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_ADC12;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_I2C1
+                              |RCC_PERIPHCLK_ADC12;
   PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
   PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
+  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -293,6 +452,58 @@ static void MX_DAC_Init(void)
 
 }
 
+/* I2C1 init function */
+static void MX_I2C1_Init(void)
+{
+
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x0000020B;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+    /**Configure Analogue filter 
+    */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
+
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
+{
+
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
+
 /* TIM6 init function */
 static void MX_TIM6_Init(void)
 {
@@ -302,7 +513,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 71;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1000;
+  htim6.Init.Period = 10000;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -334,7 +545,7 @@ static void MX_TIM7_Init(void)
     Error_Handler();
   }
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
   {
@@ -385,13 +596,8 @@ static void MX_DMA_Init(void)
         * Output
         * EVENT_OUT
         * EXTI
-     PA5   ------> SPI1_SCK
-     PA6   ------> SPI1_MISO
-     PA7   ------> SPI1_MOSI
      PA11   ------> USB_DM
      PA12   ------> USB_DP
-     PB6   ------> I2C1_SCL
-     PB7   ------> I2C1_SDA
 */
 static void MX_GPIO_Init(void)
 {
@@ -433,14 +639,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SPI1_SCK_Pin SPI1_MISO_Pin SPI1_MISOA7_Pin */
-  GPIO_InitStruct.Pin = SPI1_SCK_Pin|SPI1_MISO_Pin|SPI1_MISOA7_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
   /*Configure GPIO pins : DM_Pin DP_Pin */
   GPIO_InitStruct.Pin = DM_Pin|DP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -449,16 +647,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF14_USB;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : I2C1_SCL_Pin I2C1_SDA_Pin */
-  GPIO_InitStruct.Pin = I2C1_SCL_Pin|I2C1_SDA_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 2);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
 }
@@ -475,10 +665,9 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler */
-  /* User can add his own implementation to report the HAL error return state */
-  while(1) 
-  {
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	while (1) {
+	}
   /* USER CODE END Error_Handler */ 
 }
 
@@ -494,8 +683,8 @@ void Error_Handler(void)
 void assert_failed(uint8_t* file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-    ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+	/* User can add his own implementation to report the file name and line number,
+	 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 
 }

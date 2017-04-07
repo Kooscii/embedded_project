@@ -11,6 +11,19 @@ RM := rm -rf
 -include startup/subdir.mk
 -include Src/subdir.mk
 -include Drivers/STM32F3xx_HAL_Driver/Src/subdir.mk
+-include Drivers/STM32F3-Discovery/subdir.mk
+-include Drivers/Components/lsm303dlhc/subdir.mk
+-include Drivers/Components/l3gd20/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/TransformFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/SupportFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/StatisticsFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/MatrixFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/FilteringFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/FastMathFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/ControllerFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/ComplexMathFunctions/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/CommonTables/subdir.mk
+-include Drivers/CMSIS/DSP_Lib/Source/BasicMathFunctions/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -34,7 +47,7 @@ all: tst.elf
 tst.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F303VCTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "tst.elf" @"objects.list" $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F303VCTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "tst.elf" @"objects.list" $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

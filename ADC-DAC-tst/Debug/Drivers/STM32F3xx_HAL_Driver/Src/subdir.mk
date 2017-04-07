@@ -20,6 +20,8 @@ C_SRCS += \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.c \
+../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.c \
+../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi_ex.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
@@ -42,6 +44,8 @@ OBJS += \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.o \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi_ex.o \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.o \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o \
@@ -64,6 +68,8 @@ C_DEPS += \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.d \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.d \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi_ex.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.d \
@@ -75,7 +81,7 @@ Drivers/STM32F3xx_HAL_Driver/Src/%.o: ../Drivers/STM32F3xx_HAL_Driver/Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F303xC -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Inc" -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc" -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/Legacy" -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Drivers/CMSIS/Device/ST/STM32F3xx/Include" -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Drivers/CMSIS/Include" -I"/Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -DARM_MATH_CM4 -D__FPU_PRESENT=1 -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F303xC -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Inc" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/STM32F3-Discovery" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/Components/l3gd20" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/Components/Common" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/Components/lsm303dlhc" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/STM32F3xx_HAL_Driver/Inc/Legacy" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Device/ST/STM32F3xx/Include" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Drivers/CMSIS/Include" -I"/home/koala/workspace/embedded_project/ADC-DAC-tst/Inc"  -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
