@@ -76,16 +76,18 @@ static void MX_TIM7_Init(void);
 int i=0;
 uint16_t msTimCnt = 0;
 uint16_t sysTickCnt = 0;
+uint8_t tmp;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	HAL_ADC_Stop_IT(hadc);
-	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(hadc);
-	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
+//	tx_buf[0] = (uint8_t)HAL_ADC_GetValue(hadc);
+	tmp = (uint8_t)HAL_ADC_GetValue(hadc);
+//	HAL_UART_Transmit(&huart1, (uint8_t*)tx_buf, 1, 1);
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	dl = dl?0:1;
-}
+//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+//	dl = dl?0:1;
+//}
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM7) {
@@ -140,7 +142,12 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-
+	  if (tmp > 150) {
+		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+	  }
+	  else {
+		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+	  }
   /* USER CODE BEGIN 3 */
 //	HAL_ADC_Start(&hadc1);
 //	HAL_ADC_PollForConversion(&hadc1, 10);
