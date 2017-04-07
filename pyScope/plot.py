@@ -38,15 +38,16 @@ class Scope(object):
 def emitter(p=0.03):
     while True:
         data = st.read(batch)
-        f.write(str(data[0])+'\r\n')
+        # f.write(str(data[0])+'\r\n')
         yield [i for i in data]
 
 
 # change to your own serial name here
 # st = serial.Serial('/dev/tty.usbmodem1423', 115200)
 # st = serial.Serial('COM3', 115200)
-st = serial.Serial('/dev/ttyUSB0', 115200)
-f = open('data.txt', 'w')
+# st = serial.Serial('/dev/ttyUSB0', 115200)
+st = serial.Serial('/dev/ttyACM0', 115200)
+# f = open('data.txt', 'w')
 
 fig, ax = plt.subplots(figsize=(15,5))
 scope = Scope(ax)
@@ -58,4 +59,4 @@ ani = animation.FuncAnimation(fig, scope.update, emitter, interval=1,
 plt.show()
 
 st.close()
-f.close()
+# f.close()

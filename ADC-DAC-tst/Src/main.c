@@ -301,12 +301,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1) {
   /* USER CODE END WHILE */
-	  if (tmp > 150) {
-		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
-	  }
-	  else {
-		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
-	  }
+
   /* USER CODE BEGIN 3 */
 
 	}
