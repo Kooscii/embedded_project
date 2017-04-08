@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('TkAgg')
+
 import numpy as np
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
@@ -121,13 +124,41 @@ def emitter(p=0.03):
 # change to your own serial name here
 # st = serial.Serial('/dev/tty.usbmodem1423', 115200)
 # st = serial.Serial('COM3', 115200)
-try:
-    st = serial.Serial('/dev/ttyUSB0', 115200)
-except:
-    st = serial.Serial('/dev/ttyACM0', 115200)
+while True:
+    try:
+        st = serial.Serial('/dev/ttyUSB0', 115200)
+        break
+    except:
+        pass
+
+    try:
+        st = serial.Serial('/dev/ttyACM0', 115200)
+        break
+    except:
+        pass
+
+    try:
+        st = serial.Serial('/dev/tty.SLAB_USBtoUART', 115200)
+        break
+    except:
+        pass
+
+    try:
+        st = serial.Serial('/dev/tty.usbmodem1423', 115200)
+        break
+    except:
+        pass
+
+    try:
+        st = serial.Serial('COM3', 115200)
+        break
+    except:
+        break
+
+
 # f = open('data.txt', 'w')
 
-fig = plt.figure(figsize=(10,5))
+fig = plt.figure(figsize=(10, 5))
 ax_hr = fig.add_subplot(2, 2, 1)
 ax_txt = fig.add_subplot(2, 2, 2)
 ax_rms = fig.add_subplot(2, 2, 3)
@@ -137,8 +168,7 @@ ax = [ax_hr, ax_txt, ax_rms, ax_xyz]
 scope = Scope(ax)
 
 # pass a generator in "emitter" to produce data for the update func
-ani = animation.FuncAnimation(fig, scope.update, emitter, interval=1,
-                              blit=True)
+ani = animation.FuncAnimation(fig, scope.update, emitter, interval=20, blit=True)
 
 plt.show()
 
