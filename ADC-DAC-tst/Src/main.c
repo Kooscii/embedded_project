@@ -97,7 +97,11 @@ uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
 uint8_t rawStep_z = 0;
 uint8_t rawFlash = 0;
+
+uint8_t outHR = 0;
+uint8_t outSR = 0;
 TransDataTypeDef transdata = HR;
+uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, '\n'};
 
 
 HAL_StatusTypeDef logData2Flash(uint64_t _data) {
@@ -159,28 +163,28 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 /* USER Button Callback */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == B1_Pin) {
-		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==0) {
-			switch(transdata) {
-			case HR:
-				transdata = STEP;
-				break;
-			case STEP:
-				transdata = STEPX;
-				break;
-			case STEPX:
-				transdata = STEPY;
-				break;
-			case STEPY:
-				transdata = STEPZ;
-				break;
-			case STEPZ:
-				transdata = LOG;
-				break;
-			case LOG:
-				transdata = HR;
-				break;
-			}
-		}
+//		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==0) {
+//			switch(transdata) {
+//			case HR:
+//				transdata = STEP;
+//				break;
+//			case STEP:
+//				transdata = STEPX;
+//				break;
+//			case STEPX:
+//				transdata = STEPY;
+//				break;
+//			case STEPY:
+//				transdata = STEPZ;
+//				break;
+//			case STEPZ:
+//				transdata = LOG;
+//				break;
+//			case LOG:
+//				transdata = HR;
+//				break;
+//			}
+//		}
 	}
 }
 
@@ -191,29 +195,37 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 	} else if (htim->Instance == TIM6) {
 		HAL_ADC_Start_IT(&hadc1);
 
-		switch(transdata) {
-		case HR:
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
-			break;
-		case STEP:
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
-			break;
-		case STEPX:
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_x, 1);
-			break;
-		case STEPY:
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_y, 1);
-			break;
-		case STEPZ:
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_z, 1);
-			break;
-		case LOG:
-			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
-				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
-			else
-				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawFlash, 1);
-			break;
-		}
+//		switch(transdata) {
+//		case HR:
+//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
+//			break;
+//		case STEP:
+//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+//			break;
+//		case STEPX:
+//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_x, 1);
+//			break;
+//		case STEPY:
+//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_y, 1);
+//			break;
+//		case STEPZ:
+//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_z, 1);
+//			break;
+//		case LOG:
+//			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+//				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
+//			else
+//				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawFlash, 1);
+//			break;
+//		}
+
+		txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
+		txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
+		txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
+		txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
+		txbuf[4] = outHR + '\n' + 1;
+		txbuf[5] = outSR + '\n' + 1;
+		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 7);
 
 		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
 			logData2Flash(rawStep_rms);
@@ -591,6 +603,8 @@ static void MX_DMA_Init(void)
         * Output
         * EVENT_OUT
         * EXTI
+        * Free pins are configured automatically as Analog (this feature is enabled through 
+        * the Code Generation settings)
      PA11   ------> USB_DM
      PA12   ------> USB_DP
 */
@@ -605,6 +619,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, CS_I2C_SPI_Pin|LD4_Pin|LD3_Pin|LD5_Pin 
@@ -628,11 +643,67 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PE6 PE7 PE0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PC13 PC0 PC1 PC2 
+                           PC3 PC6 PC7 PC8 
+                           PC9 PC10 PC11 PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2 
+                          |GPIO_PIN_3|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8 
+                          |GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PF9 PF10 PF2 PF4 
+                           PF6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_2|GPIO_PIN_4 
+                          |GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA2 PA3 PA8 PA9 
+                           PA10 PA15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_8|GPIO_PIN_9 
+                          |GPIO_PIN_10|GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB1 PB2 PB10 
+                           PB11 PB12 PB13 PB14 
+                           PB15 PB4 PB5 PB8 
+                           PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10 
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
+                          |GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_8 
+                          |GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PD8 PD9 PD10 PD11 
+                           PD12 PD13 PD14 PD15 
+                           PD0 PD1 PD2 PD3 
+                           PD4 PD5 PD6 PD7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
+                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15 
+                          |GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3 
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DM_Pin DP_Pin */
   GPIO_InitStruct.Pin = DM_Pin|DP_Pin;

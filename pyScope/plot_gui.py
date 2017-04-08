@@ -1,57 +1,38 @@
-import matplotlib
-matplotlib.use('TkAgg')
-
-from numpy import arange, sin, pi
+from tkinter import Tk, Button
+import numpy as np
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-# implement the default mpl key bindings
-from matplotlib.backend_bases import key_press_handler
 
+# plotting function: clear current, plot & redraw
+def plot(x, y):
+    plt.clf()
+    plt.plot(x,y)
+    # just plt.draw() won't do it here, strangely
+    plt.gcf().canvas.draw()
 
-from matplotlib.figure import Figure
+# just to see the plot change
+plotShift = 0
+def main():
+    global plotShift
 
-import sys
-if sys.version_info[0] < 3:
-    import Tkinter as Tk
-else:
-    import tkinter as Tk
+    x = np.arange(0.0,3.0,0.01)
+    y = np.sin(2*np.pi*x + plotShift)
+    plot(x, y)
 
-root = Tk.Tk()
-root.wm_title("Embedding in TK")
+    plotShift += 1
 
+# GUI
+root = Tk()
 
-f = Figure(figsize=(5, 4), dpi=100)
-a = f.add_subplot(111)
-t = arange(0.0, 3.0, 0.01)
-s = sin(2*pi*t)
+draw_button = Button(root, text="Plot!", command = main)
+draw_button.grid(row=0, column=0)
 
-a.plot(t, s)
+# init figure
+fig = plt.figure()
 
-
-# a tk.DrawingArea
-canvas = FigureCanvasTkAgg(f, master=root)
-canvas.show()
-canvas.get_tk_widget().pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
-
+canvas = FigureCanvasTkAgg(fig, master=root)
 toolbar = NavigationToolbar2TkAgg(canvas, root)
-toolbar.update()
-canvas._tkcanvas.pack(side=Tk.TOP, fill=Tk.BOTH, expand=1)
+canvas.get_tk_widget().grid(row=0,column=1)
+toolbar.grid(row=1,column=1)
 
-
-# def on_key_event(event):
-#     print('you pressed %s' % event.key)
-#     key_press_handler(event, canvas, toolbar)
-
-# canvas.mpl_connect('key_press_event', on_key_event)
-
-
-def _quit():
-    root.quit()     # stops mainloop
-    root.destroy()  # this is necessary on Windows to prevent
-                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
-
-button = Tk.Button(master=root, text='Quit', command=_quit)
-button.pack(side=Tk.BOTTOM)
-
-Tk.mainloop()
-# If you put root.destroy() here, it will cause an error if
-# the window is closed with the window manager.
+root.mainloop()
