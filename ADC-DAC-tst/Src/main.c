@@ -59,6 +59,18 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 #define FLASH_BASE_ADDR 0x8030000
+
+uint16_t msTimCnt = 0;
+uint8_t rawHR = 0;
+uint8_t rawStep_rms = 0;
+uint8_t rawStep_x = 0;
+uint8_t rawStep_y = 0;
+uint8_t rawStep_z = 0;
+uint8_t rawFlash = 0;
+
+uint8_t outHR = 0;
+uint8_t outSR = 0;
+uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, '\n'};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,30 +92,6 @@ static void MX_SPI1_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-typedef enum
-{
-  STEP,
-  STEPX,
-  STEPY,
-  STEPZ,
-  HR,
-  LOG
-}TransDataTypeDef;
-
-uint16_t msTimCnt = 0;
-uint8_t rawHR = 0;
-uint8_t rawStep_rms = 0;
-uint8_t rawStep_x = 0;
-uint8_t rawStep_y = 0;
-uint8_t rawStep_z = 0;
-uint8_t rawFlash = 0;
-
-uint8_t outHR = 0;
-uint8_t outSR = 0;
-TransDataTypeDef transdata = HR;
-uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, '\n'};
-
-
 HAL_StatusTypeDef logData2Flash(uint64_t _data) {
 	HAL_StatusTypeDef status = HAL_OK;
 	static uint32_t _offset=0;
@@ -116,7 +104,6 @@ HAL_StatusTypeDef logData2Flash(uint64_t _data) {
 		HAL_FLASH_Lock();
 		HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 0);
 	}
-
 	return status;
 }
 
@@ -163,28 +150,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 /* USER Button Callback */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == B1_Pin) {
-//		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==0) {
-//			switch(transdata) {
-//			case HR:
-//				transdata = STEP;
-//				break;
-//			case STEP:
-//				transdata = STEPX;
-//				break;
-//			case STEPX:
-//				transdata = STEPY;
-//				break;
-//			case STEPY:
-//				transdata = STEPZ;
-//				break;
-//			case STEPZ:
-//				transdata = LOG;
-//				break;
-//			case LOG:
-//				transdata = HR;
-//				break;
-//			}
-//		}
+		UNUSED(GPIO_Pin);
 	}
 }
 
@@ -194,30 +160,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 		msTimCnt++;
 	} else if (htim->Instance == TIM6) {
 		HAL_ADC_Start_IT(&hadc1);
-
-//		switch(transdata) {
-//		case HR:
-//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawHR, 1);
-//			break;
-//		case STEP:
-//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
-//			break;
-//		case STEPX:
-//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_x, 1);
-//			break;
-//		case STEPY:
-//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_y, 1);
-//			break;
-//		case STEPZ:
-//			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_z, 1);
-//			break;
-//		case LOG:
-//			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
-//				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawStep_rms, 1);
-//			else
-//				HAL_UART_Transmit_IT(&huart1, (uint8_t*) &rawFlash, 1);
-//			break;
-//		}
 
 		txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
 		txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
@@ -231,7 +173,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 			logData2Flash(rawStep_rms);
 	}
 }
-
 /* USER CODE END 0 */
 
 int main(void)
@@ -285,7 +226,6 @@ int main(void)
 		HAL_Delay(100);
 	}
 
-	transdata = LOG;
 	HAL_GPIO_WritePin(LD10_GPIO_Port, LD10_Pin, 0);
 	HAL_GPIO_WritePin(LD9_GPIO_Port, LD9_Pin, 1);
   }

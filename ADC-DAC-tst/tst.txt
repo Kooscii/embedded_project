@@ -1,6 +1,6 @@
 Configuration	tst
-STM32CubeMX 	4.20.0
-Date	04/05/2017
+STM32CubeMX 	4.20.1
+Date	04/08/2017
 MCU	STM32F303VCTx
 
 
@@ -8,7 +8,15 @@ MCU	STM32F303VCTx
 PERIPHERALS	MODES	FUNCTIONS	PINS
 ADC1	IN2 Single-ended	ADC1_IN2	PA1
 DAC	OUT1 Configuration	DAC_OUT1	PA4
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
 RCC	BYPASS Clock Source	RCC_OSC_IN	PF0-OSC_IN
+SPI1	Full-Duplex Master	SPI1_MISO	PA6
+SPI1	Full-Duplex Master	SPI1_MOSI	PA7
+SPI1	Full-Duplex Master	SPI1_SCK	PA5
+SYS	Trace Asynchronous Sw	SYS_JTCK-SWCLK	PA14
+SYS	Trace Asynchronous Sw	SYS_JTMS-SWDIO	PA13
+SYS	Trace Asynchronous Sw	SYS_JTDO-TRACESWO	PB3
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
 USART1	Asynchronous	USART1_RX	PC5
 USART1	Asynchronous	USART1_TX	PC4
@@ -27,9 +35,9 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 23	PA0	GPIO_EXTI0	B1
 24	PA1	ADC1_IN2	
 29	PA4	DAC_OUT1	
-30	PA5*	SPI1_SCK	SPI1_SCK [L3GD20_SCL/SPC]
-31	PA6*	SPI1_MISO	SPI1_MISO [L3GD20_SA0/SDO]
-32	PA7*	SPI1_MOSI	SPI1_MISO [L3GD20_SDA/SDI/SDO]
+30	PA5	SPI1_SCK	SPI1_SCK [L3GD20_SCL/SPC]
+31	PA6	SPI1_MISO	SPI1_MISO [L3GD20_SA0/SDO]
+32	PA7	SPI1_MOSI	SPI1_MISO [L3GD20_SDA/SDI/SDO]
 33	PC4	USART1_TX	
 34	PC5	USART1_RX	
 39	PE8	GPIO_Output	LD4 [Blue Led]
@@ -42,11 +50,11 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 46	PE15	GPIO_Output	LD6 [Green Led]
 70	PA11*	USB_DM	DM
 71	PA12*	USB_DP	DP
-72	PA13*	SYS_JTMS-SWDIO	SWDIO
-76	PA14*	SYS_JTCK-SWCLK	SWCLK
-89	PB3*	SYS_JTDO-TRACESWO	SWO
-92	PB6*	I2C1_SCL	I2C1_SCL [LSM303DLHC_SCL]
-93	PB7*	I2C1_SDA	I2C1_SDA [LSM303DLHC_SDA]
+72	PA13	SYS_JTMS-SWDIO	SWDIO
+76	PA14	SYS_JTCK-SWCLK	SWCLK
+89	PB3	SYS_JTDO-TRACESWO	SWO
+92	PB6	I2C1_SCL	I2C1_SCL [LSM303DLHC_SCL]
+93	PB7	I2C1_SDA	I2C1_SDA [LSM303DLHC_SDA]
 98	PE1	GPIO_EXTI1	MEMS_INT2 [L3GD20_DRDY/INT2]
 
 
@@ -55,7 +63,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : tst
-Project Folder : /Users/koala/Documents/workspace/embedded-project/ADC-DAC-tst
+Project Folder : /home/koala/workspace/embedded_project/ADC-DAC-tst
 Toolchain / IDE : SW4STM32
 Firmware Package Name and Version : STM32Cube FW_F3 V1.7.0
 
@@ -65,7 +73,7 @@ STM32Cube Firmware Library Package : Copy only the necessary library files
 Generate peripheral initialization as a pair of '.c/.h' files per peripheral : No
 Backup previously generated files when re-generating : No
 Delete previously generated files when not re-generated : Yes
-Set all free pins as analog (to optimize the power consumption) : No
+Set all free pins as analog (to optimize the power consumption) : Yes
 
 
 Toolchains Settings : 

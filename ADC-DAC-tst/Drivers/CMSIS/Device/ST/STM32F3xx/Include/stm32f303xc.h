@@ -9,7 +9,7 @@
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral’s registers hardware
+  *           - Macros to access peripheralï¿½s registers hardware
   *
   ******************************************************************************
   * @attention
@@ -67,7 +67,9 @@
 #define __MPU_PRESENT             1U       /*!< STM32F303xC devices provide an MPU */
 #define __NVIC_PRIO_BITS          4U       /*!< STM32F303xC devices use 4 Bits for the Priority Levels */
 #define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used */
+#ifndef __FPU_PRESENT
 #define __FPU_PRESENT             1U       /*!< STM32F303xC devices provide an FPU */
+#endif
 
 /**
   * @}
