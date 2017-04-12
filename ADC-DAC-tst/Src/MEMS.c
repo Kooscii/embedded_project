@@ -1,4 +1,4 @@
-#include "MEMS_init.h"
+#include <MEMS.h>
 
 extern void Error_Handler(void);
 
