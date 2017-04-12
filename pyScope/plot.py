@@ -150,6 +150,12 @@ while True:
         pass
 
     try:
+        st = serial.Serial('/dev/tty.usbmodem1413', 115200)
+        break
+    except:
+        pass
+
+    try:
         st = serial.Serial('COM3', 115200)
         break
     except:
