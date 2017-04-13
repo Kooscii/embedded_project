@@ -46,7 +46,9 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "data.h"
+#include "mems.h"
+#include "arm_math.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -57,6 +59,7 @@ DAC_HandleTypeDef hdac;
 DMA_HandleTypeDef hdma_dac_ch1;
 
 I2C_HandleTypeDef hi2c1;
+DMA_HandleTypeDef hdma_i2c1_rx;
 
 SPI_HandleTypeDef hspi1;
 
@@ -66,7 +69,7 @@ osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+uint16_t rawHP;  // raw data of heart pulse
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,7 +118,11 @@ int main(void)
   MX_DAC_Init();
 
   /* USER CODE BEGIN 2 */
+  MEMS_ACCELERO_Init();  // initialize accelerator
 
+  HAL_TIM_Base_Start_IT(&htim6);  // start TIM7
+  HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 965, DAC_ALIGN_8B_R);  // start DAC in DMA mode
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&rawHP, 1);  // start ADC in DMA mode
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -301,7 +308,7 @@ static void MX_I2C1_Init(void)
 {
 
   hi2c1.Instance = I2C1;
-  hi2c1.Init.Timing = 0x2000090E;
+  hi2c1.Init.Timing = 0x0000020B;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -395,6 +402,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+  /* DMA1_Channel7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
 
 }
 
@@ -519,10 +529,14 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN 5 */
+	int16_t acc[3];
+	HAL_StatusTypeDef status = HAL_OK;
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	 status = HAL_I2C_Mem_Read_DMA(&hi2c1, 0x32, 0x28|0x80, I2C_MEMADD_SIZE_8BIT, acc, 6);
+//	  BSP_ACCELERO_GetXYZ(acc);
+    osDelay(10);
   }
   /* USER CODE END 5 */ 
 }
