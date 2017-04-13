@@ -534,7 +534,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	 status = HAL_I2C_Mem_Read_DMA(&hi2c1, 0x32, 0x28|0x80, I2C_MEMADD_SIZE_8BIT, acc, 6);
+	 status = HAL_I2C_Mem_Read_IT(&hi2c1, 0x32, 0x28|0x80, I2C_MEMADD_SIZE_8BIT, acc, 6);
 //	  BSP_ACCELERO_GetXYZ(acc);
     osDelay(10);
   }
