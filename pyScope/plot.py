@@ -103,13 +103,13 @@ def emitter(p=0.03):
     while True:
         raw_hr = np.array([])
         raw_rms = np.array([])
-        raw_xyz = np.array([]).reshape(0,3)
+        raw_xyz = np.array([]).reshape(0, 3)
         hr = -1
         sr = -1
 
         l = st.inWaiting()
-        if l >= 7: 
-            for i in range(int(l/5)):
+        if l >= 8:
+            for i in range(int(l/8)):
                 rd = st.readline()
                 raw_hr = np.append(raw_hr, rd[0])
                 raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[1:4]])])
@@ -174,7 +174,7 @@ ax = [ax_hr, ax_txt, ax_rms, ax_xyz]
 scope = Scope(ax)
 
 # pass a generator in "emitter" to produce data for the update func
-ani = animation.FuncAnimation(fig, scope.update, emitter, interval=20, blit=True)
+ani = animation.FuncAnimation(fig, scope.update, emitter, interval=10, blit=True)
 
 plt.show()
 
