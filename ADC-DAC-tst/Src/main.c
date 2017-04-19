@@ -70,7 +70,7 @@ uint8_t rawFlash = 0;
 
 uint8_t outHR = 0;
 uint8_t outSR = 0;
-uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, '\n'};
+uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, '\n'};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -167,7 +167,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 		txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
 		txbuf[4] = outHR + '\n' + 1;
 		txbuf[5] = outSR + '\n' + 1;
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 7);
+		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
 
 		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
 			logData2Flash(rawStep_rms);

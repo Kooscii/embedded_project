@@ -100,6 +100,7 @@ class Scope(object):
 
 
 def emitter(p=0.03):
+    f_cnt = 3000
     while True:
         raw_hr = np.array([])
         raw_rms = np.array([])
@@ -116,7 +117,14 @@ def emitter(p=0.03):
                 raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31)
                 hr = rd[4]-11
                 sr = rd[5]-11
-            # f.write(str(data[0])+'\r\n')
+            if f_cnt>0:
+                f.write(str(raw_xyz[-1][0])+',')
+                f.write(str(raw_xyz[-1][1])+',')
+                f.write(str(raw_xyz[-1][2])+',')
+                f.write(str(raw_rms[-1])+'\r\n')
+                f_cnt -= 1
+            else:
+                f.close()
             
         yield (raw_hr, raw_rms, raw_xyz, hr, sr)
 
@@ -162,7 +170,7 @@ while True:
         break
 
 
-# f = open('data.txt', 'w')
+f = open('data.csv', 'w')
 
 fig = plt.figure(figsize=(10, 5))
 ax_hr = fig.add_subplot(2, 2, 1)
@@ -179,4 +187,7 @@ ani = animation.FuncAnimation(fig, scope.update, emitter, interval=10, blit=True
 plt.show()
 
 st.close()
-# f.close()
+try:
+    f.close()
+except:
+    pass

@@ -164,7 +164,7 @@
   * @brief This is the HAL system configuration section
   */     
 
-#define  VDD_VALUE                   ((uint32_t)3300) /*!< Value of VDD in mv */
+#define  VDD_VALUE                   ((uint32_t)3000) /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY            ((uint32_t)0)    /*!< tick interrupt priority (lowest by default)  */            
 #define  USE_RTOS                     0
 #define  PREFETCH_ENABLE              1
@@ -176,7 +176,7 @@
   * @brief Uncomment the line below to expanse the "assert_param" macro in the 
   *        HAL drivers code
   */
- #define USE_FULL_ASSERT    1 
+/* #define USE_FULL_ASSERT    1 */
 
 /* ################## SPI peripheral configuration ########################## */
 
