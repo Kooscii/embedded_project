@@ -181,7 +181,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
 
     /* Peripheral DMA init*/
   
-    hdma_dac_ch1.Instance = DMA1_Channel3;
+    hdma_dac_ch1.Instance = DMA2_Channel3;
     hdma_dac_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_dac_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_dac_ch1.Init.MemInc = DMA_MINC_ENABLE;
@@ -193,8 +193,6 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
     {
       Error_Handler();
     }
-
-    __HAL_DMA_REMAP_CHANNEL_ENABLE(HAL_REMAPDMA_TIM6_DAC1_CH1_DMA1_CH3);
 
     __HAL_LINKDMA(hdac,DMA_Handle1,hdma_dac_ch1);
 
@@ -412,7 +410,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   if(huart->Instance==USART1)
   {
   /* USER CODE BEGIN USART1_MspInit 0 */
-
+//
   /* USER CODE END USART1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_USART1_CLK_ENABLE();
@@ -449,7 +447,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
-
+//
   /* USER CODE END USART1_MspInit 1 */
   }
 

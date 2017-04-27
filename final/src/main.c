@@ -16,6 +16,9 @@
 
 void error_handler(char*);
 
+DAC_HandleTypeDef hdac;
+DMA_HandleTypeDef hdma_dac;		// dma2 ch
+
 osThreadId IdleTaskHandle;
 void StartIdleTask(void const*);
 
@@ -24,6 +27,7 @@ int main(void)
 {
 	RCC_Init();
 	GPIO_Init();
+	DAC_Init(&hdl_dac);
 
 
 	osThreadDef(idleTask, StartIdleTask, osPriorityIdle, 0, 128);

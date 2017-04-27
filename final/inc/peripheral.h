@@ -76,14 +76,16 @@
 //#define SWO_Pin 				GPIO_PIN_3
 //#define SWO_GPIO_Port 			GPIOB
 
+// DAC
+#define DAC_OUT1_GPIO_PORT 		GPIOA
+#define DAC_OUT1_PIN			GPIO_PIN_4
 
 void RCC_Init(void);
 void GPIO_Init(void);
-void dma_init(void);
 void i2c_init(void);
 void spi_init(void);
-void tim_init(void);
-void dac_init(void);
+void TIM_init(void);
+void DAC_Init(DAC_HandleTypeDef *);
 void uart_init(void);
 void adc_init(void);
 
