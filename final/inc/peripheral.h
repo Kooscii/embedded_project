@@ -79,15 +79,34 @@
 // DAC
 #define DAC_OUT1_GPIO_PORT 		GPIOA
 #define DAC_OUT1_PIN			GPIO_PIN_4
+#define __RCC_DAC_GPIO_CLK_ENABLE()		__HAL_RCC_GPIOA_CLK_ENABLE()
 
+#define ADC_IN7_GPIO_PORT 		GPIOC
+#define ADC_IN7_PIN				GPIO_PIN_1
+#define __RCC_ADC_GPIO_CLK_ENABLE()		__HAL_RCC_GPIOC_CLK_ENABLE()
+
+/*
+ * Peripheral Handler
+ */
+TIM_HandleTypeDef htim6;
+
+DAC_HandleTypeDef hdac;
+DMA_HandleTypeDef hdma_dac;
+
+ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
+
+
+void NVIC_Init(void);
 void RCC_Init(void);
 void GPIO_Init(void);
+void TIM_Init(void);
+void DAC_Init(void);
+void ADC_Init(void);
+void uart_init(void);
 void i2c_init(void);
 void spi_init(void);
-void TIM_init(void);
-void DAC_Init(DAC_HandleTypeDef *);
-void uart_init(void);
-void adc_init(void);
+
 
 
 #endif

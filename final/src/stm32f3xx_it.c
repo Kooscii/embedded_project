@@ -9,8 +9,9 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f3xx_hal.h"
-#include "stm32f3xx.h"
+//#include "stm32f3xx_hal.h"
+//#include "stm32f3xx.h"
+#include "peripheral.h"
 #ifdef USE_RTOS_SYSTICK
 #include <cmsis_os.h>
 #endif
@@ -46,3 +47,20 @@ void EXTI0_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
 }
+
+#ifdef TIM6_INT_ENABLE
+/*
+ * TIM6 and DAC IRQHandler
+ */
+void TIM6_DAC_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&htim6);
+  HAL_DAC_IRQHandler(&hdac);
+}
+#endif
+
+#ifdef DMA2CH3_INT_ENABLE
+void DMA2_Channel3_IRQHandler(void) {
+	HAL_DMA_IRQHandler(&hdma_dac);
+}
+#endif

@@ -96,11 +96,11 @@ class Scope(object):
         if sr>=0:
             self.sr_txt.set_text(str(sr))
 
-        return self.hrline, self.rmsline, self.xline, self.yline, self.zline,
+        return self.hrline, self.rmsline, self.xline, self.yline, self.zline, self.hr_txt, self.sr_txt
 
 
 def emitter(p=0.03):
-    f_cnt = 3000
+    f_cnt = 0
     while True:
         raw_hr = np.array([])
         raw_rms = np.array([])
@@ -110,13 +110,13 @@ def emitter(p=0.03):
 
         l = st.inWaiting()
         if l >= 8:
-            for i in range(int(l/8)):
+            for i in range(int(l/8.)):
                 rd = st.readline()
                 raw_hr = np.append(raw_hr, rd[0])
                 raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[1:4]])])
                 raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31)
-                hr = rd[4]-11
-                sr = rd[5]-11
+                hr = rd[4]-1 if hr>10 else rd[4]
+                sr = rd[5]-1 if sr>10 else rd[5]
             if f_cnt>0:
                 f.write(str(raw_xyz[-1][0])+',')
                 f.write(str(raw_xyz[-1][1])+',')
@@ -168,7 +168,6 @@ while True:
         break
     except:
         break
-
 
 f = open('data.csv', 'w')
 

@@ -67,6 +67,7 @@ uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
 uint8_t rawStep_z = 0;
 uint8_t rawFlash = 0;
+uint8_t rawUpdated = 0;
 
 uint8_t outHR = 0;
 uint8_t outSR = 0;
@@ -145,6 +146,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	/* get logged data in flash */
 	rawFlash = *((uint16_t *)(FLASH_BASE_ADDR+offset));
 	offset = (offset+2)%6000;
+
+	rawUpdated = 1;
 }
 
 /* USER Button Callback */
@@ -161,16 +164,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 	} else if (htim->Instance == TIM6) {
 		HAL_ADC_Start_IT(&hadc1);
 
-		txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
+//		txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
+		txbuf[0] = (outSR=='\n')? outSR + 1 : outSR;
 		txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
 		txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
 		txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
-		txbuf[4] = outHR + '\n' + 1;
-		txbuf[5] = outSR + '\n' + 1;
+		txbuf[4] = (outHR=='\n')? outHR + 1 : outHR;
+		txbuf[5] = (outSR=='\n')? outSR + 1 : outSR;
 		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
 
 		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
 			logData2Flash(rawStep_rms);
+		else
+			HAL_FLASH_Lock();
 	}
 }
 /* USER CODE END 0 */
@@ -182,6 +188,34 @@ int main(void)
 	FLASH_EraseInitTypeDef eri;
 	uint32_t err;
 	uint8_t i;
+	uint8_t j;
+	uint8_t k;
+
+
+	uint8_t _rawHR = 0;
+	float _rawStep_rms[20] = {0};
+	float filterStep = 0;
+	int8_t stepIdx = 0;
+	float filter_cali = 0;
+
+	uint8_t flag1 = 0;
+	uint8_t flag2 = 0;
+	uint8_t peak = 0;
+	uint8_t max = 0;
+	uint8_t step1 = 0;
+	uint8_t step2 = 0;
+	uint8_t list1 = 0;
+	int8_t idx1 = 0;
+	uint8_t list2 = 0;
+	int8_t idx2 = 0;
+	uint8_t list3 = 0;
+	int8_t idx3 = 0;
+	uint8_t list4 = 0;
+	int8_t idx4 = 0;
+	float threshold = 1.03;
+	float difference = 0.1;
+	float filter[20] = {0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.1, 0.09, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01};
+
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -247,6 +281,29 @@ int main(void)
 //	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) FLASH_BASE_ADDR, 3000,
 //				DAC_ALIGN_8B_R);
 
+	// acc init
+	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 1);
+
+	filter_cali = 0;
+	for (k=0; k<100; k++) {
+		while (!rawUpdated);
+
+		_rawStep_rms[stepIdx] = (float) rawStep_rms;
+		stepIdx = (stepIdx + 1) % 20;
+
+		filterStep = 0;
+		for (i=0; i<20; i++) {
+			j =(i + stepIdx) % 20;
+			filterStep += filter[i] * _rawStep_rms[j];
+		}
+		if (k>=30) {
+			filter_cali += filterStep;
+		}
+	}
+	filter_cali /= 70;
+
+	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 0);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -255,9 +312,44 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+		// wait for raw data being updated
+		while (!rawUpdated);
 
+		// get raw data into local
+		_rawHR = rawHR;
+		_rawStep_rms[stepIdx] = (float) rawStep_rms;
+		stepIdx = (stepIdx + 1) % 20;
+
+		// step
+		filterStep = 0;
+		for (i=0; i<20; i++) {
+			j =(i + stepIdx) % 20;
+			filterStep += filter[i] * _rawStep_rms[j] / filter_cali;
+		}
+		if (flag1==0 && peak==0 && flag2==0) {
+			if (filterStep >threshold) {
+				flag1 = 1;
+				max = filterStep;
+			}
+			if (flag1) {
+				if (filterStep > max) {
+					max = filterStep;
+				}
+				else {
+					peak = max;
+					step1++;
+
+				}
+			}
+		}
+
+
+		outSR = (uint8_t) ((filterStep-1)*100+128);
+
+
+		rawUpdated = 0;
 	}
-	HAL_FLASH_Lock();
+
   /* USER CODE END 3 */
 
 }
