@@ -165,13 +165,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 		HAL_ADC_Start_IT(&hadc1);
 
 //		txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
-		txbuf[0] = (outSR=='\n')? outSR + 1 : outSR;
-		txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
-		txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
-		txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
-		txbuf[4] = (outHR=='\n')? outHR + 1 : outHR;
-		txbuf[5] = (outSR=='\n')? outSR + 1 : outSR;
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
+//		txbuf[0] = (outSR=='\n')? outSR + 1 : outSR;
+//		txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
+//		txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
+//		txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
+//		txbuf[4] = (outHR=='\n')? outHR + 1 : outHR;
+//		txbuf[5] = (outSR=='\n')? outSR + 1 : outSR;
+//		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
+
+		txbuf[0] = rawStep_rms;
+//		txbuf[1] = rawStep_y;
+//		txbuf[2] = rawStep_z;
+		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 1);
 
 		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
 			logData2Flash(rawStep_rms);
@@ -206,11 +211,11 @@ int main(void)
 	uint8_t step2 = 0;
 	uint8_t list1 = 0;
 	int8_t idx1 = 0;
-	uint8_t list2 = 0;
+	uint8_t list2[4] = {0};
 	int8_t idx2 = 0;
 	uint8_t list3 = 0;
 	int8_t idx3 = 0;
-	uint8_t list4 = 0;
+	uint8_t list4[4] = {0};
 	int8_t idx4 = 0;
 	float threshold = 1.03;
 	float difference = 0.1;

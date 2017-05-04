@@ -100,7 +100,7 @@ class Scope(object):
 
 
 def emitter(p=0.03):
-    f_cnt = 0
+    f_cnt = 10000
     while True:
         raw_hr = np.array([])
         raw_rms = np.array([])
