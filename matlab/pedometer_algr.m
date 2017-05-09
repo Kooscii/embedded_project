@@ -51,7 +51,12 @@ h3 = [1:2 2:-1:1];
 h4 = ones(1,3);
 
 %%
+<<<<<<< HEAD
 x = csvread('step40.csv', 0, 2);
+=======
+x = csvread('sr-1hz.csv', 0, 3);
+
+>>>>>>> bdd3a3934f9a36c305e4c164881538c7a0ea93a9
 x_g = mean(x(1:300));
 x = x/x_g - 1;
 
@@ -61,6 +66,7 @@ x = x(1:10:end);
 
 hold on
 
+<<<<<<< HEAD
 % plot(abs(fft(conv(x,h2))))
 
 % plot(x)
@@ -75,6 +81,16 @@ x = conv(x,h5);
 % plot(x)
 
 % plot(x)
+=======
+% plot(abs(fft(x)))
+
+plot(x)
+x = conv(x,h1);
+plot(x)
+x = conv(x,h5);
+plot(x)
+% plot(conv(x,h3))
+>>>>>>> bdd3a3934f9a36c305e4c164881538c7a0ea93a9
 % plot(conv(x,h4))
 
 % stem(abs(fft(x)), '.')
