@@ -30,24 +30,24 @@ h3 = [1:10 10:-1:1]/80;
 h4 = ones(1,20)/20;
 
 %%
-x = csvread('step30.csv', 0, 2);
+x = csvread('sr-1hz.csv', 0, 3);
 
 x_g = mean(x(1:300));
 x = x/x_g - 1;
 
 hold on
 
-plot(abs(fft(x)))
+% plot(abs(fft(x)))
 
-% plot(x)
+plot(x)
 x = conv(x,h1);
-% plot(x)
+plot(x)
 x = conv(x,h5);
-% plot(x)
+plot(x)
 % plot(conv(x,h3))
 % plot(conv(x,h4))
 
-stem(abs(fft(x)), '.')
+% stem(abs(fft(x)), '.')
 
 % xlim([600 1800])
 
