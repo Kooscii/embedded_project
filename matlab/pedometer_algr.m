@@ -4,11 +4,11 @@ clear
 %%
 j = (-1)^(1/2);
 
-N1 = 99;
+N1 = 10;
 k1 = 0:N1-1;
 M1 = (N1-1)/2;
 W = exp(j*2*pi/N1);
-Ak1 = [1 1 0.8 0.1 zeros(1, 92) 0.1 0.8 1];
+Ak1 = [1 1 0.7 0 zeros(1, 3) 0 -0.7 -1];
 h1 = real(ifft(Ak1.*W.^(-M1*k1)));
 
 N2 = 49;
@@ -18,36 +18,66 @@ W = exp(j*2*pi/N2);
 Ak2 = [1 0.9 0.05 zeros(1, 44) 0.05 0.9];
 h2 = real(ifft(Ak2.*W.^(-M2*k2)));
 
-N5 = 99;
+N5 = 9;
 k5 = 0:N5-1;
 M5 = (N5-1)/2;
-W = exp(j*2*pi/N1);
-Ak5 = [0 0.7 ones(1, 96) 0.7];
+W = exp(j*2*pi/N5);
+Ak5 = [0 0.7 ones(1, 6) 0.7];
 h5 = real(ifft(Ak5.*W.^(-M5*k5)));
 
-h3 = [1:10 10:-1:1]/80;
-
-h4 = ones(1,20)/20;
+% N1 = 99;
+% k1 = 0:N1-1;
+% M1 = (N1-1)/2;
+% W = exp(j*2*pi/N1);
+% Ak1 = [1 1 0.7 0 zeros(1, 92) 0 0.7 1];
+% h1 = real(ifft(Ak1.*W.^(-M1*k1)));
+% 
+% N2 = 49;
+% k2 = 0:N2-1;
+% M2 = (N2-1)/2;
+% W = exp(j*2*pi/N2);
+% Ak2 = [1 0.9 0.05 zeros(1, 44) 0.05 0.9];
+% h2 = real(ifft(Ak2.*W.^(-M2*k2)));
+% 
+% N5 = 99;
+% k5 = 0:N5-1;
+% M5 = (N5-1)/2;
+% W = exp(j*2*pi/N1);
+% Ak5 = [0 0.7 ones(1, 96) 0.7];
+% h5 = real(ifft(Ak5.*W.^(-M5*k5)));
+% 
+h3 = [1:2 2:-1:1];
+% 
+h4 = ones(1,3);
 
 %%
-x = csvread('step30.csv', 0, 2);
-
+x = csvread('step40.csv', 0, 2);
 x_g = mean(x(1:300));
 x = x/x_g - 1;
 
+x = x(1:10:end);
+
+
+
 hold on
 
-plot(abs(fft(x)))
+% plot(abs(fft(conv(x,h2))))
 
 % plot(x)
+plot(conv(x,h3)*0.7)
+plot(conv(x,h4))
+plot(conv(x,h1)*2)
+
 x = conv(x,h1);
 % plot(x)
+% plot(abs(fft(x)))
 x = conv(x,h5);
 % plot(x)
-% plot(conv(x,h3))
+
+% plot(x)
 % plot(conv(x,h4))
 
-stem(abs(fft(x)), '.')
+% stem(abs(fft(x)), '.')
 
 % xlim([600 1800])
 
