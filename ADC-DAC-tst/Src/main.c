@@ -74,6 +74,7 @@ uint32_t msTimCnt = 0;
 uint8_t rawHR = 0;
 uint8_t rawStep_rms = 0;
 uint8_t filtStep_rms = 0;
+float32_t f32Step_rms = 0;
 uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
 uint8_t rawStep_z = 0;
@@ -148,7 +149,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	facc[1] = (float32_t)acc[1];
 	facc[2] = (float32_t)acc[2];
 	arm_rms_f32(facc, 3, &f_acc_rms);
-	rawStep_rms = (uint8_t) (f_acc_rms/16);
+	f32Step_rms = f_acc_rms*1.73205080756888;
+	rawStep_rms = (((uint16_t)f_acc_rms+4096)>>5) & 0xff;
 	// calc x y z
 	rawStep_x = ((acc[0]+4096)>>5) & 0xff;
 	rawStep_y = ((acc[1]+4096)>>5) & 0xff;
@@ -178,12 +180,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 			HAL_ADC_Start_IT(&hadc1);
 
 			txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
-//			txbuf[0] = (outSR=='\n')? outSR + 1 : outSR;
 			txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
 			txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
 			txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
-			txbuf[4] = (outHR=='\n')? outHR + 1 : outHR;
-			txbuf[5] = (outSR=='\n')? outSR + 1 : outSR;
+			txbuf[4] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
+			txbuf[5] = (outHR=='\n')? outHR + 1 : outHR;
+			txbuf[6] = (outSR=='\n')? outSR + 1 : outSR;
 			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
 
 	//		txbuf[0] = rawStep_rms;
@@ -236,7 +238,7 @@ int main(void)
 	float32_t step_peak = 0;
 	float32_t step_valley = 0;
 	float32_t step_baseline = 0;
-	float32_t step_threshold = 0.03;
+	float32_t step_threshold = 0.05;
 	uint32_t step_mstick = 0;
 	uint8_t step_periodidx = 0;
 	float32_t step_period[3] = {1000};
@@ -280,6 +282,7 @@ int main(void)
   MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
+	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 1);
 
   /*
    * check if entering data collecting mode
@@ -324,12 +327,10 @@ int main(void)
 //				DAC_ALIGN_8B_R);
 
 	// acc init
-	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 1);
-
 	rawStep_gval = 0;
 	for (rawStep_stackIdx=99; rawStep_stackIdx>49; rawStep_stackIdx--) {
 		while (!rawUpdated);
-			rawStep_stack[rawStep_stackIdx] = (float) rawStep_rms;
+			rawStep_stack[rawStep_stackIdx] = f32Step_rms;
 			rawUpdated = 0;
 	}
 	// Get the mean value of first 100 data. This value equals to 1g.
@@ -338,10 +339,10 @@ int main(void)
 	arm_scale_f32(rawStep_stack+50, 1/rawStep_gval, rawStep_stack+50, 50);
 	arm_offset_f32(rawStep_stack+50, -1, rawStep_stack+50, 50);
 
-	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 0);
-
 	step_state = STEP_IDLE;
 	hr_state = HR_IDLE;
+
+	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, 0);
 
   /* USER CODE END 2 */
 
@@ -358,11 +359,12 @@ int main(void)
 		 * FIR filter
 		 */
 		// put raw data into stack
-		rawStep_stack[rawStep_stackIdx] = (float) (rawStep_rms/rawStep_gval-1);
+		rawStep_stack[rawStep_stackIdx] = f32Step_rms/rawStep_gval-1.;
 		// get filtered current step value
 		arm_dot_prod_f32((float*) (rawStep_stack+rawStep_stackIdx), (float*) step_filter,
 							51, &currStep_rms);
 //		arm_mean_f32(rawStep_stack+rawStep_stackIdx, 51, &currStep_rms);
+		filtStep_rms = ((( (uint16_t) ( (currStep_rms+1)*rawStep_gval) )+4096)>>5) & 0xff;
 		// store raw step data history
 		rawStep_stack[rawStep_stackIdx+50] = rawStep_stack[rawStep_stackIdx];
 		// rawStep_stackIdx--
@@ -445,16 +447,14 @@ int main(void)
 			}
 		}
 		else if (hr_state & HR_RISING) {
-			if (currHR_val > hr_baseline + hr_threshold) {
+			if ((float32_t) (msTimCnt - hr_mstick) > hr_mean*0.3 && currHR_val > hr_baseline + hr_threshold) {
 				hr_state = HR_FALLING | (hr_state & HR_ESTAB);
 				hr_period[hr_periodcnt-1] = (float32_t) (msTimCnt-hr_mstick);
 				hr_mstick = msTimCnt;
 			}
-			else {
-				if (msTimCnt - hr_mstick > 2000) {
-					hr_state = HR_IDLE;
-					outHR = 0;
-				}
+			else if (msTimCnt - hr_mstick > 2000) {
+				hr_state = HR_IDLE;
+				outHR = 0;
 			}
 		}
 		else if (hr_state & HR_FALLING) {
@@ -466,7 +466,7 @@ int main(void)
 						if (hr_periodcnt == 3) {
 							arm_std_f32(hr_period, 3, &hr_std);
 							arm_mean_f32(hr_period, 3, &hr_mean);
-							if (hr_mean > 500 && hr_mean < 3500 && hr_std < 500) {
+							if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
 								hr_state = HR_RISING | HR_ESTAB;
 							}
 							else {
