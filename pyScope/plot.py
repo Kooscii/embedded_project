@@ -6,12 +6,13 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import serial
+from time import time
 
 batch = 1
 
 
 class Scope(object):
-    def __init__(self, ax, maxt=5, dt=0.01):
+    def __init__(self, ax, maxt=5, dt=0.02):
         self.dt = dt
         self.maxt = maxt
 
@@ -100,8 +101,8 @@ class Scope(object):
 
 
 def emitter(p=0.03):
-    f_cnt = 10000
     while True:
+        ## print(time())
         raw_hr = np.array([])
         raw_rms = np.array([])
         raw_xyz = np.array([]).reshape(0, 3)
@@ -111,20 +112,21 @@ def emitter(p=0.03):
         l = st.inWaiting()
         if l >= 8:
             for i in range(int(l/8.)):
+                print('before',st.inWaiting())
                 rd = st.readline()
+                print([i for i in rd])
+                print('after',st.inWaiting())
                 raw_hr = np.append(raw_hr, rd[0])
                 raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[1:4]])])
                 raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31)
                 hr = rd[4]-1 if hr>10 else rd[4]
                 sr = rd[5]-1 if sr>10 else rd[5]
-            if f_cnt>0:
-                f.write(str(raw_xyz[-1][0])+',')
-                f.write(str(raw_xyz[-1][1])+',')
-                f.write(str(raw_xyz[-1][2])+',')
-                f.write(str(raw_rms[-1])+'\r\n')
-                f_cnt -= 1
-            else:
-                f.close()
+
+                f.write(str(hr)+','+str(sr)+',\n')
+        else:
+            print('no data')
+            
+        print()
             
         yield (raw_hr, raw_rms, raw_xyz, hr, sr)
 
@@ -181,7 +183,7 @@ ax = [ax_hr, ax_txt, ax_rms, ax_xyz]
 scope = Scope(ax)
 
 # pass a generator in "emitter" to produce data for the update func
-ani = animation.FuncAnimation(fig, scope.update, emitter, interval=10, blit=True)
+ani = animation.FuncAnimation(fig, scope.update, emitter, interval=0, blit=True)
 
 plt.show()
 
