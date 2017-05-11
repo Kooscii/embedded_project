@@ -124,16 +124,17 @@ def emitter(p=0.03):
         srlist = []
 
         l = st.inWaiting()
-        if l >= 8:
-            for i in range(int(l/8.)):
+        if l >= 10:
+            for i in range(int(l/10.)):
                 # print('before', st.inWaiting())
                 rd = st.readline()
                 # print([i for i in rd])
                 # print('after', st.inWaiting())
                 raw_hr = np.append(raw_hr, rd[0])
                 raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[1:4]])])
-                raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31.)
+                # raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31.)
                 raw_flit = np.append(raw_flit, (rd[4]-128)/31.)
+                raw_rms = np.append(raw_rms, (rd[7]-128)/31.)
 
 
                 g.write(str(raw_hr[-1])+','+str(raw_xyz[-1,0])+','+str(raw_xyz[-1,1])+','+str(raw_xyz[-1,2])+'\n')
@@ -143,8 +144,8 @@ def emitter(p=0.03):
                     sr = rd[6]-1 if sr>10 else rd[6]
                     hrlist.append(hr)
                     srlist.append(sr)
-                    if rate_upd%500 == 0:
-                        f.write(str(sum(hrlist)/10)+','+str(sum(srlist)/10)+',\n')
+                    if rate_upd%50 == 0:
+                        f.write(str(sum(hrlist)/1)+','+str(sum(srlist)/1)+',\n')
                 rate_upd = (rate_upd + 1) % 500
         else:
             # print('no data')
@@ -195,8 +196,8 @@ while True:
     except:
         break
 
-f = open('rate_data.csv', 'w')
-g = open('raw_data.csv', 'w')
+f = open('rate_data15.csv', 'w')
+g = open('raw_data15.csv', 'w')
 
 fig = plt.figure(figsize=(10, 5))
 ax_hr = fig.add_subplot(2, 2, 1)

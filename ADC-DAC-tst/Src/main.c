@@ -74,6 +74,7 @@ uint32_t msTimCnt = 0;
 uint8_t rawHR = 0;
 uint8_t rawStep_rms = 0;
 uint8_t filtStep_rms = 0;
+uint8_t threshStep = 0.03;
 float32_t f32Step_rms = 0;
 uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
@@ -83,7 +84,7 @@ uint8_t rawUpdated = 0;
 
 uint8_t outHR = 0;
 uint8_t outSR = 0;
-uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, '\n'};
+uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, '\n'};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -186,7 +187,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 			txbuf[4] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
 			txbuf[5] = (outHR=='\n')? outHR + 1 : outHR;
 			txbuf[6] = (outSR=='\n')? outSR + 1 : outSR;
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 8);
+			txbuf[7] = (threshStep=='\n')? threshStep + 1 : threshStep;
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 10);
 
 	//		txbuf[0] = rawStep_rms;
 	////		txbuf[1] = rawStep_y;
@@ -238,7 +240,7 @@ int main(void)
 	float32_t step_peak = 0;
 	float32_t step_valley = 0;
 	float32_t step_baseline = 0;
-	float32_t step_threshold = 0.05;
+	float32_t step_threshold = 0.04;
 	uint32_t step_mstick = 0;
 	uint8_t step_periodidx = 0;
 	float32_t step_period[3] = {1000};
@@ -374,6 +376,7 @@ int main(void)
 		 * Steps detecting algorithm
 		 */
 		if (step_state & STEP_IDLE) {
+			threshStep = ((( (uint16_t) ( (step_baseline + step_threshold+1)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms > step_baseline + step_threshold) {
 				step_state = STEP_FIRST | STEP_UPPER;
 				step_peak = currStep_rms;
@@ -381,6 +384,7 @@ int main(void)
 			}
 		}
 		else if (step_state & STEP_UPPER) {
+			threshStep = ((( (uint16_t) ( (step_baseline - step_threshold+1.)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms > step_peak) {
 				step_peak = currStep_rms;
 				if (!(step_state & STEP_FIRST)) {
@@ -402,6 +406,7 @@ int main(void)
 			}
 		}
 		else if (step_state & STEP_LOWER) {
+			threshStep = ((( (uint16_t) ( (step_baseline + step_threshold+1.)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms < step_valley) {
 				step_valley = currStep_rms;
 				step_baseline = (step_peak + step_valley)/2;
@@ -414,9 +419,9 @@ int main(void)
 			}
 		}
 
-		if (!(step_state & STEP_IDLE) && ((currStep_rms * prevStep_rms <0) || (msTimCnt-step_mstick > 3000))) {
+		if (!(step_state & STEP_IDLE) && ((currStep_rms * prevStep_rms <0) || (msTimCnt-step_mstick > 2000))) {
 			step_cross0++;
-			if (step_cross0 > 5) {
+			if (step_cross0 > 20) {
 				step_state = STEP_IDLE;
 				step_baseline = 0;
 				step_period[0] = 1000;
@@ -485,7 +490,7 @@ int main(void)
 					hr_state = HR_RISING | HR_ESTAB;
 					hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
 					hr_mstick = msTimCnt;
-					u8minmax(rawHR_stack, 100, 50, rawHR_stackIdx, &hr_baseline, &hr_peak);
+					u8minmax(rawHR_stack, 100, 25, rawHR_stackIdx, &hr_baseline, &hr_peak);
 					hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
 					arm_mean_f32(hr_period, 3, &hr_mean);
 					arm_std_f32(hr_period, 3, &hr_std);
