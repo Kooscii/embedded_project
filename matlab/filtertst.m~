@@ -7,12 +7,11 @@ N1 = 101;
 k1 = 0:N1-1;
 M1 = (N1-1)/2;
 W = exp(j*2*pi/N1);
-s = [3 2 1 0.6 0.4 0.2 0 0];
-Ak1 = [0.5 s zeros(1, 101-17) flip(s)];
+Ak1 = [1 1.5 0.5 0.2 0 zeros(1, 92) 0 0.2 -0.7 -1];
 h1 = real(ifft(Ak1.*W.^(-M1*k1)));
 fvtool(h1);
 %%
-[H,w] = freqz(h1,1);
+[H,w] = freqz(h,1);
 plot(w/2/pi, abs(H))
 
 %%

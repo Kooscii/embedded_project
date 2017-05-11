@@ -12,7 +12,7 @@ batch = 1
 
 
 class Scope(object):
-    def __init__(self, ax, maxt=5, dt=0.02):
+    def __init__(self, ax, maxt=3, dt=0.02):
         self.dt = dt
         self.maxt = maxt
 
@@ -26,8 +26,11 @@ class Scope(object):
 
         # heart rate data
         self.hrdata = np.array([128]*int(self.maxt/self.dt))
+        self.hrthreshdata = np.array([128]*int(self.maxt/self.dt))
         self.hrline = Line2D(self.tdata, self.hrdata)
+        self.hrthreshline = Line2D(self.tdata, self.hrthreshdata, lw=1, color='C1', label='raw')
         self.ax_hr.add_line(self.hrline)
+        self.ax_hr.add_line(self.hrthreshline)
         self.ax_hr.set_ylim(0, 255)
         self.ax_hr.set_xlim(0, self.maxt)
         self.ax_hr.get_yaxis().set_visible(False)
@@ -51,7 +54,7 @@ class Scope(object):
         self.flitline = Line2D(self.tdata, self.flitdata, color='C1', label='filtered')
         self.ax_rms.add_line(self.rmsline)
         self.ax_rms.add_line(self.flitline)
-        self.ax_rms.set_ylim(0, 2.5)
+        self.ax_rms.set_ylim(0, 2)
         self.ax_rms.set_xlim(0, self.maxt)
         self.ax_rms.legend(loc='upper left', prop={'size':7}, ncol=1)
 
@@ -69,20 +72,30 @@ class Scope(object):
 
     def update(self, param):
         raw_hr = param[0]
-        raw_rms = param[1]
-        raw_flit = param[2]
-        raw_xyz = param[3]
-        hr = param[4]
-        sr = param[5]
+        thresh_hr = param[1]
+        raw_rms = param[2]
+        raw_flit = param[3]
+        raw_xyz = param[4]
+        hr = param[5]
+        sr = param[6]
 
         if raw_hr.size:
             self.hrdata = np.append(self.hrdata, raw_hr)
             self.hrdata = self.hrdata[len(raw_hr):]
             ymax = max(self.hrdata)
             ymin = min(self.hrdata)
+            if (ymax-ymin) < 20:
+                mid = (ymax+ymin)/2
+                ymax = mid + 10
+                ymin = mid - 10
             margin = (ymax-ymin)/20.0
             self.ax_hr.set_ylim(ymin-margin, ymax+margin)
             self.hrline.set_ydata(self.hrdata)
+
+        if thresh_hr.size:
+            self.hrthreshdata = np.append(self.hrthreshdata, thresh_hr)
+            self.hrthreshdata = self.hrthreshdata[len(thresh_hr):]
+            self.hrthreshline.set_ydata(self.hrthreshdata)
 
         if raw_rms.size:
             self.rmsdata = np.append(self.rmsdata, raw_rms)
@@ -92,6 +105,14 @@ class Scope(object):
         if raw_flit.size:
             self.flitdata = np.append(self.flitdata, raw_flit)
             self.flitdata = self.flitdata[len(raw_flit):]
+            # ymax = max(self.flitdata)
+            # ymin = min(self.flitdata)
+            # if (ymax-ymin) < 0.2:
+            #     mid = (ymax+ymin)/2
+            #     ymax = mid + 0.1
+            #     ymin = mid - 0.1
+            # margin = (ymax-ymin)/10.0
+            # self.ax_rms.set_ylim(ymin-margin, ymax+margin)
             self.flitline.set_ydata(self.flitdata)
 
         if raw_xyz.size:
@@ -107,7 +128,7 @@ class Scope(object):
         if sr>=0:
             self.sr_txt.set_text(str(sr))
 
-        return self.hrline, self.rmsline, self.flitline, self.xline, self.yline, self.zline, self.hr_txt, self.sr_txt
+        return self.hrline, self.hrthreshline, self.rmsline, self.flitline, self.xline, self.yline, self.zline, self.hr_txt, self.sr_txt
 
 
 def emitter(p=0.03):
@@ -115,6 +136,7 @@ def emitter(p=0.03):
     while True:
         ## print(time())
         raw_hr = np.array([])
+        thresh_hr = np.array([])
         raw_rms = np.array([])
         raw_flit = np.array([])
         raw_xyz = np.array([]).reshape(0, 3)
@@ -124,24 +146,25 @@ def emitter(p=0.03):
         srlist = []
 
         l = st.inWaiting()
-        if l >= 10:
-            for i in range(int(l/10.)):
+        if l >= 11:
+            for i in range(int(l/11.)):
                 # print('before', st.inWaiting())
                 rd = st.readline()
-                # print([i for i in rd])
+                print([i for i in rd])
                 # print('after', st.inWaiting())
-                raw_hr = np.append(raw_hr, rd[0])
-                raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[1:4]])])
+                raw_hr = np.append(raw_hr, rd[1])
+                thresh_hr = np.append(thresh_hr, rd[9])
+                raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[2:5]])])
                 # raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31.)
-                raw_flit = np.append(raw_flit, (rd[4]-128)/31.)
-                raw_rms = np.append(raw_rms, (rd[7]-128)/31.)
+                raw_flit = np.append(raw_flit, (rd[5]-128)/31.)
+                raw_rms = np.append(raw_rms, (rd[8]-128)/31.)
 
 
                 g.write(str(raw_hr[-1])+','+str(raw_xyz[-1,0])+','+str(raw_xyz[-1,1])+','+str(raw_xyz[-1,2])+'\n')
 
                 if rate_upd%50 == 0:
-                    hr = rd[5]-1 if hr>10 else rd[5]
-                    sr = rd[6]-1 if sr>10 else rd[6]
+                    hr = rd[6]-1 if hr>10 else rd[6]
+                    sr = rd[7]-1 if sr>10 else rd[7]
                     hrlist.append(hr)
                     srlist.append(sr)
                     if rate_upd%50 == 0:
@@ -153,7 +176,7 @@ def emitter(p=0.03):
             
         # print()
             
-        yield (raw_hr, raw_rms, raw_flit, raw_xyz, hr, sr)
+        yield (raw_hr, thresh_hr, raw_rms, raw_flit, raw_xyz, hr, sr)
 
 
 # change to your own serial name here
@@ -196,8 +219,8 @@ while True:
     except:
         break
 
-f = open('rate_data15.csv', 'w')
-g = open('raw_data15.csv', 'w')
+f = open('rate_data.csv', 'w')
+g = open('raw_data.csv', 'w')
 
 fig = plt.figure(figsize=(10, 5))
 ax_hr = fig.add_subplot(2, 2, 1)

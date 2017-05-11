@@ -59,22 +59,35 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 #define FLASH_BASE_ADDR 0x8030000
-#define STEP_IDLE (0x01)
-#define STEP_UPPER (0x01<<1)
-#define STEP_LOWER (0x01<<2)
-#define STEP_FIRST (0x01<<7)
+#define STEP_IDLE 		(0x01)
+#define STEP_FALLING 	(0x01<<1)
+#define STEP_RISING 	(0x01<<2)
+#define STEP_FIRST 		(0x01<<7)
 
-#define HR_IDLE (0x01)
-#define HR_RISING (0x01<<1)
-#define HR_FALLING (0x01<<2)
-#define HR_BLOCK (0x01<<3)
-#define HR_ESTAB (0x01<<7)
+#define STEP_THRESH		0.3
+#define STEP_FILTER_LEN 50
+
+//#define HR_IDLE (0x01)
+//#define HR_RISING (0x01<<1)
+//#define HR_FALLING (0x01<<2)
+//#define HR_BLOCK (0x01<<3)
+//#define HR_ESTAB (0x01<<7)
+
+#define HR_IDLE 		(0x01)
+#define HR_RISING 		(0x01<<1)
+#define HR_FALLING 		(0x01<<2)
+#define HR_FIRST 		(0x01<<7)
+
+#define HR_THRESH		5
+#define HR_FILTER_LEN 	50
 
 uint32_t msTimCnt = 0;
 uint8_t rawHR = 0;
+uint8_t filtHR_val = 0;
+uint8_t threshHR = HR_THRESH;
 uint8_t rawStep_rms = 0;
 uint8_t filtStep_rms = 0;
-uint8_t threshStep = 0.03;
+uint8_t threshStep = STEP_THRESH;
 float32_t f32Step_rms = 0;
 uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
@@ -84,7 +97,7 @@ uint8_t rawUpdated = 0;
 
 uint8_t outHR = 0;
 uint8_t outSR = 0;
-uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, '\n'};
+uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '\n'};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -181,14 +194,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
 			HAL_ADC_Start_IT(&hadc1);
 
 			txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
-			txbuf[1] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
-			txbuf[2] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
-			txbuf[3] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
-			txbuf[4] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
-			txbuf[5] = (outHR=='\n')? outHR + 1 : outHR;
-			txbuf[6] = (outSR=='\n')? outSR + 1 : outSR;
-			txbuf[7] = (threshStep=='\n')? threshStep + 1 : threshStep;
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 10);
+			txbuf[1] = (filtHR_val=='\n')? filtHR_val+1: filtHR_val;
+			txbuf[2] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
+			txbuf[3] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
+			txbuf[4] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
+			txbuf[5] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
+			txbuf[6] = (outHR=='\n')? outHR + 1 : outHR;
+			txbuf[7] = (outSR=='\n')? outSR + 1 : outSR;
+			txbuf[8] = (threshStep=='\n')? threshStep + 1 : threshStep;
+			txbuf[9] = (threshHR=='\n')? threshHR + 1 : threshHR;
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 11);
 
 	//		txbuf[0] = rawStep_rms;
 	////		txbuf[1] = rawStep_y;
@@ -230,8 +245,8 @@ int main(void)
 	uint8_t k;
 
 	// step part
-	float32_t rawStep_stack[100] = {0};
-	uint8_t rawStep_stackIdx = 100;
+	float32_t rawStep_stack[STEP_FILTER_LEN*2] = {0};
+	uint8_t rawStep_stackIdx = STEP_FILTER_LEN*2;
 	float32_t rawStep_gval = 0;
 	float32_t currStep_rms = 0;
 	float32_t prevStep_rms = 0;
@@ -240,27 +255,47 @@ int main(void)
 	float32_t step_peak = 0;
 	float32_t step_valley = 0;
 	float32_t step_baseline = 0;
-	float32_t step_threshold = 0.04;
+	float32_t step_threshold = 0.05;
 	uint32_t step_mstick = 0;
 	uint8_t step_periodidx = 0;
 	float32_t step_period[3] = {1000};
 	float32_t step_mean = 0;
+	uint32_t step_timeout = 0;
 
-	// heart part
-	uint8_t rawHR_stack[100] = {0};
-	uint8_t rawHR_stackIdx = 0;
-	uint8_t currHR_val = 0;
-	uint8_t prevHR_val = 255;
+
+//	// heart part
+//	uint8_t rawHR_stack[HR_FILTER_LEN*2] = {0};
+//	uint8_t rawHR_stackIdx = HR_FILTER_LEN*2;
+//	uint8_t currHR_val = 0;
+//	uint8_t prevHR_val = 255;
+//	uint8_t hr_state = 0;
+//	uint8_t hr_peak = 0;
+//	uint8_t hr_baseline = 0;
+//	uint8_t hr_threshold = 0;
+//	uint8_t hr_periodcnt = 0;
+//	float32_t hr_period[3] = {1000};
+//	uint32_t hr_mstick = 0;
+//	float32_t hr_std = 0;
+//	float32_t hr_mean = 0;
+//	uint8_t hr_datacnt = 0;
+
+	float32_t rawHR_stack[HR_FILTER_LEN*2] = {0};
+	uint8_t rawHR_stackIdx = HR_FILTER_LEN*2;
+	float32_t rawHR_offset = 0;
+	float32_t currHR_val = 0;
+	float32_t prevHR_val = 0;
 	uint8_t hr_state = 0;
-	uint8_t hr_peak = 0;
-	uint8_t hr_baseline = 0;
-	uint8_t hr_threshold = 0;
-	uint8_t hr_periodcnt = 0;
-	float32_t hr_period[3] = {1000};
+	uint8_t hr_cross0 = 0;
+	float32_t hr_peak = 0;
+	float32_t hr_valley = 0;
+	float32_t hr_baseline = 0;
+	float32_t hr_baselineoffset = 0;
+	float32_t hr_threshold = HR_THRESH;
 	uint32_t hr_mstick = 0;
-	float32_t hr_std = 0;
+	uint8_t hr_periodidx = 0;
+	float32_t hr_period[3] = {1000};
 	float32_t hr_mean = 0;
-	uint8_t hr_datacnt = 0;
+	uint32_t hr_timeout = 0;
 
   /* USER CODE END 1 */
 
@@ -330,16 +365,31 @@ int main(void)
 
 	// acc init
 	rawStep_gval = 0;
-	for (rawStep_stackIdx=99; rawStep_stackIdx>49; rawStep_stackIdx--) {
+	for (rawStep_stackIdx=STEP_FILTER_LEN*2-1; rawStep_stackIdx>STEP_FILTER_LEN-1; rawStep_stackIdx--) {
 		while (!rawUpdated);
-			rawStep_stack[rawStep_stackIdx] = f32Step_rms;
-			rawUpdated = 0;
+		rawStep_stack[rawStep_stackIdx] = f32Step_rms;
+		rawUpdated = 0;
 	}
 	// Get the mean value of first 100 data. This value equals to 1g.
-	arm_mean_f32(rawStep_stack+50, 50, &rawStep_gval);
+	arm_mean_f32(rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN, &rawStep_gval);
 	// Zero-centering the all raw values. (val / 1g - 1)
-	arm_scale_f32(rawStep_stack+50, 1/rawStep_gval, rawStep_stack+50, 50);
-	arm_offset_f32(rawStep_stack+50, -1, rawStep_stack+50, 50);
+	arm_scale_f32(rawStep_stack+STEP_FILTER_LEN, 1/rawStep_gval, rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN);
+	arm_offset_f32(rawStep_stack+STEP_FILTER_LEN, -1, rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN);
+
+	// HR offset
+	rawHR_offset = 0;
+	for (rawHR_stackIdx=HR_FILTER_LEN*2-1; rawHR_stackIdx>HR_FILTER_LEN-1; rawHR_stackIdx--) {
+		while (!rawUpdated);
+		rawHR_stack[rawHR_stackIdx] = (float32_t) rawHR;
+		rawUpdated = 0;
+	}
+	// Get the mean value of first 100 data.
+	arm_mean_f32(rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN, &rawHR_offset);
+	arm_std_f32(rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN, &hr_threshold);
+	hr_baseline = rawHR_offset;
+
+//	// Zero-centering the all raw values. (val - rawHR_offset)
+//	arm_offset_f32(rawHR_stack+HR_FILTER_LEN, -rawHR_offset, rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN);
 
 	step_state = STEP_IDLE;
 	hr_state = HR_IDLE;
@@ -355,7 +405,11 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 		// wait for raw data being updated
+		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+//		HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, 1);
 		while (!rawUpdated);
+		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+//		HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, 0);
 
 		/*
 		 * FIR filter
@@ -364,13 +418,18 @@ int main(void)
 		rawStep_stack[rawStep_stackIdx] = f32Step_rms/rawStep_gval-1.;
 		// get filtered current step value
 		arm_dot_prod_f32((float*) (rawStep_stack+rawStep_stackIdx), (float*) step_filter,
-							51, &currStep_rms);
+									STEP_FILTER_LEN+1, &currStep_rms);
 //		arm_mean_f32(rawStep_stack+rawStep_stackIdx, 51, &currStep_rms);
 		filtStep_rms = ((( (uint16_t) ( (currStep_rms+1)*rawStep_gval) )+4096)>>5) & 0xff;
 		// store raw step data history
-		rawStep_stack[rawStep_stackIdx+50] = rawStep_stack[rawStep_stackIdx];
+		rawStep_stack[rawStep_stackIdx+STEP_FILTER_LEN] = rawStep_stack[rawStep_stackIdx];
 		// rawStep_stackIdx--
-		rawStep_stackIdx = (rawStep_stackIdx + 49)%50;
+		rawStep_stackIdx = (rawStep_stackIdx + STEP_FILTER_LEN-1)%STEP_FILTER_LEN;
+
+		if (!(step_state & STEP_IDLE)) {
+			arm_std_f32(rawStep_stack+rawStep_stackIdx, STEP_FILTER_LEN, &step_threshold);
+			step_threshold *= STEP_THRESH;
+		}
 
 		/*
 		 * Steps detecting algorithm
@@ -378,139 +437,219 @@ int main(void)
 		if (step_state & STEP_IDLE) {
 			threshStep = ((( (uint16_t) ( (step_baseline + step_threshold+1)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms > step_baseline + step_threshold) {
-				step_state = STEP_FIRST | STEP_UPPER;
+				step_state = STEP_FIRST | STEP_FALLING;
 				step_peak = currStep_rms;
 				step_cross0 = 0;
+				step_timeout = msTimCnt;
 			}
 		}
-		else if (step_state & STEP_UPPER) {
+		else if (step_state & STEP_FALLING) {
 			threshStep = ((( (uint16_t) ( (step_baseline - step_threshold+1.)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms > step_peak) {
 				step_peak = currStep_rms;
-				if (!(step_state & STEP_FIRST)) {
-					step_baseline = (step_peak + step_valley)/2;
-				}
 			}
 			else if (currStep_rms < step_baseline - step_threshold) {
 				if (!(step_state & STEP_FIRST)) {
 					step_period[step_periodidx] = (float32_t) (msTimCnt - step_mstick);
 					step_periodidx = (step_periodidx+1)%3;
 				}
-				step_state = STEP_LOWER;
+				step_state = STEP_RISING;
 				step_valley = currStep_rms;
-				step_baseline = (step_peak + step_valley)/2;
 				step_cross0 = 0;
 				step_mstick = msTimCnt;
 				arm_mean_f32(step_period, 3, &step_mean);
 				outSR = (uint8_t) (60000./step_mean);
+				step_timeout = msTimCnt;
+			}
+			else if (!(step_state & STEP_FIRST)) {
+				step_baseline = (step_peak + step_valley)/2;
 			}
 		}
-		else if (step_state & STEP_LOWER) {
+		else if (step_state & STEP_RISING) {
 			threshStep = ((( (uint16_t) ( (step_baseline + step_threshold+1.)*rawStep_gval) )+4096)>>5) & 0xff;
 			if (currStep_rms < step_valley) {
 				step_valley = currStep_rms;
-				step_baseline = (step_peak + step_valley)/2;
 			}
 			else if (currStep_rms > step_baseline + step_threshold) {
-				step_state = STEP_UPPER;
+				step_state = STEP_FALLING;
 				step_peak = currStep_rms;
-				step_baseline = (step_peak + step_valley)/2;
 				step_cross0 = 0;
+				step_timeout = msTimCnt;
+			}
+			else {
+				step_baseline = (step_peak + step_valley)/2;
 			}
 		}
 
-		if (!(step_state & STEP_IDLE) && ((currStep_rms * prevStep_rms <0) || (msTimCnt-step_mstick > 2000))) {
-			step_cross0++;
-			if (step_cross0 > 20) {
+		if ( ((step_state & STEP_RISING) && (msTimCnt - step_timeout>2000))
+				|| ((step_state & STEP_FALLING) && (msTimCnt - step_timeout>1000)) ) {
 				step_state = STEP_IDLE;
 				step_baseline = 0;
-				step_period[0] = 1000;
-				step_period[1] = 1000;
-				step_period[2] = 1000;
+				step_threshold = 0.05;
+	//			step_period[0] = 1000;
+	//			step_period[1] = 1000;
+	//			step_period[2] = 1000;
 				outSR = 0;
 			}
-		}
+
 
 		prevStep_rms = currStep_rms;
 
 		/*
 		 * Heart rate algorithm
 		 */
-		currHR_val = rawHR;
-		rawHR_stack[rawHR_stackIdx] = currHR_val;
-		rawHR_stackIdx = (rawHR_stackIdx+1)%100;
-		hr_datacnt = hr_datacnt<100? hr_datacnt+1: hr_datacnt;
+//		currHR_val = rawHR;
+//		rawHR_stack[rawHR_stackIdx] = currHR_val;
+//		rawHR_stackIdx = (rawHR_stackIdx+1)%100;
+//		hr_datacnt = hr_datacnt<100? hr_datacnt+1: hr_datacnt;
+//
+//		if (hr_state & HR_IDLE) {
+////			outHR = 0;
+//			u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//			hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
+//			if ((hr_peak - hr_baseline > 30) && (currHR_val > hr_baseline + hr_threshold)) {
+//				hr_state = HR_FALLING;
+//				hr_mstick = msTimCnt;
+//				hr_periodcnt = 0;
+//			}
+//		}
+//		else if (hr_state & HR_RISING) {
+//			if ((float32_t) (msTimCnt - hr_mstick) > hr_mean*0.3 && currHR_val > hr_baseline + hr_threshold) {
+//				hr_state = HR_FALLING | (hr_state & HR_ESTAB);
+//				hr_period[hr_periodcnt-1] = (float32_t) (msTimCnt-hr_mstick);
+//				hr_mstick = msTimCnt;
+//			}
+//			else if (msTimCnt - hr_mstick > 2000) {
+//				hr_state = HR_IDLE;
+//				outHR = 0;
+//			}
+//		}
+//		else if (hr_state & HR_FALLING) {
+//			if (currHR_val < hr_peak - hr_threshold) {
+//				if (!(hr_state & HR_ESTAB)) {
+//					hr_state = HR_RISING;
+//					if (hr_periodcnt) {
+//						hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
+//						if (hr_periodcnt == 3) {
+//							arm_std_f32(hr_period, 3, &hr_std);
+//							arm_mean_f32(hr_period, 3, &hr_mean);
+//							if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
+//								hr_state = HR_RISING | HR_ESTAB;
+//							}
+//							else {
+//								hr_state = HR_IDLE;
+//							}
+//						}
+//					}
+//					else {
+//						u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//						hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
+//					}
+//					hr_mstick = msTimCnt;
+//					hr_periodcnt = hr_periodcnt%3 + 1;
+//				}
+//				else {
+//					hr_state = HR_RISING | HR_ESTAB;
+//					hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
+//					hr_mstick = msTimCnt;
+//					u8minmax(rawHR_stack, 100, 25, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//					hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
+//					arm_mean_f32(hr_period, 3, &hr_mean);
+//					arm_std_f32(hr_period, 3, &hr_std);
+//					if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
+//						outHR = (uint8_t) (60000./hr_mean);
+//						hr_periodcnt = hr_periodcnt%3 + 1;
+//					}
+//					else {
+//						hr_state = HR_IDLE;
+//						outHR = 0;
+//					}
+//				}
+//			}
+//			else {
+//				if (msTimCnt - hr_mstick > 1000) {
+//					hr_state = HR_IDLE;
+//					outHR = 0;
+//				}
+//			}
+//		}
+
+		/*
+		 * FIR filter
+		 */
+		// put raw data into stack
+		rawHR_stack[rawHR_stackIdx] = ((float32_t)rawHR);
+		// get filtered current hr value
+		arm_dot_prod_f32((float*) (rawHR_stack+rawHR_stackIdx), (float*) hr_filter,
+									HR_FILTER_LEN+1, &currHR_val);
+		filtHR_val = currHR_val>=255? 255: (uint8_t) currHR_val;
+		// store raw hr data history
+		rawHR_stack[rawHR_stackIdx+HR_FILTER_LEN] = rawHR_stack[rawHR_stackIdx];
+		// rawHR_stackIdx--
+		rawHR_stackIdx = (rawHR_stackIdx + HR_FILTER_LEN-1)%HR_FILTER_LEN;
+
+		arm_mean_f32(rawHR_stack+rawHR_stackIdx, HR_FILTER_LEN, &rawHR_offset);
+		arm_std_f32(rawHR_stack+rawHR_stackIdx, HR_FILTER_LEN, &hr_threshold);
+		hr_threshold /= 3;
 
 		if (hr_state & HR_IDLE) {
-//			outHR = 0;
-			u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
-			hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-			if ((hr_peak - hr_baseline > 30) && (currHR_val > hr_baseline + hr_threshold)) {
-				hr_state = HR_FALLING;
-				hr_mstick = msTimCnt;
-				hr_periodcnt = 0;
-			}
-		}
-		else if (hr_state & HR_RISING) {
-			if ((float32_t) (msTimCnt - hr_mstick) > hr_mean*0.3 && currHR_val > hr_baseline + hr_threshold) {
-				hr_state = HR_FALLING | (hr_state & HR_ESTAB);
-				hr_period[hr_periodcnt-1] = (float32_t) (msTimCnt-hr_mstick);
-				hr_mstick = msTimCnt;
-			}
-			else if (msTimCnt - hr_mstick > 2000) {
-				hr_state = HR_IDLE;
-				outHR = 0;
+			threshHR = (uint8_t) (hr_baseline + hr_threshold);
+			if (currHR_val > hr_baseline + hr_threshold) {
+				hr_state = HR_FIRST | HR_FALLING;
+				hr_peak = currHR_val;
+				hr_cross0 = 0;
+				hr_timeout = msTimCnt;
 			}
 		}
 		else if (hr_state & HR_FALLING) {
-			if (currHR_val < hr_peak - hr_threshold) {
-				if (!(hr_state & HR_ESTAB)) {
-					hr_state = HR_RISING;
-					if (hr_periodcnt) {
-						hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
-						if (hr_periodcnt == 3) {
-							arm_std_f32(hr_period, 3, &hr_std);
-							arm_mean_f32(hr_period, 3, &hr_mean);
-							if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
-								hr_state = HR_RISING | HR_ESTAB;
-							}
-							else {
-								hr_state = HR_IDLE;
-							}
-						}
-					}
-					else {
-						u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
-						hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-					}
-					hr_mstick = msTimCnt;
-					hr_periodcnt = hr_periodcnt%3 + 1;
-				}
-				else {
-					hr_state = HR_RISING | HR_ESTAB;
-					hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
-					hr_mstick = msTimCnt;
-					u8minmax(rawHR_stack, 100, 25, rawHR_stackIdx, &hr_baseline, &hr_peak);
-					hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-					arm_mean_f32(hr_period, 3, &hr_mean);
-					arm_std_f32(hr_period, 3, &hr_std);
-					if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
-						outHR = (uint8_t) (60000./hr_mean);
-						hr_periodcnt = hr_periodcnt%3 + 1;
-					}
-					else {
-						hr_state = HR_IDLE;
-						outHR = 0;
-					}
-				}
+			threshHR = (uint8_t) (hr_baseline - hr_threshold);
+			if (currHR_val > hr_peak) {
+				hr_peak = currHR_val;
 			}
-			else {
-				if (msTimCnt - hr_mstick > 1000) {
-					hr_state = HR_IDLE;
-					outHR = 0;
+			else if (currHR_val < hr_baseline - hr_threshold) {
+				if (!(hr_state & HR_FIRST)) {
+					hr_period[hr_periodidx] = (float32_t) (msTimCnt - hr_mstick);
+					hr_periodidx = (hr_periodidx+1)%3;
 				}
+				hr_state = HR_RISING;
+				hr_valley = currHR_val;
+				hr_cross0 = 0;
+				hr_mstick = msTimCnt;
+				arm_mean_f32(hr_period, 3, &hr_mean);
+				outHR = (uint8_t) (60000./hr_mean);
+				hr_timeout = msTimCnt;
+			}
+			else if (!(hr_state & HR_FIRST)) {
+				hr_baseline = (hr_peak - hr_valley)*3/5 + hr_valley;
 			}
 		}
+		else if (hr_state & HR_RISING) {
+			threshHR = (uint8_t) (hr_baseline + hr_threshold);
+			if (currHR_val < hr_valley) {
+				hr_valley = currHR_val;
+			}
+			else if (currHR_val > hr_baseline + hr_threshold) {
+				hr_state = HR_FALLING;
+				hr_peak = currHR_val;
+				hr_cross0 = 0;
+				hr_timeout = msTimCnt;
+			}
+			else {
+				hr_baseline = (hr_peak - hr_valley)*3/5 + hr_valley;
+			}
+		}
+
+		// check timeout
+		if ( ((hr_state & HR_RISING) && (msTimCnt - hr_timeout>2000))
+			|| ((hr_state & HR_FALLING) && (msTimCnt - hr_timeout>1000)) ) {
+			hr_state = HR_IDLE;
+			hr_baseline = rawHR_offset;
+//			hr_period[0] = 1000;
+//			hr_period[1] = 1000;
+//			hr_period[2] = 1000;
+			outHR = 0;
+		}
+
 
 		prevHR_val = currHR_val;
 
