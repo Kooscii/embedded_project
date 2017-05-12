@@ -63,10 +63,16 @@ class Scope(object):
         self.ax_txt.get_yaxis().set_visible(False)
         self.ax_txt.set_ylim(0, 50)
         self.ax_txt.set_xlim(0, 150)
-        ax_txt.text(10, 40, r'BPM:', fontsize=15)
-        ax_txt.text(10, 20, r'SPM:', fontsize=15)
-        self.hr_txt = ax_txt.text(10, 30, str(0), fontsize=15)
-        self.sr_txt = ax_txt.text(10, 10, str(0), fontsize=15)
+        ax_txt.text(20, 40, r'BPM:', fontsize=15)
+        ax_txt.text(20, 20, r'SPM:', fontsize=15)
+        ax_txt.text(60, 40, r'Total Beats:', fontsize=15)
+        ax_txt.text(60, 20, r'Total Steps:', fontsize=15)
+        self.hc = 0
+        self.sc = 0
+        self.hr_txt = ax_txt.text(20, 30, str(0), fontsize=15)
+        self.sr_txt = ax_txt.text(20, 10, str(0), fontsize=15)
+        self.hc_txt = ax_txt.text(60, 30, str(self.hc), fontsize=15)
+        self.sc_txt = ax_txt.text(60, 10, str(self.sc), fontsize=15)
 
         st.flushInput()
 
@@ -128,6 +134,9 @@ class Scope(object):
         if sr>=0:
             self.sr_txt.set_text(str(sr))
 
+        self.hc_txt.set_text(str(self.hc))
+        self.sc_txt.set_text(str(self.sc))
+
         return self.hrline, self.hrthreshline, self.rmsline, self.flitline, self.xline, self.yline, self.zline, self.hr_txt, self.sr_txt
 
 
@@ -156,8 +165,8 @@ def emitter(p=0.03):
                 thresh_hr = np.append(thresh_hr, rd[9])
                 raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[2:5]])])
                 # raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31.)
-                raw_flit = np.append(raw_flit, (rd[5]-128)/31.)
-                raw_rms = np.append(raw_rms, (rd[8]-128)/31.)
+                raw_flit = np.append(raw_flit, (rd[5]-128)/32.)
+                raw_rms = np.append(raw_rms, (rd[8]-128)/32.)
 
 
                 g.write(str(raw_hr[-1])+','+str(raw_xyz[-1,0])+','+str(raw_xyz[-1,1])+','+str(raw_xyz[-1,2])+'\n')

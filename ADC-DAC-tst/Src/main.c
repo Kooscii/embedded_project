@@ -64,8 +64,11 @@ UART_HandleTypeDef huart1;
 #define STEP_RISING 	(0x01<<2)
 #define STEP_FIRST 		(0x01<<7)
 
-#define STEP_THRESH		0.3
+#define STEP_THRESH		0.05
+#define STEP_THRESH_DYN	0.5
 #define STEP_FILTER_LEN 50
+#define STEP_PREIOD_LEN 5
+#define STEP_WINDOW_LEN 50
 
 //#define HR_IDLE (0x01)
 //#define HR_RISING (0x01<<1)
@@ -80,6 +83,7 @@ UART_HandleTypeDef huart1;
 
 #define HR_THRESH		5
 #define HR_FILTER_LEN 	50
+#define HR_PREIOD_LEN 5
 
 uint32_t msTimCnt = 0;
 uint8_t rawHR = 0;
@@ -245,27 +249,29 @@ int main(void)
 	uint8_t k;
 
 	// step part
-	float32_t rawStep_stack[STEP_FILTER_LEN*2] = {0};
-	uint8_t rawStep_stackIdx = STEP_FILTER_LEN*2;
+	float32_t rawStep_queue[STEP_FILTER_LEN*2];
+	uint8_t rawStep_queueIdx = STEP_FILTER_LEN*2;
 	float32_t rawStep_gval = 0;
 	float32_t currStep_rms = 0;
 	float32_t prevStep_rms = 0;
+	float32_t flitStep_queue[STEP_WINDOW_LEN];
+	uint8_t flitStep_queueIdx = STEP_WINDOW_LEN;
 	uint8_t step_state = 0;
-	uint8_t step_cross0 = 0;
 	float32_t step_peak = 0;
 	float32_t step_valley = 0;
 	float32_t step_baseline = 0;
-	float32_t step_threshold = 0.05;
+	float32_t step_threshold = STEP_THRESH;
 	uint32_t step_mstick = 0;
 	uint8_t step_periodidx = 0;
-	float32_t step_period[3] = {1000};
+	float32_t step_period[STEP_PREIOD_LEN];
 	float32_t step_mean = 0;
+	float32_t step_std = 0;
 	uint32_t step_timeout = 0;
 
 
 //	// heart part
-//	uint8_t rawHR_stack[HR_FILTER_LEN*2] = {0};
-//	uint8_t rawHR_stackIdx = HR_FILTER_LEN*2;
+//	uint8_t rawHR_queue[HR_FILTER_LEN*2] = {0};
+//	uint8_t rawHR_queueIdx = HR_FILTER_LEN*2;
 //	uint8_t currHR_val = 0;
 //	uint8_t prevHR_val = 255;
 //	uint8_t hr_state = 0;
@@ -279,8 +285,8 @@ int main(void)
 //	float32_t hr_mean = 0;
 //	uint8_t hr_datacnt = 0;
 
-	float32_t rawHR_stack[HR_FILTER_LEN*2] = {0};
-	uint8_t rawHR_stackIdx = HR_FILTER_LEN*2;
+	float32_t rawHR_queue[HR_FILTER_LEN*2];
+	uint8_t rawHR_queueIdx = HR_FILTER_LEN*2;
 	float32_t rawHR_offset = 0;
 	float32_t currHR_val = 0;
 	float32_t prevHR_val = 0;
@@ -293,7 +299,7 @@ int main(void)
 	float32_t hr_threshold = HR_THRESH;
 	uint32_t hr_mstick = 0;
 	uint8_t hr_periodidx = 0;
-	float32_t hr_period[3] = {1000};
+	float32_t hr_period[3];
 	float32_t hr_mean = 0;
 	uint32_t hr_timeout = 0;
 
@@ -365,31 +371,34 @@ int main(void)
 
 	// acc init
 	rawStep_gval = 0;
-	for (rawStep_stackIdx=STEP_FILTER_LEN*2-1; rawStep_stackIdx>STEP_FILTER_LEN-1; rawStep_stackIdx--) {
+	for (rawStep_queueIdx=STEP_FILTER_LEN*2-1; rawStep_queueIdx>STEP_FILTER_LEN-1; rawStep_queueIdx--) {
 		while (!rawUpdated);
-		rawStep_stack[rawStep_stackIdx] = f32Step_rms;
+		rawStep_queue[rawStep_queueIdx] = f32Step_rms;
 		rawUpdated = 0;
 	}
 	// Get the mean value of first 100 data. This value equals to 1g.
-	arm_mean_f32(rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN, &rawStep_gval);
+	arm_mean_f32(rawStep_queue+STEP_FILTER_LEN, STEP_FILTER_LEN, &rawStep_gval);
 	// Zero-centering the all raw values. (val / 1g - 1)
-	arm_scale_f32(rawStep_stack+STEP_FILTER_LEN, 1/rawStep_gval, rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN);
-	arm_offset_f32(rawStep_stack+STEP_FILTER_LEN, -1, rawStep_stack+STEP_FILTER_LEN, STEP_FILTER_LEN);
+	arm_scale_f32(rawStep_queue+STEP_FILTER_LEN, 1/rawStep_gval, rawStep_queue+STEP_FILTER_LEN, STEP_FILTER_LEN);
+	arm_offset_f32(rawStep_queue+STEP_FILTER_LEN, -1, rawStep_queue+STEP_FILTER_LEN, STEP_FILTER_LEN);
+	// Init period
+	for (i=0; i<STEP_PREIOD_LEN; i++)
+		step_period[i] = 2000;
 
 	// HR offset
 	rawHR_offset = 0;
-	for (rawHR_stackIdx=HR_FILTER_LEN*2-1; rawHR_stackIdx>HR_FILTER_LEN-1; rawHR_stackIdx--) {
+	for (rawHR_queueIdx=HR_FILTER_LEN*2-1; rawHR_queueIdx>HR_FILTER_LEN-1; rawHR_queueIdx--) {
 		while (!rawUpdated);
-		rawHR_stack[rawHR_stackIdx] = (float32_t) rawHR;
+		rawHR_queue[rawHR_queueIdx] = (float32_t) rawHR;
 		rawUpdated = 0;
 	}
 	// Get the mean value of first 100 data.
-	arm_mean_f32(rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN, &rawHR_offset);
-	arm_std_f32(rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN, &hr_threshold);
+	arm_mean_f32(rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN, &rawHR_offset);
+	arm_std_f32(rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN, &hr_threshold);
 	hr_baseline = rawHR_offset;
 
 //	// Zero-centering the all raw values. (val - rawHR_offset)
-//	arm_offset_f32(rawHR_stack+HR_FILTER_LEN, -rawHR_offset, rawHR_stack+HR_FILTER_LEN, HR_FILTER_LEN);
+//	arm_offset_f32(rawHR_queue+HR_FILTER_LEN, -rawHR_offset, rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN);
 
 	step_state = STEP_IDLE;
 	hr_state = HR_IDLE;
@@ -414,21 +423,24 @@ int main(void)
 		/*
 		 * FIR filter
 		 */
-		// put raw data into stack
-		rawStep_stack[rawStep_stackIdx] = f32Step_rms/rawStep_gval-1.;
+		// put raw data into queue
+		rawStep_queue[rawStep_queueIdx] = f32Step_rms/rawStep_gval-1.;
 		// get filtered current step value
-		arm_dot_prod_f32((float*) (rawStep_stack+rawStep_stackIdx), (float*) step_filter,
+		arm_dot_prod_f32((float*) (rawStep_queue+rawStep_queueIdx), (float*) step_filter,
 									STEP_FILTER_LEN+1, &currStep_rms);
-//		arm_mean_f32(rawStep_stack+rawStep_stackIdx, 51, &currStep_rms);
+		// add current filtered rms to filtered queue
+		flitStep_queue[flitStep_queueIdx] = currStep_rms;
+		flitStep_queueIdx = (flitStep_queueIdx+1)%STEP_WINDOW_LEN;
+		// uart
 		filtStep_rms = ((( (uint16_t) ( (currStep_rms+1)*rawStep_gval) )+4096)>>5) & 0xff;
 		// store raw step data history
-		rawStep_stack[rawStep_stackIdx+STEP_FILTER_LEN] = rawStep_stack[rawStep_stackIdx];
-		// rawStep_stackIdx--
-		rawStep_stackIdx = (rawStep_stackIdx + STEP_FILTER_LEN-1)%STEP_FILTER_LEN;
+		rawStep_queue[rawStep_queueIdx+STEP_FILTER_LEN] = rawStep_queue[rawStep_queueIdx];
+		// rawStep_queueIdx--
+		rawStep_queueIdx = (rawStep_queueIdx + STEP_FILTER_LEN-1)%STEP_FILTER_LEN;
 
 		if (!(step_state & STEP_IDLE)) {
-			arm_std_f32(rawStep_stack+rawStep_stackIdx, STEP_FILTER_LEN, &step_threshold);
-			step_threshold *= STEP_THRESH;
+			arm_std_f32(flitStep_queue, STEP_WINDOW_LEN, &step_threshold);
+			step_threshold *= STEP_THRESH_DYN;
 		}
 
 		/*
@@ -439,7 +451,6 @@ int main(void)
 			if (currStep_rms > step_baseline + step_threshold) {
 				step_state = STEP_FIRST | STEP_FALLING;
 				step_peak = currStep_rms;
-				step_cross0 = 0;
 				step_timeout = msTimCnt;
 			}
 		}
@@ -449,16 +460,16 @@ int main(void)
 				step_peak = currStep_rms;
 			}
 			else if (currStep_rms < step_baseline - step_threshold) {
+				arm_std_f32(step_period, STEP_PREIOD_LEN, &step_std);
 				if (!(step_state & STEP_FIRST)) {
 					step_period[step_periodidx] = (float32_t) (msTimCnt - step_mstick);
-					step_periodidx = (step_periodidx+1)%3;
+					step_periodidx = (step_periodidx+1)%STEP_PREIOD_LEN;
+					arm_mean_f32(step_period, STEP_PREIOD_LEN, &step_mean);
+					outSR = (uint8_t) (60000./step_mean);
 				}
 				step_state = STEP_RISING;
 				step_valley = currStep_rms;
-				step_cross0 = 0;
 				step_mstick = msTimCnt;
-				arm_mean_f32(step_period, 3, &step_mean);
-				outSR = (uint8_t) (60000./step_mean);
 				step_timeout = msTimCnt;
 			}
 			else if (!(step_state & STEP_FIRST)) {
@@ -473,7 +484,6 @@ int main(void)
 			else if (currStep_rms > step_baseline + step_threshold) {
 				step_state = STEP_FALLING;
 				step_peak = currStep_rms;
-				step_cross0 = 0;
 				step_timeout = msTimCnt;
 			}
 			else {
@@ -481,16 +491,15 @@ int main(void)
 			}
 		}
 
-		if ( ((step_state & STEP_RISING) && (msTimCnt - step_timeout>2000))
-				|| ((step_state & STEP_FALLING) && (msTimCnt - step_timeout>1000)) ) {
-				step_state = STEP_IDLE;
-				step_baseline = 0;
-				step_threshold = 0.05;
-	//			step_period[0] = 1000;
-	//			step_period[1] = 1000;
-	//			step_period[2] = 1000;
-				outSR = 0;
-			}
+		if ( ((step_state & STEP_RISING) && (msTimCnt - step_timeout>3000))
+				|| ((step_state & STEP_FALLING) && (msTimCnt - step_timeout>3000)) ) {
+			step_state = STEP_IDLE;
+			step_baseline = 0;
+			step_threshold = STEP_THRESH;
+			for (i=0; i<STEP_PREIOD_LEN; i++)
+				step_period[i] = 2000;
+			outSR = 0;
+		}
 
 
 		prevStep_rms = currStep_rms;
@@ -499,13 +508,13 @@ int main(void)
 		 * Heart rate algorithm
 		 */
 //		currHR_val = rawHR;
-//		rawHR_stack[rawHR_stackIdx] = currHR_val;
-//		rawHR_stackIdx = (rawHR_stackIdx+1)%100;
+//		rawHR_queue[rawHR_queueIdx] = currHR_val;
+//		rawHR_queueIdx = (rawHR_queueIdx+1)%100;
 //		hr_datacnt = hr_datacnt<100? hr_datacnt+1: hr_datacnt;
 //
 //		if (hr_state & HR_IDLE) {
 ////			outHR = 0;
-//			u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//			u8minmax(rawHR_queue, 100, hr_datacnt, rawHR_queueIdx, &hr_baseline, &hr_peak);
 //			hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
 //			if ((hr_peak - hr_baseline > 30) && (currHR_val > hr_baseline + hr_threshold)) {
 //				hr_state = HR_FALLING;
@@ -542,7 +551,7 @@ int main(void)
 //						}
 //					}
 //					else {
-//						u8minmax(rawHR_stack, 100, hr_datacnt, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//						u8minmax(rawHR_queue, 100, hr_datacnt, rawHR_queueIdx, &hr_baseline, &hr_peak);
 //						hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
 //					}
 //					hr_mstick = msTimCnt;
@@ -552,7 +561,7 @@ int main(void)
 //					hr_state = HR_RISING | HR_ESTAB;
 //					hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
 //					hr_mstick = msTimCnt;
-//					u8minmax(rawHR_stack, 100, 25, rawHR_stackIdx, &hr_baseline, &hr_peak);
+//					u8minmax(rawHR_queue, 100, 25, rawHR_queueIdx, &hr_baseline, &hr_peak);
 //					hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
 //					arm_mean_f32(hr_period, 3, &hr_mean);
 //					arm_std_f32(hr_period, 3, &hr_std);
@@ -577,19 +586,19 @@ int main(void)
 		/*
 		 * FIR filter
 		 */
-		// put raw data into stack
-		rawHR_stack[rawHR_stackIdx] = ((float32_t)rawHR);
+		// put raw data into queue
+		rawHR_queue[rawHR_queueIdx] = ((float32_t)rawHR);
 		// get filtered current hr value
-		arm_dot_prod_f32((float*) (rawHR_stack+rawHR_stackIdx), (float*) hr_filter,
+		arm_dot_prod_f32((float*) (rawHR_queue+rawHR_queueIdx), (float*) hr_filter,
 									HR_FILTER_LEN+1, &currHR_val);
 		filtHR_val = currHR_val>=255? 255: (uint8_t) currHR_val;
 		// store raw hr data history
-		rawHR_stack[rawHR_stackIdx+HR_FILTER_LEN] = rawHR_stack[rawHR_stackIdx];
-		// rawHR_stackIdx--
-		rawHR_stackIdx = (rawHR_stackIdx + HR_FILTER_LEN-1)%HR_FILTER_LEN;
+		rawHR_queue[rawHR_queueIdx+HR_FILTER_LEN] = rawHR_queue[rawHR_queueIdx];
+		// rawHR_queueIdx--
+		rawHR_queueIdx = (rawHR_queueIdx + HR_FILTER_LEN-1)%HR_FILTER_LEN;
 
-		arm_mean_f32(rawHR_stack+rawHR_stackIdx, HR_FILTER_LEN, &rawHR_offset);
-		arm_std_f32(rawHR_stack+rawHR_stackIdx, HR_FILTER_LEN, &hr_threshold);
+		arm_mean_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &rawHR_offset);
+		arm_std_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &hr_threshold);
 		hr_threshold /= 3;
 
 		if (hr_state & HR_IDLE) {
