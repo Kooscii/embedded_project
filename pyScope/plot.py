@@ -6,7 +6,9 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import serial
-from time import time
+import time
+from matplotlib.widgets import Button
+import os.path
 
 batch = 1
 
@@ -16,47 +18,69 @@ class Scope(object):
         self.dt = dt
         self.maxt = maxt
 
-        self.ax_hr = ax[0]
+        self.ax_heart = ax[0]
         self.ax_txt = ax[1]
-        self.ax_rms = ax[2]
-        self.ax_xyz = ax[3]
+        self.ax_step = ax[2]
+        self.ax_rate = ax[3]
 
-        self.tdata = np.arange(0, self.maxt, self.dt)
-        # self.txyzdata = np.array([[i,i,i] for i in np.arange(0, self.maxt, self.dt)])
+        self.data_time = np.arange(0, self.maxt, self.dt)
+        # self.data_time_xyz_step = np.array([[i,i,i] for i in np.arange(0, self.maxt, self.dt)])
 
         # heart rate data
-        self.hrdata = np.array([128]*int(self.maxt/self.dt))
-        self.hrthreshdata = np.array([128]*int(self.maxt/self.dt))
-        self.hrline = Line2D(self.tdata, self.hrdata)
-        self.hrthreshline = Line2D(self.tdata, self.hrthreshdata, lw=1, color='C1', label='raw')
-        self.ax_hr.add_line(self.hrline)
-        self.ax_hr.add_line(self.hrthreshline)
-        self.ax_hr.set_ylim(0, 255)
-        self.ax_hr.set_xlim(0, self.maxt)
-        self.ax_hr.get_yaxis().set_visible(False)
+        # raw data
+        self.data_raw_heart = np.array([128]*int(self.maxt/self.dt))
+        self.line_raw_heart = Line2D(self.data_time, self.data_raw_heart, lw=0.5, color='orange', label='raw')
+        self.ax_heart.add_line(self.line_raw_heart)
+        # filtered data
+        self.data_filt_heart = np.array([128]*int(self.maxt/self.dt))
+        self.data_thrs_heart = np.array([128]*int(self.maxt/self.dt))
+        self.line_filt_heart = Line2D(self.data_time, self.data_filt_heart, lw=1.5, color='C1', label='filtered')
+        self.line_thrs_heart = Line2D(self.data_time, self.data_thrs_heart, lw=0.5, color='C0', label='threshold')
+        self.ax_heart.add_line(self.line_filt_heart)
+        self.ax_heart.add_line(self.line_thrs_heart)
+        self.ax_heart.set_ylim(0, 255)
+        self.ax_heart.set_xlim(0, self.maxt)
+        self.ax_heart.get_yaxis().set_visible(False)
+        self.ax_heart.legend(loc='upper left', prop={'size':7}, ncol=3)
+        self.ax_heart.set_xlabel('Time (s)')
 
-        # accelero xyz data
-        self.xyzdata = np.array([[0,0,0]]*int(self.maxt/self.dt))
-        self.xline = Line2D(self.tdata, self.xyzdata[:,0], lw=1, color='r', label='x')
-        self.yline = Line2D(self.tdata, self.xyzdata[:,1], lw=1, color='g', label='y')
-        self.zline = Line2D(self.tdata, self.xyzdata[:,2], lw=1, color='b', label='z')
-        self.ax_xyz.add_line(self.xline)
-        self.ax_xyz.add_line(self.yline)
-        self.ax_xyz.add_line(self.zline)
-        self.ax_xyz.set_ylim(-100, 100)
-        self.ax_xyz.set_xlim(0, self.maxt)
-        self.ax_xyz.legend(loc='upper left', prop={'size':7}, ncol=3)
+        # hr, sr data
+        self.data_time60 = np.arange(0, 60, self.dt)
+        self.data_bpm = np.array([0]*int(60/self.dt))
+        self.data_spm = np.array([0]*int(60/self.dt))
+        self.line_bpm = Line2D(self.data_time60, self.data_bpm, lw=1, color='C1', label='BPM')
+        self.line_spm = Line2D(self.data_time60, self.data_spm, lw=1, color='C0', label='SPM')
+        self.ax_rate.add_line(self.line_bpm)
+        self.ax_rate.add_line(self.line_spm)
+        self.ax_rate.set_ylim(0, 200)
+        self.ax_rate.set_xlim(0, 60)
+        self.ax_rate.legend(loc='upper left', prop={'size':7}, ncol=2)
+        self.ax_rate.set_xlabel('Time (s)')
+
 
         # accelero rms data
-        self.rmsdata = np.array([1]*int(self.maxt/self.dt))
-        self.flitdata = np.array([1]*int(self.maxt/self.dt))
-        self.rmsline = Line2D(self.tdata, self.rmsdata, lw=1, color='C0', label='raw')
-        self.flitline = Line2D(self.tdata, self.flitdata, color='C1', label='filtered')
-        self.ax_rms.add_line(self.rmsline)
-        self.ax_rms.add_line(self.flitline)
-        self.ax_rms.set_ylim(0, 2)
-        self.ax_rms.set_xlim(0, self.maxt)
-        self.ax_rms.legend(loc='upper left', prop={'size':7}, ncol=1)
+        # raw data
+        self.data_rms_step = np.array([1]*int(self.maxt/self.dt))
+        self.data_xyz_step = np.array([[0,0,0]]*int(self.maxt/self.dt))
+        self.line_rms_step = Line2D(self.data_time, self.data_rms_step, lw=0.5, color='orange', label='rms')
+        self.line_x_step = Line2D(self.data_time, self.data_xyz_step[:,0], lw=0.3, color='lightpink') #, label='x')
+        self.line_y_step = Line2D(self.data_time, self.data_xyz_step[:,1], lw=0.3, color='lightgreen') #, label='y')
+        self.line_z_step = Line2D(self.data_time, self.data_xyz_step[:,2], lw=0.3, color='lightblue') #, label='z')
+        self.ax_step.add_line(self.line_rms_step)
+        self.ax_step.add_line(self.line_x_step)
+        self.ax_step.add_line(self.line_y_step)
+        self.ax_step.add_line(self.line_z_step)
+        # filtered data
+        self.data_filt_step = np.array([1]*int(self.maxt/self.dt))
+        self.data_thrs_step = np.array([1]*int(self.maxt/self.dt))
+        self.line_filt_step = Line2D(self.data_time, self.data_filt_step, lw=1.5, color='C1', label='filtered')
+        self.line_thrs_step = Line2D(self.data_time, self.data_thrs_step, lw=0.5, color='C0', label='threshold')
+        self.ax_step.add_line(self.line_filt_step)
+        self.ax_step.add_line(self.line_thrs_step)
+        self.ax_step.set_ylim(-1, 3)
+        self.ax_step.set_xlim(0, self.maxt)
+        self.ax_step.legend(loc='upper left', prop={'size':7}, ncol=7)
+        self.ax_step.set_xlabel('Time (s)')
 
         # text
         self.ax_txt.get_xaxis().set_visible(False)
@@ -64,133 +88,203 @@ class Scope(object):
         self.ax_txt.set_ylim(0, 50)
         self.ax_txt.set_xlim(0, 150)
         ax_txt.text(20, 40, r'BPM:', fontsize=15)
-        ax_txt.text(20, 20, r'SPM:', fontsize=15)
+        ax_txt.text(20, 15, r'SPM:', fontsize=15)
         ax_txt.text(60, 40, r'Total Beats:', fontsize=15)
-        ax_txt.text(60, 20, r'Total Steps:', fontsize=15)
-        self.hc = 0
-        self.sc = 0
-        self.hr_txt = ax_txt.text(20, 30, str(0), fontsize=15)
-        self.sr_txt = ax_txt.text(20, 10, str(0), fontsize=15)
-        self.hc_txt = ax_txt.text(60, 30, str(self.hc), fontsize=15)
-        self.sc_txt = ax_txt.text(60, 10, str(self.sc), fontsize=15)
+        ax_txt.text(60, 15, r'Total Steps:', fontsize=15)
+        self.data_beats = 0
+        self.data_steps = 0
+        self.txt_bpm = ax_txt.text(20, 30, str(0), fontsize=15)
+        self.txt_spm = ax_txt.text(20, 5, str(0), fontsize=15)
+        self.txt_beats = ax_txt.text(60, 30, str(self.data_beats), fontsize=15)
+        self.txt_steps = ax_txt.text(60, 5, str(self.data_steps), fontsize=15)
 
         st.flushInput()
 
     def update(self, param):
-        raw_hr = param[0]
-        thresh_hr = param[1]
-        raw_rms = param[2]
-        raw_flit = param[3]
-        raw_xyz = param[4]
-        hr = param[5]
-        sr = param[6]
+        (
+            data_raw_heart,
+            data_thrs_heart,
+            data_filt_heart,
+            data_xyz_step,
+            data_thrs_step,
+            data_filt_step,
+            data_bpm,
+            data_spm,
+            data_beats,
+            data_steps
+        ) = param
 
-        if raw_hr.size:
-            self.hrdata = np.append(self.hrdata, raw_hr)
-            self.hrdata = self.hrdata[len(raw_hr):]
-            ymax = max(self.hrdata)
-            ymin = min(self.hrdata)
-            if (ymax-ymin) < 20:
-                mid = (ymax+ymin)/2
-                ymax = mid + 10
-                ymin = mid - 10
-            margin = (ymax-ymin)/20.0
-            self.ax_hr.set_ylim(ymin-margin, ymax+margin)
-            self.hrline.set_ydata(self.hrdata)
+        self.data_raw_heart = np.append(self.data_raw_heart, data_raw_heart)
+        self.data_raw_heart = self.data_raw_heart[len(data_raw_heart):]
+        self.line_raw_heart.set_ydata(self.data_raw_heart)
 
-        if thresh_hr.size:
-            self.hrthreshdata = np.append(self.hrthreshdata, thresh_hr)
-            self.hrthreshdata = self.hrthreshdata[len(thresh_hr):]
-            self.hrthreshline.set_ydata(self.hrthreshdata)
+        self.data_thrs_heart = np.append(self.data_thrs_heart, data_thrs_heart)
+        self.data_thrs_heart = self.data_thrs_heart[len(data_thrs_heart):]
+        self.line_thrs_heart.set_ydata(self.data_thrs_heart)
 
-        if raw_rms.size:
-            self.rmsdata = np.append(self.rmsdata, raw_rms)
-            self.rmsdata = self.rmsdata[len(raw_rms):]
-            self.rmsline.set_ydata(self.rmsdata)
+        self.data_filt_heart = np.append(self.data_filt_heart, data_filt_heart)
+        self.data_filt_heart = self.data_filt_heart[len(data_filt_heart):]
+        self.line_filt_heart.set_ydata(self.data_filt_heart)
+        # rescale axis y
+        ymax = max(self.data_filt_heart)
+        ymin = min(self.data_filt_heart)
+        if (ymax-ymin) < 20:
+            mid = (ymax+ymin)/2
+            ymax = mid + 10
+            ymin = mid - 10
+        margin = (ymax-ymin)/5.0
+        self.ax_heart.set_ylim(ymin-margin, ymax+margin)
 
-        if raw_flit.size:
-            self.flitdata = np.append(self.flitdata, raw_flit)
-            self.flitdata = self.flitdata[len(raw_flit):]
-            # ymax = max(self.flitdata)
-            # ymin = min(self.flitdata)
-            # if (ymax-ymin) < 0.2:
-            #     mid = (ymax+ymin)/2
-            #     ymax = mid + 0.1
-            #     ymin = mid - 0.1
-            # margin = (ymax-ymin)/10.0
-            # self.ax_rms.set_ylim(ymin-margin, ymax+margin)
-            self.flitline.set_ydata(self.flitdata)
+        self.data_xyz_step = np.vstack([self.data_xyz_step, data_xyz_step])
+        self.data_xyz_step = self.data_xyz_step[len(data_xyz_step):]
+        self.line_x_step.set_ydata(self.data_xyz_step[:,0])
+        self.line_y_step.set_ydata(self.data_xyz_step[:,1])
+        self.line_z_step.set_ydata(self.data_xyz_step[:,2])
 
-        if raw_xyz.size:
-            self.xyzdata = np.vstack([self.xyzdata, raw_xyz])
-            self.xyzdata = self.xyzdata[len(raw_xyz):]
-            self.xline.set_ydata(self.xyzdata[:,0])
-            self.yline.set_ydata(self.xyzdata[:,1])
-            self.zline.set_ydata(self.xyzdata[:,2])
+        self.data_rms_step = np.append(self.data_rms_step, np.linalg.norm(data_xyz_step, axis=1))
+        self.data_rms_step = self.data_rms_step[len(data_xyz_step):]
+        self.line_rms_step.set_ydata(self.data_rms_step)
 
-        if hr>=0:
-            self.hr_txt.set_text(str(hr))
+        self.data_thrs_step = np.append(self.data_thrs_step, data_thrs_step)
+        self.data_thrs_step = self.data_thrs_step[len(data_thrs_step):]
+        self.line_thrs_step.set_ydata(self.data_thrs_step)
 
-        if sr>=0:
-            self.sr_txt.set_text(str(sr))
+        self.data_filt_step = np.append(self.data_filt_step, data_filt_step)
+        self.data_filt_step = self.data_filt_step[len(data_filt_step):]
+        self.line_filt_step.set_ydata(self.data_filt_step)
 
-        self.hc_txt.set_text(str(self.hc))
-        self.sc_txt.set_text(str(self.sc))
 
-        return self.hrline, self.hrthreshline, self.rmsline, self.flitline, self.xline, self.yline, self.zline, self.hr_txt, self.sr_txt
+        self.txt_bpm.set_text(str(data_bpm[-1]))
+        self.data_bpm = np.append(self.data_bpm, data_bpm)
+        self.data_bpm = self.data_bpm[len(data_bpm):]
+        self.line_bpm.set_ydata(self.data_bpm)
+
+
+        self.txt_spm.set_text(str(data_spm[-1]))
+        self.data_spm = np.append(self.data_spm, data_spm)
+        self.data_spm = self.data_spm[len(data_spm):]
+        self.line_spm.set_ydata(self.data_spm)
+
+
+        self.txt_beats.set_text(str(data_beats))
+
+
+        self.txt_steps.set_text(str(data_steps))  
+
+        if log_flag[0]:
+            self.txt_bpm.set_color('r')
+            self.txt_spm.set_color('r')
+            self.txt_beats.set_color('r')
+            self.txt_steps.set_color('r')
+        else:
+            self.txt_bpm.set_color('k')
+            self.txt_spm.set_color('k')
+            self.txt_beats.set_color('k')
+            self.txt_steps.set_color('k')
+
+        # self.txt_beats.set_text(str(self.data_beats))
+        # self.txt_steps.set_text(str(self.data_steps))
+
+        return (self.line_raw_heart,
+                self.line_thrs_heart,
+                self.line_filt_heart,
+                self.line_x_step,
+                self.line_y_step,
+                self.line_z_step,
+                self.line_rms_step,
+                self.line_thrs_step,
+                self.line_filt_step,
+                self.txt_bpm,
+                self.txt_spm,
+                self.txt_beats,
+                self.txt_steps,
+                self.line_bpm,
+                self.line_spm
+                )
 
 
 def emitter(p=0.03):
-    rate_upd = 0
+    log_rate = 100
+    log_list = []
+    list_bpm = []
+    list_spm = []
+    data_beats = 0
+    prev_beats = 0
+    data_steps = 0
+    prev_steps = 0
     while True:
         ## print(time())
-        raw_hr = np.array([])
-        thresh_hr = np.array([])
-        raw_rms = np.array([])
-        raw_flit = np.array([])
-        raw_xyz = np.array([]).reshape(0, 3)
-        hr = -1
-        sr = -1
-        hrlist = []
-        srlist = []
+        data_raw_heart = []
+        data_thrs_heart = []
+        data_filt_heart = []
+        data_xyz_step = []
+        data_thrs_step = []
+        data_filt_step = []
+        data_bpm = []
+        data_spm = []
 
-        l = st.inWaiting()
-        if l >= 11:
-            for i in range(int(l/11.)):
-                # print('before', st.inWaiting())
-                rd = st.readline()
-                print([i for i in rd])
-                # print('after', st.inWaiting())
-                raw_hr = np.append(raw_hr, rd[1])
-                thresh_hr = np.append(thresh_hr, rd[9])
-                raw_xyz = np.vstack([raw_xyz, 128-np.array([i for i in rd[2:5]])])
-                # raw_rms = np.append(raw_rms, np.linalg.norm(raw_xyz[-1])/31.)
-                raw_flit = np.append(raw_flit, (rd[5]-128)/32.)
-                raw_rms = np.append(raw_rms, (rd[8]-128)/32.)
-
-
-                g.write(str(raw_hr[-1])+','+str(raw_xyz[-1,0])+','+str(raw_xyz[-1,1])+','+str(raw_xyz[-1,2])+'\n')
-
-                if rate_upd%50 == 0:
-                    hr = rd[6]-1 if hr>10 else rd[6]
-                    sr = rd[7]-1 if sr>10 else rd[7]
-                    hrlist.append(hr)
-                    srlist.append(sr)
-                    if rate_upd%50 == 0:
-                        f.write(str(sum(hrlist)/1)+','+str(sum(srlist)/1)+',\n')
-                rate_upd = (rate_upd + 1) % 500
-        else:
-            # print('no data')
+        while (st.inWaiting() < 14):
             pass
-            
-        # print()
-            
-        yield (raw_hr, thresh_hr, raw_rms, raw_flit, raw_xyz, hr, sr)
+
+        len_inbuf = st.inWaiting()
+
+        for i in range(int(len_inbuf/14.)):
+            rd = st.readline()
+
+            data_raw_heart.append(rd[1])
+            data_thrs_heart.append(rd[2])
+            data_filt_heart.append(rd[3])
+
+            data_xyz_step.append([(i-128.)/32. for i in rd[4:7]])
+            data_thrs_step.append(((rd[7]-128)/32.-1)*1.1+1)
+            data_filt_step.append((rd[8]-128)/32.)
+
+            list_bpm.append(rd[9]-11)
+            list_bpm = list_bpm[-25:]
+            data_bpm.append(int(sum(list_bpm)/len(list_bpm)))
+
+            list_spm.append(rd[10]-11)
+            list_spm = list_spm[-25:]
+            data_spm.append(int(sum(list_spm)/len(list_spm)))
+
+            if prev_beats <= rd[11]-11:
+                data_beats += (rd[11]-11) - data_beats%100
+            else:
+                data_beats += (rd[11]-11) + 100 - data_beats%100
+            prev_beats = rd[11]-11
+
+            if prev_steps <= rd[12]-11:
+                data_steps += (rd[12]-11) - data_steps%100
+            else:
+                data_steps += (rd[12]-11) + 100 - data_steps%100
+            prev_steps = rd[12]-11
+
+            if log_flag[0]:
+                f[0].write(rd)
+
+        yield (
+                data_raw_heart,
+                data_thrs_heart,
+                data_filt_heart,
+                data_xyz_step,
+                data_thrs_step,
+                data_filt_step,
+                data_bpm,
+                data_spm,
+                data_beats,
+                data_steps
+            )
+
+def startLog(event, log_flag, f):
+    if not log_flag[0]:
+        f[0] = open('log-'+time.strftime("%m%d%H%M%S", time.localtime()), 'wb')
+        log_flag[0] = True
+    else:
+        f[0].close()
+        log_flag[0] = False
 
 
 # change to your own serial name here
-# st = serial.Serial('/dev/tty.usbmodem1423', 115200)
-# st = serial.Serial('COM3', 115200)
 while True:
     try:
         st = serial.Serial('/dev/ttyUSB0', 115200)
@@ -228,26 +322,27 @@ while True:
     except:
         break
 
-f = open('rate_data.csv', 'w')
-g = open('raw_data.csv', 'w')
+log_flag = [False]
+f = [None]
 
 fig = plt.figure(figsize=(10, 5))
-ax_hr = fig.add_subplot(2, 2, 1)
+ax_heart = fig.add_subplot(2, 2, 1)
 ax_txt = fig.add_subplot(2, 2, 2)
-ax_rms = fig.add_subplot(2, 2, 3)
+ax_step = fig.add_subplot(2, 2, 3)
 ax_xyz = fig.add_subplot(2, 2, 4)
+fig.canvas.mpl_connect('key_press_event', lambda event: startLog(event, log_flag, f))
 
-ax = [ax_hr, ax_txt, ax_rms, ax_xyz]
+ax = [ax_heart, ax_txt, ax_step, ax_xyz]
 scope = Scope(ax)
 
 # pass a generator in "emitter" to produce data for the update func
 ani = animation.FuncAnimation(fig, scope.update, emitter, interval=10, blit=True)
 
+plt.tight_layout()
 plt.show()
 
 st.close()
 try:
-    f.close()
-    g.close()
+    f[0].close()
 except:
     pass

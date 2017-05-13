@@ -82,16 +82,18 @@ UART_HandleTypeDef huart1;
 #define HR_FIRST 		(0x01<<7)
 
 #define HR_THRESH		5
+#define HR_THRESH_DYN	0.4
 #define HR_FILTER_LEN 	50
-#define HR_PREIOD_LEN 5
+#define HR_PREIOD_LEN 	5
+#define HR_WINDOW_LEN 	50
 
 uint32_t msTimCnt = 0;
 uint8_t rawHR = 0;
-uint8_t filtHR_val = 0;
 uint8_t threshHR = HR_THRESH;
+uint8_t filtHR_val = 0;
 uint8_t rawStep_rms = 0;
-uint8_t filtStep_rms = 0;
 uint8_t threshStep = STEP_THRESH;
+uint8_t filtStep_rms = 0;
 float32_t f32Step_rms = 0;
 uint8_t rawStep_x = 0;
 uint8_t rawStep_y = 0;
@@ -101,7 +103,9 @@ uint8_t rawUpdated = 0;
 
 uint8_t outHR = 0;
 uint8_t outSR = 0;
-uint8_t txbuf[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '\n'};
+uint8_t outHC = 0;
+uint8_t outSC = 0;
+uint8_t txbuf[20];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -190,36 +194,37 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 /* ADC TimeBase 6,7 Callback */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim) {
-	static uint8_t cnt=0;
+	static uint8_t cnt;
+	static uint8_t index = 0;
 	if (htim->Instance == TIM7) {
 		msTimCnt++;
 	} else if (htim->Instance == TIM6) {
 		if (cnt==0) {
 			HAL_ADC_Start_IT(&hadc1);
 
-			txbuf[0] = (rawHR=='\n')? rawHR+1: rawHR;
-			txbuf[1] = (filtHR_val=='\n')? filtHR_val+1: filtHR_val;
-			txbuf[2] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
-			txbuf[3] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
-			txbuf[4] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
-			txbuf[5] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
-			txbuf[6] = (outHR=='\n')? outHR + 1 : outHR;
-			txbuf[7] = (outSR=='\n')? outSR + 1 : outSR;
-			txbuf[8] = (threshStep=='\n')? threshStep + 1 : threshStep;
-			txbuf[9] = (threshHR=='\n')? threshHR + 1 : threshHR;
-			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 11);
+			txbuf[0] = index+11;
+			txbuf[1] = (rawHR=='\n')? rawHR+1: rawHR;
+			txbuf[2] = (threshHR=='\n')? threshHR+1 : threshHR;
+			txbuf[3] = (filtHR_val=='\n')? filtHR_val+1: filtHR_val;
+			txbuf[4] = (rawStep_x=='\n')? rawStep_x+1: rawStep_x;
+			txbuf[5] = (rawStep_y=='\n')? rawStep_y+1: rawStep_y;
+			txbuf[6] = (rawStep_z=='\n')? rawStep_z+1: rawStep_z;
+			txbuf[7] = (threshStep=='\n')? threshStep + 1 : threshStep;
+			txbuf[8] = (filtStep_rms=='\n')? filtStep_rms + 1 : filtStep_rms;
+			txbuf[9] = outHR+11;
+			txbuf[10] = outSR+11;
+			txbuf[11] = outHC+11;
+			txbuf[12] = outSC+11;
+			txbuf[13] = '\n';
+			HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 14);
+			index = (index+1)%100;
 
-	//		txbuf[0] = rawStep_rms;
-	////		txbuf[1] = rawStep_y;
-	////		txbuf[2] = rawStep_z;
-	//		HAL_UART_Transmit_IT(&huart1, (uint8_t*) &txbuf, 1);
+			if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
+				logData2Flash(rawStep_rms);
+			else
+				HAL_FLASH_Lock();
 		}
 		cnt = (cnt+1)%2;
-
-		if (HAL_GPIO_ReadPin(LD9_GPIO_Port, LD9_Pin)==1)
-			logData2Flash(rawStep_rms);
-		else
-			HAL_FLASH_Lock();
 	}
 }
 
@@ -299,7 +304,7 @@ int main(void)
 	float32_t hr_threshold = HR_THRESH;
 	uint32_t hr_mstick = 0;
 	uint8_t hr_periodidx = 0;
-	float32_t hr_period[3];
+	float32_t hr_period[HR_PREIOD_LEN];
 	float32_t hr_mean = 0;
 	uint32_t hr_timeout = 0;
 
@@ -396,6 +401,8 @@ int main(void)
 	arm_mean_f32(rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN, &rawHR_offset);
 	arm_std_f32(rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN, &hr_threshold);
 	hr_baseline = rawHR_offset;
+	for (i=0; i<HR_PREIOD_LEN; i++)
+			hr_period[i] = 2000;
 
 //	// Zero-centering the all raw values. (val - rawHR_offset)
 //	arm_offset_f32(rawHR_queue+HR_FILTER_LEN, -rawHR_offset, rawHR_queue+HR_FILTER_LEN, HR_FILTER_LEN);
@@ -466,6 +473,7 @@ int main(void)
 					step_periodidx = (step_periodidx+1)%STEP_PREIOD_LEN;
 					arm_mean_f32(step_period, STEP_PREIOD_LEN, &step_mean);
 					outSR = (uint8_t) (60000./step_mean);
+					outSC = (outSC+1)%100;
 				}
 				step_state = STEP_RISING;
 				step_valley = currStep_rms;
@@ -599,14 +607,13 @@ int main(void)
 
 		arm_mean_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &rawHR_offset);
 		arm_std_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &hr_threshold);
-		hr_threshold /= 3;
+		hr_threshold *= HR_THRESH_DYN;
 
 		if (hr_state & HR_IDLE) {
 			threshHR = (uint8_t) (hr_baseline + hr_threshold);
 			if (currHR_val > hr_baseline + hr_threshold) {
 				hr_state = HR_FIRST | HR_FALLING;
 				hr_peak = currHR_val;
-				hr_cross0 = 0;
 				hr_timeout = msTimCnt;
 			}
 		}
@@ -618,14 +625,14 @@ int main(void)
 			else if (currHR_val < hr_baseline - hr_threshold) {
 				if (!(hr_state & HR_FIRST)) {
 					hr_period[hr_periodidx] = (float32_t) (msTimCnt - hr_mstick);
-					hr_periodidx = (hr_periodidx+1)%3;
+					hr_periodidx = (hr_periodidx+1)%HR_PREIOD_LEN;
+					arm_mean_f32(hr_period, HR_PREIOD_LEN, &hr_mean);
+					outHR = (uint8_t) (60000./hr_mean);
+					outHC = (outHC+1)%100;
 				}
 				hr_state = HR_RISING;
 				hr_valley = currHR_val;
-				hr_cross0 = 0;
 				hr_mstick = msTimCnt;
-				arm_mean_f32(hr_period, 3, &hr_mean);
-				outHR = (uint8_t) (60000./hr_mean);
 				hr_timeout = msTimCnt;
 			}
 			else if (!(hr_state & HR_FIRST)) {
@@ -640,7 +647,6 @@ int main(void)
 			else if (currHR_val > hr_baseline + hr_threshold) {
 				hr_state = HR_FALLING;
 				hr_peak = currHR_val;
-				hr_cross0 = 0;
 				hr_timeout = msTimCnt;
 			}
 			else {
@@ -653,9 +659,8 @@ int main(void)
 			|| ((hr_state & HR_FALLING) && (msTimCnt - hr_timeout>1000)) ) {
 			hr_state = HR_IDLE;
 			hr_baseline = rawHR_offset;
-//			hr_period[0] = 1000;
-//			hr_period[1] = 1000;
-//			hr_period[2] = 1000;
+			for (i=0; i<HR_PREIOD_LEN; i++)
+				hr_period[i] = 2000;
 			outHR = 0;
 		}
 
