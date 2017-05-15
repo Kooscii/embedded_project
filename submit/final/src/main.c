@@ -14,25 +14,26 @@
 #include "arm_math.h"
 
 
-#define STEP_IDLE 		(0x01)
-#define STEP_FALLING 	(0x01<<1)
-#define STEP_RISING 	(0x01<<2)
-#define STEP_FIRST 		(0x01<<7)
-#define STEP_THRESH		0.05
-#define STEP_THRESH_DYN	0.5
-#define STEP_FILTER_LEN 50
-#define STEP_PREIOD_LEN 5
-#define STEP_WINDOW_LEN 50
+#define STEP_IDLE 			(0x01)		// state
+#define STEP_FALLING 		(0x01<<1)
+#define STEP_RISING 		(0x01<<2)
+#define STEP_FIRST 			(0x01<<7)
+#define STEP_THRESH			0.05		// default and minimum threshold
+#define STEP_THRESH_DYN		0.5			// coefficient of dynamic threshold
+#define STEP_FILTER_LEN 	50			// raw data queue length
+#define STEP_WINDOW_LEN 	50			// filtered data queue length
+#define STEP_PREIOD_LEN 	5			// moving average filter length for period calculating
 
-#define HP_IDLE 		(0x01)
-#define HP_FALLING		(0x01<<1)
-#define HP_RISING 		(0x01<<2)
-#define HP_FIRST 		(0x01<<7)
-#define HP_THRESH		3
-#define HP_THRESH_DYN	0.3
-#define HP_FILTER_LEN 	50
-#define HP_PREIOD_LEN 	5
-#define HP_WINDOW_LEN 	50
+
+#define HP_IDLE 			(0x01)
+#define HP_FALLING			(0x01<<1)
+#define HP_RISING 			(0x01<<2)
+#define HP_FIRST 			(0x01<<7)
+#define HP_THRESH			3
+#define HP_THRESH_DYN		0.3
+#define HP_FILTER_LEN 		50
+#define HP_PREIOD_LEN 		5
+#define HP_WINDOW_LEN 		50
 
 
 /* sensor buffer */
@@ -63,6 +64,7 @@ struct {
 
 /* To avoid data in uart struct equal to '\n' */
 uint8_t uart_assign(uint8_t);
+
 void Error_Handler(char*);
 
 /*
@@ -78,8 +80,8 @@ int main(void)
 	// Step
 	float32_t 	step_rawqueue[STEP_FILTER_LEN*2];
 	uint8_t 	step_rawqueueIdx = STEP_FILTER_LEN*2;
-	float32_t 	step_filtqueue[STEP_WINDOW_LEN];
-	uint8_t 	step_filtqueueIdx = STEP_WINDOW_LEN;
+	float32_t 	step_filtqueue[STEP_WINDOW_LEN*2];
+	uint8_t 	step_filtqueueIdx = STEP_WINDOW_LEN*2;
 	float32_t 	step_rawgval = 0;
 	float32_t 	step_currval = 0;
 	uint8_t 	step_state = 0;
@@ -93,14 +95,14 @@ int main(void)
 	uint8_t 	step_periodidx = 0;
 	float32_t 	step_mean = 0;
 //	float32_t 	step_std = 0;
-	uint8_t 	outSR = 0;			// stride rate
-	uint8_t 	outSC = 0;			// strides count
+	uint8_t 	outSR = 0;			// step rate
+	uint8_t 	outSC = 0;			// steps count
 
 	// Heart Pulse
 	float32_t 	hp_rawqueue[HP_FILTER_LEN*2];
 	uint8_t 	hp_rawqueueIdx = HP_FILTER_LEN*2;
-	float32_t 	hp_filtqueue[HP_WINDOW_LEN];
-	uint8_t 	hp_filtqueueIdx = HP_WINDOW_LEN;
+	float32_t 	hp_filtqueue[HP_WINDOW_LEN*2];
+	uint8_t 	hp_filtqueueIdx = HP_WINDOW_LEN*2;
 	float32_t 	rawHP_offset = 0;
 	float32_t 	hp_currval = 0;
 	uint8_t 	hp_state = 0;
@@ -115,7 +117,7 @@ int main(void)
 	uint8_t 	hp_periodidx = 0;
 	float32_t 	hp_mean = 0;
 	uint8_t 	outHR = 0;			// heart rate
-	uint8_t 	outHC = 0;			// beats count
+	uint8_t 	outHC = 0;			// heart beats count
 
 
 	/*
@@ -138,6 +140,7 @@ int main(void)
 	// DAC start
 	HAL_TIM_Base_Start_IT(&htim6);  // start TIM6
 	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 965, DAC_ALIGN_8B_R);  // start DAC in DMA mode
+	// DAC was used to simulate the heart pulse signal because we only had one sensor for the group.
 
 	// ADC start
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&u16rawHP_dma, 1);  // start ADC in DMA mode
@@ -160,6 +163,8 @@ int main(void)
 	// 3. Init period
 	for (i=0; i<STEP_PREIOD_LEN; i++)
 		step_period[i] = 2000;
+	// 4. Init index of filtered data queue
+	step_filtqueueIdx = STEP_WINDOW_LEN - 1;
 
 	// Heart Pulse Algorithm Init
 	rawHP_offset = 0;
@@ -175,6 +180,8 @@ int main(void)
 	// 2. Init period
 	for (i=0; i<HP_PREIOD_LEN; i++)
 			hp_period[i] = 2000;
+	// 3. Init index of filtered data queue
+	hp_filtqueueIdx = HP_WINDOW_LEN - 1;
 
 	// Init state machine
 	step_state = STEP_IDLE;
@@ -201,13 +208,17 @@ int main(void)
 		// get filtered step value
 		arm_dot_prod_f32((float*) (step_rawqueue+step_rawqueueIdx), (float*) step_filter,
 									STEP_FILTER_LEN+1, &step_currval);
-		// add current filtered value to filtered queue
-		step_filtqueue[step_filtqueueIdx] = step_currval;
-		step_filtqueueIdx = (step_filtqueueIdx+1)%STEP_WINDOW_LEN;
 		// forming a continuous array for 'arm_dot_prod_f32'
 		step_rawqueue[step_rawqueueIdx+STEP_FILTER_LEN] = step_rawqueue[step_rawqueueIdx];
 		// step_rawqueueIdx--
 		step_rawqueueIdx = (step_rawqueueIdx + STEP_FILTER_LEN-1)%STEP_FILTER_LEN;
+
+		// add current filtered value to filtered queue
+		step_filtqueue[step_filtqueueIdx] = step_currval;
+//		// forming a continuous array for 'arm_std_f32' and 'arm_std_f32' (may not needed in step algorithm)
+//		step_filtqueue[step_filtqueueIdx+STEP_WINDOW_LEN] = step_filtqueue[step_filtqueueIdx];
+//		// step_rawqueueIdx--
+		step_filtqueueIdx = (step_filtqueueIdx + STEP_WINDOW_LEN-1)%STEP_WINDOW_LEN;
 
 		/* 2. Update baseline and threshold */
 		if (!(step_state & STEP_IDLE)) {
@@ -282,7 +293,7 @@ int main(void)
 			}
 		}
 
-		/* Timeout checking */
+		// Timeout checking
 		if ( ((step_state & STEP_RISING) && (HAL_GetTick() - step_timeout>3000))
 				|| ((step_state & STEP_FALLING) && (HAL_GetTick() - step_timeout>3000)) ) {
 			step_state = STEP_IDLE;
@@ -306,13 +317,18 @@ int main(void)
 		// get filtered hp value
 		arm_dot_prod_f32((float*) (hp_rawqueue+hp_rawqueueIdx), (float*) hp_filter,
 									HP_FILTER_LEN+1, &hp_currval);
-		// add current filtered value to filtered queue
-		hp_filtqueue[hp_filtqueueIdx] = hp_currval;
-		hp_filtqueueIdx = (hp_filtqueueIdx+1)%HP_WINDOW_LEN;
 		// forming a continuous array for 'arm_dot_prod_f32'
 		hp_rawqueue[hp_rawqueueIdx+HP_FILTER_LEN] = hp_rawqueue[hp_rawqueueIdx];
 		// hp_rawqueueIdx--
 		hp_rawqueueIdx = (hp_rawqueueIdx + HP_FILTER_LEN-1)%HP_FILTER_LEN;
+
+		// add current filtered value to filtered queue
+		hp_filtqueue[hp_filtqueueIdx] = hp_currval;
+		// forming a continuous array for 'arm_mean_f32' and 'arm_std_f32',
+		// it's needed because length is different and not equal to HP_WINDOW_LEN in next section
+		hp_filtqueue[hp_filtqueueIdx+HP_WINDOW_LEN] = hp_filtqueue[hp_filtqueueIdx];
+		// hp_filtqueueIdx--
+		hp_filtqueueIdx = (hp_filtqueueIdx + HP_WINDOW_LEN-1)%HP_WINDOW_LEN;
 
 		/* 2. Update baseline and threshold */
 		arm_mean_f32(hp_filtqueue+hp_filtqueueIdx, HP_WINDOW_LEN/2, &rawHP_offset);
@@ -373,11 +389,11 @@ int main(void)
 				hp_timeout = HAL_GetTick();
 			}
 			// Here is the difference. Tricky but works pretty well.
-			// The magnitude of heart pulse signal will unexpectedly decrease sometimes
+			// The amplitude of heart pulse signal will unexpectedly decrease a lot sometimes
 			// So I want the baseline keep going down while the signal rising,
 			// and make them meet with each other
 			else {
-				hp_baseline -= hp_threshold*0.05;
+				hp_baseline -= hp_threshold*0.1;
 			}
 		}
 

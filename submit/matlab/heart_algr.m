@@ -45,7 +45,7 @@ baseline = mean(x(1:50));
 
 for i=51:length(x)
     if i>50 && state ~= 0
-        threshold = std(x(i-25:i))*0.3;
+        threshold = std(x(i-10:i))*0.3;
         if threshold < 3
             threshold = 3;
         end
@@ -111,7 +111,7 @@ for i=51:length(x)
                 peaklist = [peaklist peak];
                 peakidx = [peakidx i];
         else
-				baseline = baseline - threshold*0.05;
+				baseline = baseline - threshold*0.1;
         end
     end
     

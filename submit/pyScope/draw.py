@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-f = open('log-0515145605', 'rb')
+f = open('log-0515152050', 'rb')
 
 index = []
 rawHR = []

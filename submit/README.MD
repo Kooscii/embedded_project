@@ -1,6 +1,6 @@
 1. Introduction
 --------------------------------------------
-Our project aims to use heart pulse sensor and accelerometer to find out the relationship between heart rate and stride rate. We designed a 'dynamic threshold sinusoid-like wave detecting algorithm' to get these two rates from raw data. We also built a host interface which can visualize all the data in realtime. 
+Our project aims to use heart pulse sensor and accelerometer to find out the relationship between heart rate and step rate. We designed a 'dynamic threshold sinusoid-like wave detecting algorithm' to get these two rates from raw data. We also built a host interface which can visualize all the data in realtime. 
 
 
 2. Program structure
@@ -11,17 +11,17 @@ To calculate the heart rate and step rate. First, we have to read the data from 
 3. Algorithm Intro
 --------------------------------------------
 Our algorithm contains 4 major parts: filtering, baseline and threshold adjusting, finite state machine and rate measuring.
-Every time we get new data, we first apply a low-pass filter on it (linear-phase, cut-off frequency 4Hz). Next, we calculate the mean and standard deviation in the past 1s, and adjust the baseline and threshold. Once done, the data, baseline, threshold are sent to the state machine. The state machine has three states. Idle, falling and rising. Changing between states is based on the value of data, baseline, and threshold. Jumping from rising to falling then back to rising is considered as one step/pulse (a sinusoid-like wave is detected), and then the rate will be calculated. For more details, please refer to the comments in our source code. 
+Every time we get new data, we first apply a low-pass filter on it (linear-phase, cut-off frequency 4Hz). Next, we calculate the mean and standard deviation of the past 1s, and adjust the baseline and threshold. Once done, the data, baseline, threshold are sent to the state machine. The state machine has three states. Idle, falling and rising. Changing between states is based on the value of data, baseline, and threshold. Jumping from rising to falling then back to rising is considered as one step/pulse (a sinusoid-like wave is detected), and then the rate will be calculated. For more details, please refer to the comments in our source code. 
 
 
 4. Experiment
 --------------------------------------------
-Our goal was to find out the relationship between heart rate and stride rate. So we did an experiment. We let one of our group members walked/ran on a treadmill while wearing the sensors. The speed was increasing from 1 mph to 4~6mph then decreasing back to 1 mph. All the data was collected by the host via wireless uart. After the experiment, a figure of heart rate and stride rate with time was plotted by Matlab. We could clearly see that they are correlated.
+Our goal was to find out the relationship between heart rate and step rate. So we did an experiment. We let one of our group members walked/ran on a treadmill while wearing the sensors. The speed was increasing from 1 mph to 4~6mph then decreasing back to 1 mph. All the data was collected by the host via wireless uart. After the experiment, a figure of heart rate and step rate with time was plotted by Matlab. We could clearly see that they are correlated.
 
 
 5. Tools we used 
 --------------------------------------------
-We used OpenSTM32 on Eclipse as our IDE. We used STM32CubeMX to help configure the hardware. Python was used to develop the user interface. Matlab was used to design the filter, analyze the algorithm off-line, and plot the experiment results.
+We used OpenSTM32 on Eclipse as our IDE. We used STM32CubeMX to help configure the hardware. Python was used to develop the host interface. Matlab was used to design the filter, analyze the algorithm off-line, and plot the experiment results.
 
 
 6. Folders and Files
@@ -42,7 +42,7 @@ pyScope/*
 The host interface is written in python. 'interface.py' is the realtime visualization interface. 'draw.py' can plot the log files as a figure.
 
 matlab/*
-MATLAB version of our algorithm, used to analyze and improve our algorithm off-line. It was also used to give a better visualization of our algorithm. It does nothing on the host interface. All things displayed on the interface are received directly from STM32. The eps files in this folder are the results of two experiments.
+MATLAB version of our algorithm, used to analyze and improve our algorithm off-line. It was also used to give a better visualization of our algorithm. It does nothing to the host interface. All things displayed on the interface are received directly from STM32. The eps files in this folder are the results of two experiments.
 
 screenshot/*
 Some screenshots of our host interface. It also includes the pictures of our board and experiments.
