@@ -359,13 +359,13 @@ int main(void)
 			}
 			else if (!(hp_state & HP_FIRST)) {
 				// the baseline of heart pulse is a little higher
-				hp_baseline = (hp_peak - hp_valley)*3/5 + hp_valley;
+				hp_baseline = (hp_peak - hp_valley)*2/3 + hp_valley;
 			}
 		}
 		else if (hp_state & HP_RISING) {
 			if (hp_currval < hp_valley) {
 				hp_valley = hp_currval;
-				hp_baseline = (hp_peak - hp_valley)*3/5 + hp_valley;
+				hp_baseline = (hp_peak - hp_valley)*2/3 + hp_valley;
 			}
 			else if (hp_currval > hp_baseline + hp_threshold) {
 				hp_state = HP_FALLING;
@@ -377,7 +377,7 @@ int main(void)
 			// So I want the baseline keep going down while the signal rising,
 			// and make them meet with each other
 			else {
-				hp_baseline -= hp_threshold*0.1;
+				hp_baseline -= hp_threshold*0.05;
 			}
 		}
 

@@ -1,21 +1,17 @@
 %%
 h=firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
-load expdata1.csv
+load exp1.csv
 
 %%
-x = expdata1(9000:59000,2);
-n = (9000:59000)/50;
-
+x = exp1(1:30000,2);
+n = (1:length(x))/50;
 x_g = mean(x(1:100));
 x = x/x_g - 1;
 
 % plot(abs(fft(x)))
-figure
 
 x = conv(x,h);
 x = x(1:length(n));
-
-% x = rawH - mean(rawH);
 
 peak = -100;
 valley = 100;
@@ -136,13 +132,18 @@ for i=1:length(x)
 end
 
 %%
+figure
+box on
 hold on
-plot(x)
-plot(peakidx, peaklist,'.')
-plot(valleyidx, valleylist,'.')
-plot(baselinelist,':')
-plot(thresholdlist,':')
+plot(n, x)
+plot(peakidx/50, peaklist,'.')
+plot(valleyidx/50, valleylist,'.')
+plot(n, baselinelist, ':')
+plot(n, thresholdlist, ':')
+legend('signal', 'peak', 'valley', 'baseline', 'threshold')
+xlabel('Time (s)')
 
+%%
 figure
 plot(outSRlist,'+')
 % plot(lowerthresholdidx, lowerthresholdlist,'.')

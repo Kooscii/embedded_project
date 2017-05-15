@@ -1,17 +1,14 @@
 %%
 h=firls(50,[0 4 5 25]/50*2,[1 1 0 0]);
-load expdata1.csv
-
+load exp1.csv
 
 %%
-x = expdata1(9000:59000,1);
-n = (9000:59000)/50;
+x = exp1(1:30000,1);
+n = (1:length(x))/50;
 
 %%
 x = conv(x,h);
 x = x(1:length(n));
-
-% x = rawH - mean(rawH);
 
 peak = -100;
 valley = 100;
@@ -97,12 +94,12 @@ for i=51:length(x)
                 valleyidx = [valleyidx i];
                 valleylist = [valleylist valley];
         elseif flg_firststep == 0
-                baseline = (peak-valley)*3/5+valley;
+                baseline = (peak-valley)*2/3+valley;
         end
     elseif state == 3
         if x(i)<valley
             valley = x(i);
-            baseline = (peak-valley)*3/5+valley;
+            baseline = (peak-valley)*2/3+valley;
             %
             valleyidx(end) = i;
             valleylist(end) = valley;
@@ -114,7 +111,7 @@ for i=51:length(x)
                 peaklist = [peaklist peak];
                 peakidx = [peakidx i];
         else
-				baseline = baseline - threshold*0.1;
+				baseline = baseline - threshold*0.05;
         end
     end
     
@@ -135,17 +132,25 @@ for i=51:length(x)
 end
 
 %%
+figure
+box on
 hold on
-plot(x)
-plot(peakidx, peaklist,'.')
-plot(valleyidx, valleylist,'.')
-plot(baselinelist,':')
-plot(thresholdlist,':')
+plot(n, x)
+plot(peakidx/50, peaklist, '.')
+plot(valleyidx/50, valleylist, '.')
+plot(n, baselinelist, ':')
+plot(n, thresholdlist, ':')
+legend('signal', 'peak', 'valley', 'baseline', 'threshold')
+xlabel('Time (s)')
+ylim([0 255])
 
 %%
 figure
+box on
 hold on
-plot(outHRlist(1:50:end), '.')
-plot(outSRlist(1:50:end), '.')
+plot(outSRlist(1:end), '.')
+plot(outHRlist(1:end), '.')
+legend('SPM','BPM')
+xlabel('Time (s)')
 % plot(lowerthresholdidx, lowerthresholdlist,'.')
 % plot(upperthresholdidx, upperthresholdlist,'.')

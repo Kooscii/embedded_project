@@ -5,23 +5,23 @@ Our project aims to use heart pulse sensor and accelerometer to find out the rel
 
 2. Program structure
 --------------------------------------------
-To calculate the heart rate and step rate. First we have to read the data from sensors. Heart pulse senor is read through ADC and accelerometer is read through I2C. Timer interrupt is used to sample the data. The sampling rate is 50Hz. Once new data is collected, it need some preprocessing before sent to the main algorithm, such as scaling, shifting, etc.. Then the main algorithm (a state machine) decides whether it's a step or heart pulse and calculates the rates if it is. Once done, waiting for next data. In every loop, all data is sent to the host via uart. 
+To calculate the heart rate and step rate. First, we have to read the data from sensors. Heart pulse senor is read through ADC and accelerometer is read through I2C. Timer interrupt is used to sample the data. The sampling rate is 50Hz. Once new data is collected, it needs some preprocessing before sent to the main algorithm, such as scaling, shifting, etc.. Then the main algorithm (a state machine) decides whether it's a step or heart pulse and calculates the rates if it is. Once done, waiting for next data. In every loop, all data is sent to the host via uart. 
 
 
 3. Algorithm Intro
 --------------------------------------------
 Our algorithm contains 4 major parts: filtering, baseline and threshold adjusting, finite state machine and rate measuring.
-Every time we get new data, we first apply a low-pass filter on it (linear-phase, cut-off frequency 4Hz). Next, we calculate the mean and standard deviation in the past 1s, and adjust the baseline and threshold. Once done, the data, baseline, threshold are sent to the state machine. The state machine has three states. Idle, falling and rising. Changing between states is based on the value of data, baseline and threshold. Jumping from rising to falling then back to rising is considered as one step/pulse (a sinusoid-like wave is detect), and then the rate will be calculate. For more details, please refer to the comments in our source code. 
+Every time we get new data, we first apply a low-pass filter on it (linear-phase, cut-off frequency 4Hz). Next, we calculate the mean and standard deviation in the past 1s, and adjust the baseline and threshold. Once done, the data, baseline, threshold are sent to the state machine. The state machine has three states. Idle, falling and rising. Changing between states is based on the value of data, baseline, and threshold. Jumping from rising to falling then back to rising is considered as one step/pulse (a sinusoid-like wave is detected), and then the rate will be calculated. For more details, please refer to the comments in our source code. 
 
 
 4. Experiment
 --------------------------------------------
-Our goal was to find out the relationship between heart rate and stride rate. So we did an experiment. We let one of our group member walked on a treadmill while wearing the sensors. The walking speed was increasing from 1 mph to 4mph then decreasing back to 1 mph. All the data was collected by the host via wireless uart. After experiment, a figure of heart rate and stride rate with time was ploted by matlab. We could clearly see that they are correlated.
+Our goal was to find out the relationship between heart rate and stride rate. So we did an experiment. We let one of our group members walked/ran on a treadmill while wearing the sensors. The speed was increasing from 1 mph to 4~6mph then decreasing back to 1 mph. All the data was collected by the host via wireless uart. After the experiment, a figure of heart rate and stride rate with time was plotted by Matlab. We could clearly see that they are correlated.
 
 
 5. Tools we used 
 --------------------------------------------
-We used OpenSTM32 on Eclipse as our IDE. Python was used to develop the user interface. Matlab was used to design the filter, analyze the algorithm off-line, and plot the experiment results.
+We used OpenSTM32 on Eclipse as our IDE. We used STM32CubeMX to help configure the hardware. Python was used to develop the user interface. Matlab was used to design the filter, analyze the algorithm off-line, and plot the experiment results.
 
 
 6. Folders and Files
@@ -42,4 +42,7 @@ pyScope/*
 The host interface is written in python. 'interface.py' is the realtime visualization interface. 'draw.py' can plot the log files as a figure.
 
 matlab/*
-MATLAB version of our algorithm.
+MATLAB version of our algorithm, used to analyze and improve our algorithm off-line. It was also used to give a better visualization of our algorithm. It does nothing on the host interface. All things displayed on the interface are received directly from STM32. The eps files in this folder are the results of two experiments.
+
+screenshot/*
+Some screenshots of our host interface. It also includes the pictures of our board and experiments.

@@ -26,8 +26,8 @@
 #define HP_RISING 		(0x01<<1)
 #define HP_FALLING 		(0x01<<2)
 #define HP_FIRST 		(0x01<<7)
-#define HP_THRESH		5
-#define HP_THRESH_DYN	0.4
+#define HP_THRESH		3
+#define HP_THRESH_DYN	0.3
 #define HP_FILTER_LEN 	50
 #define HP_PREIOD_LEN 	5
 
@@ -98,6 +98,8 @@ int main(void)
 	// Heart Pulse
 	float32_t 	hp_rawqueue[HP_FILTER_LEN*2];
 	uint8_t 	hp_rawqueueIdx = HP_FILTER_LEN*2;
+	float32_t 	hp_filtqueue[HP_FILTER_LEN];
+	uint8_t 	hp_filtqueueIdx = HP_FILTER_LEN;
 	float32_t 	rawHP_offset = 0;
 	float32_t 	hp_currval = 0;
 	uint8_t 	hp_state = 0;
@@ -306,9 +308,13 @@ int main(void)
 		// hp_rawqueueIdx--
 		hp_rawqueueIdx = (hp_rawqueueIdx + HP_FILTER_LEN-1)%HP_FILTER_LEN;
 
+		// add current filtered value to filtered queue
+		hp_filtqueue[hp_filtqueueIdx] = hp_currval;
+		hp_filtqueueIdx = (hp_filtqueueIdx+1)%STEP_WINDOW_LEN;
+
 		/* 2. Update baseline and threshold */
-		arm_mean_f32(hp_rawqueue+hp_rawqueueIdx, HP_FILTER_LEN/2, &rawHP_offset);
-		arm_std_f32(hp_rawqueue+hp_rawqueueIdx, HP_FILTER_LEN/2, &hp_threshold);
+		arm_mean_f32(hp_filtqueue+hp_filtqueueIdx, HP_FILTER_LEN/2, &rawHP_offset);
+		arm_std_f32(hp_filtqueue+hp_filtqueueIdx, HP_FILTER_LEN/5, &hp_threshold);
 		hp_threshold *= HP_THRESH_DYN;
 		if (hp_threshold < HP_THRESH) {
 			hp_threshold = HP_THRESH;
@@ -316,7 +322,7 @@ int main(void)
 
 		/* 3. Update uart struct (data and threshold)*/
 		uart.filtHP = uart_assign((uint8_t)hp_currval);
-		if ((hp_state & STEP_IDLE) || (hp_state & STEP_RISING))
+		if ((hp_state & HP_IDLE) || (hp_state & HP_RISING))
 			uart.thrsHP = uart_assign((uint8_t) (hp_baseline + hp_threshold));
 		else
 			uart.thrsHP = uart_assign((uint8_t) (hp_baseline - hp_threshold));
@@ -349,12 +355,13 @@ int main(void)
 			}
 			else if (!(hp_state & HP_FIRST)) {
 				// the baseline of heart pulse is a little higher
-				hp_baseline = (hp_peak - hp_valley)*3/5 + hp_valley;
+				hp_baseline = (hp_peak - hp_valley)*2/3 + hp_valley;
 			}
 		}
 		else if (hp_state & HP_RISING) {
 			if (hp_currval < hp_valley) {
 				hp_valley = hp_currval;
+				hp_baseline = (hp_peak - hp_valley)*2/3 + hp_valley;
 			}
 			else if (hp_currval > hp_baseline + hp_threshold) {
 				hp_state = HP_FALLING;
@@ -362,7 +369,7 @@ int main(void)
 				hp_timeout = HAL_GetTick();
 			}
 			else {
-				hp_baseline = (hp_peak - hp_valley)*3/5 + hp_valley;
+				hp_baseline -= hp_threshold*0.05;
 			}
 		}
 
