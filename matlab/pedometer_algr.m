@@ -7,7 +7,7 @@ j = (-1)^(1/2);
 h=firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
 
 %%
-x = csvread('step40.csv', 0, 2);
+x = csvread('step28.csv', 0, 2);
 
 
 
@@ -45,6 +45,12 @@ lowerthresholdidx = [];
 
 
 for i=1:length(x)
+    if i>50 && state ~= 0
+        threshold = std(x(i-40:i))*0.3;
+        if threshold < 0.05
+            threshold = 0.05;
+        end
+    end
     %
     baselinelist = [baselinelist baseline];
     if state == 0 ||state == 3
