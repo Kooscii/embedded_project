@@ -36,8 +36,8 @@
 
 
 /* sensor buffer */
-uint16_t 	u16dma_rawHP;				// unprocessed data from heart pulse sensor
-int16_t 	i16_rawAcc[3] = {0,0,0};	// unprocessed data from acceleometer
+uint16_t 	u16rawHP_dma = 0;			// unprocessed data from heart pulse sensor
+int16_t 	i16rawAcc[3] = {0,0,0};		// unprocessed data from acceleometer
 uint8_t 	u8rawHP = 0;				// preprocessed raw heart pulse data
 float32_t 	f32rawStep = 0;				// preprocessed raw step data
 uint8_t 	rawUpdated = 0;				// raw data updating flag
@@ -140,7 +140,7 @@ int main(void)
 	HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) hr_data, 965, DAC_ALIGN_8B_R);  // start DAC in DMA mode
 
 	// ADC start
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&u16dma_rawHP, 1);  // start ADC in DMA mode
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&u16rawHP_dma, 1);  // start ADC in DMA mode
 
 	// Accelerometer start
 	MEMS_ACCELERO_Init();
@@ -381,7 +381,7 @@ int main(void)
 			}
 		}
 
-		/* Timeout Checking */
+		/* 5. Timeout Checking */
 		if ( ((hp_state & HP_RISING) && (HAL_GetTick() - hp_timeout>2000))
 			|| ((hp_state & HP_FALLING) && (HAL_GetTick() - hp_timeout>1000)) ) {
 			hp_state = HP_IDLE;
@@ -408,14 +408,17 @@ int main(void)
 	}
 }
 
+/*
+ * Timer Interrupt Callback, used for sampling (50Hz)
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 {
 	if (htim->Instance == TIM6) {
 		/* Sampling rate = 50 Hz */
 		// read accelerometer
-		HAL_I2C_Mem_Read_IT(&hi2c1, 0x32, 0x28|0x80, I2C_MEMADD_SIZE_8BIT, (uint8_t *)i16_rawAcc, 6);
+		HAL_I2C_Mem_Read_IT(&hi2c1, 0x32, 0x28|0x80, I2C_MEMADD_SIZE_8BIT, (uint8_t *)i16rawAcc, 6);
 		// heart pulse data from ADC is get by DMA
-		// stored in u16dma_rawHP
+		// stored in u16rawHP_dma
 	}
 }
 
@@ -432,12 +435,12 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 		 * Preprocessing raw data
 		 */
 		// Get heart pulse raw data
-		u8rawHP = (uint8_t) u16dma_rawHP;
+		u8rawHP = (uint8_t) u16rawHP_dma;
 
 		// Get step raw data, and calc rms
-		facc[0] = (float32_t)(i16_rawAcc[0]>>3);	// return value from acceleo is 12-bit left aligned,
-		facc[1] = (float32_t)(i16_rawAcc[1]>>3);	// and sensitivity under 4g scale is 2mg/bit, so >>3
-		facc[2] = (float32_t)(i16_rawAcc[2]>>3);
+		facc[0] = (float32_t)(i16rawAcc[0]>>3);	// return value from acceleo is 12-bit left aligned,
+		facc[1] = (float32_t)(i16rawAcc[1]>>3);	// and sensitivity under 4g scale is 2mg/bit, so >>3
+		facc[2] = (float32_t)(i16rawAcc[2]>>3);
 		arm_rms_f32(facc, 3, &f_acc_rms);
 		f32rawStep = f_acc_rms*1.73205080756888;
 
@@ -446,9 +449,9 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 		 */
 		uart.rawHP = uart_assign(u8rawHP);
 		// >> 8 we get 8-bit resolution
-		uart.rawStepx = uart_assign((uint8_t) ((i16_rawAcc[0]>>8)+128));
-		uart.rawStepy = uart_assign((uint8_t) ((i16_rawAcc[1]>>8)+128));
-		uart.rawStepz = uart_assign((uint8_t) ((i16_rawAcc[2]>>8)+128));
+		uart.rawStepx = uart_assign((uint8_t) ((i16rawAcc[0]>>8)+128));
+		uart.rawStepy = uart_assign((uint8_t) ((i16rawAcc[1]>>8)+128));
+		uart.rawStepz = uart_assign((uint8_t) ((i16rawAcc[2]>>8)+128));
 
 		rawUpdated = 1;
 	}
