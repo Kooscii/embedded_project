@@ -448,6 +448,8 @@ int main(void)
 		if (!(step_state & STEP_IDLE)) {
 			arm_std_f32(flitStep_queue, STEP_WINDOW_LEN, &step_threshold);
 			step_threshold *= STEP_THRESH_DYN;
+			if (step_threshold < 0.05)
+				step_threshold = 0.05;
 		}
 
 		/*
@@ -513,85 +515,6 @@ int main(void)
 		prevStep_rms = currStep_rms;
 
 		/*
-		 * Heart rate algorithm
-		 */
-//		currHR_val = rawHR;
-//		rawHR_queue[rawHR_queueIdx] = currHR_val;
-//		rawHR_queueIdx = (rawHR_queueIdx+1)%100;
-//		hr_datacnt = hr_datacnt<100? hr_datacnt+1: hr_datacnt;
-//
-//		if (hr_state & HR_IDLE) {
-////			outHR = 0;
-//			u8minmax(rawHR_queue, 100, hr_datacnt, rawHR_queueIdx, &hr_baseline, &hr_peak);
-//			hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-//			if ((hr_peak - hr_baseline > 30) && (currHR_val > hr_baseline + hr_threshold)) {
-//				hr_state = HR_FALLING;
-//				hr_mstick = msTimCnt;
-//				hr_periodcnt = 0;
-//			}
-//		}
-//		else if (hr_state & HR_RISING) {
-//			if ((float32_t) (msTimCnt - hr_mstick) > hr_mean*0.3 && currHR_val > hr_baseline + hr_threshold) {
-//				hr_state = HR_FALLING | (hr_state & HR_ESTAB);
-//				hr_period[hr_periodcnt-1] = (float32_t) (msTimCnt-hr_mstick);
-//				hr_mstick = msTimCnt;
-//			}
-//			else if (msTimCnt - hr_mstick > 2000) {
-//				hr_state = HR_IDLE;
-//				outHR = 0;
-//			}
-//		}
-//		else if (hr_state & HR_FALLING) {
-//			if (currHR_val < hr_peak - hr_threshold) {
-//				if (!(hr_state & HR_ESTAB)) {
-//					hr_state = HR_RISING;
-//					if (hr_periodcnt) {
-//						hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
-//						if (hr_periodcnt == 3) {
-//							arm_std_f32(hr_period, 3, &hr_std);
-//							arm_mean_f32(hr_period, 3, &hr_mean);
-//							if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
-//								hr_state = HR_RISING | HR_ESTAB;
-//							}
-//							else {
-//								hr_state = HR_IDLE;
-//							}
-//						}
-//					}
-//					else {
-//						u8minmax(rawHR_queue, 100, hr_datacnt, rawHR_queueIdx, &hr_baseline, &hr_peak);
-//						hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-//					}
-//					hr_mstick = msTimCnt;
-//					hr_periodcnt = hr_periodcnt%3 + 1;
-//				}
-//				else {
-//					hr_state = HR_RISING | HR_ESTAB;
-//					hr_period[hr_periodcnt-1] += (float32_t) (msTimCnt-hr_mstick);
-//					hr_mstick = msTimCnt;
-//					u8minmax(rawHR_queue, 100, 25, rawHR_queueIdx, &hr_baseline, &hr_peak);
-//					hr_threshold = (uint8_t) (hr_peak-hr_baseline)/1.5;
-//					arm_mean_f32(hr_period, 3, &hr_mean);
-//					arm_std_f32(hr_period, 3, &hr_std);
-//					if (hr_mean > 250 && hr_mean < 3000 && hr_std < 500) {
-//						outHR = (uint8_t) (60000./hr_mean);
-//						hr_periodcnt = hr_periodcnt%3 + 1;
-//					}
-//					else {
-//						hr_state = HR_IDLE;
-//						outHR = 0;
-//					}
-//				}
-//			}
-//			else {
-//				if (msTimCnt - hr_mstick > 1000) {
-//					hr_state = HR_IDLE;
-//					outHR = 0;
-//				}
-//			}
-//		}
-
-		/*
 		 * FIR filter
 		 */
 		// put raw data into queue
@@ -605,9 +528,12 @@ int main(void)
 		// rawHR_queueIdx--
 		rawHR_queueIdx = (rawHR_queueIdx + HR_FILTER_LEN-1)%HR_FILTER_LEN;
 
-		arm_mean_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &rawHR_offset);
-		arm_std_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN, &hr_threshold);
+		arm_mean_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN/2, &rawHR_offset);
+		arm_std_f32(rawHR_queue+rawHR_queueIdx, HR_FILTER_LEN/2, &hr_threshold);
 		hr_threshold *= HR_THRESH_DYN;
+		if (hr_threshold < HR_THRESH) {
+			hr_threshold = HR_THRESH;
+		}
 
 		if (hr_state & HR_IDLE) {
 			threshHR = (uint8_t) (hr_baseline + hr_threshold);

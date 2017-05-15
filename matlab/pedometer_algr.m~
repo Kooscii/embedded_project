@@ -1,20 +1,16 @@
 %%
 h=firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
-load expdata1.csv
-
 
 %%
-x = expdata1(9000:59000,2);
-n = (9000:59000)/50;
+x = csvread('step28.csv', 0, 2);
 
-x_g = mean(x(1:100));
-
+x_g = mean(x(1:300));
 x = x/x_g - 1;
 % plot(abs(fft(x)))
 figure
 
+x = x(1:2:end);
 x = conv(x,h);
-x = x(1:length(n));
 
 % x = rawH - mean(rawH);
 
@@ -35,36 +31,36 @@ peaklist = [];
 peakidx = [];
 valleylist = [];
 valleyidx = [];
-baselinelist = zeros(1,length(x));
-thresholdlist = zeros(1,length(x));
-upperthresholdlist = zeros(1,length(x));
-upperthresholdidx = zeros(1,length(x));
-lowerthresholdlist = zeros(1,length(x));
-lowerthresholdidx = zeros(1,length(x));
+baselinelist = [];
+thresholdlist = [];
+upperthresholdlist = [];
+upperthresholdidx = [];
+lowerthresholdlist = [];
+lowerthresholdidx = [];
 
 msTimCnt = 0;
 step_timeout = msTimCnt;
 step_mstick = msTimCnt;
 
-outSRlist = zeros(1,length(x));
+outSRlist = [];
 
 for i=1:length(x)
     if i>50 && state ~= 0
-        threshold = std(x(i-40:i))*0.5;
+        threshold = std(x(i-40:i))*0.3;
         if threshold < 0.05
             threshold = 0.05;
         end
     end
     %
-    baselinelist(i) = baseline;
+    baselinelist = [baselinelist baseline];
     if state == 0 ||state == 3
-        thresholdlist(i) = baseline+threshold;
-        upperthresholdlist(i) = baseline+threshold;
-        upperthresholdidx(i) = i;
+        thresholdlist = [thresholdlist baseline+threshold];
+        upperthresholdlist = [upperthresholdlist baseline+threshold];
+        upperthresholdidx = [upperthresholdidx i];
     else
-        thresholdlist(i) = baseline-threshold;
-        lowerthresholdlist(i) = baseline-threshold;
-        lowerthresholdidx(i) = i;
+        thresholdlist = [thresholdlist baseline-threshold];
+        lowerthresholdlist = [lowerthresholdlist baseline-threshold];
+        lowerthresholdidx = [lowerthresholdidx i];
     end
     
     if state == 0
@@ -86,7 +82,7 @@ for i=1:length(x)
         elseif x(i)<baseline-threshold
             if flg_firststep == 0
                 step_period(step_periodidx) = msTimCnt - step_mstick;
-                step_periodidx = mod(step_periodidx, 5)+1;
+                step_periodidx = mod((step_periodidx+1), 5);
                 step_mean = mean(step_period);
                 outSR = 60000./step_mean;
             end
@@ -119,31 +115,32 @@ for i=1:length(x)
         end
     end
     
-    if ((state == 3) && (msTimCnt - step_timeout>3000)) || ((state == 2) && (msTimCnt - step_timeout>3000))
-			state = 0;
+    if ((step_state == 3) && (msTimCnt - step_timeout>3000)) || ((step_state == 2) && (msTimCnt - step_timeout>3000))
+			step_state = 0;
             flg_firststep = 1;
-			baseline = 0;
-			threshold = 0.05;
-			step_period = 2000*ones(1,5);
+			step_baseline = 0;
+			step_threshold = 0.05;
+			for (i=0; i<STEP_PREIOD_LEN; i++)
+				step_period[i] = 2000;
+            end
             outSR = 0;
     end
     
     prev_x = x(i);
     
-    outSRlist(i) = outSR;
+    outSRlist = [outSRlist outSR];
     
-    msTimCnt = msTimCnt + 20;
+    msTick = msTick + 1;
 end
+
+mean(t)
 
 %%
 hold on
 plot(x)
-plot(peakidx, peaklist,'.')
-plot(valleyidx, valleylist,'.')
+plot(peakidx, peaklist,'*')
+plot(valleyidx, valleylist,'*')
 plot(baselinelist,':')
 plot(thresholdlist,':')
-
-figure
-plot(outSRlist,'+')
 % plot(lowerthresholdidx, lowerthresholdlist,'.')
 % plot(upperthresholdidx, upperthresholdlist,'.')

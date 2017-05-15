@@ -1,18 +1,13 @@
 %%
-h=firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
+h=firls(50,[0 3 4 25]/50*2,[1 1 0 0]);
 load expdata1.csv
 
 
 %%
-x = expdata1(9000:59000,2);
+x = expdata1(9000:59000,1);
 n = (9000:59000)/50;
 
-x_g = mean(x(1:100));
-
-x = x/x_g - 1;
-% plot(abs(fft(x)))
-figure
-
+%%
 x = conv(x,h);
 x = x(1:length(n));
 
@@ -29,6 +24,7 @@ prev_x = 0;
 step = 0;
 step_period = ones(1,5)*2000;
 step_periodidx = 1;
+outHR = 0;
 
 %
 peaklist = [];
@@ -46,11 +42,13 @@ msTimCnt = 0;
 step_timeout = msTimCnt;
 step_mstick = msTimCnt;
 
-outSRlist = zeros(1,length(x));
+outHRlist = zeros(1,length(x));
 
-for i=1:length(x)
+baseline = mean(x(1:50));
+
+for i=51:length(x)
     if i>50 && state ~= 0
-        threshold = std(x(i-40:i))*0.5;
+        threshold = std(x(i-25:i))*0.5;
         if threshold < 0.05
             threshold = 0.05;
         end
@@ -88,7 +86,7 @@ for i=1:length(x)
                 step_period(step_periodidx) = msTimCnt - step_mstick;
                 step_periodidx = mod(step_periodidx, 5)+1;
                 step_mean = mean(step_period);
-                outSR = 60000./step_mean;
+                outHR = 60000./step_mean;
             end
                 flg_firststep = 0;
                 state = 3;
@@ -99,7 +97,7 @@ for i=1:length(x)
                 valleyidx = [valleyidx i];
                 valleylist = [valleylist valley];
         elseif flg_firststep == 0
-                baseline = (peak+valley)/2;
+                baseline = (peak-valley)*3/5+valley;
         end
     elseif state == 3
         if x(i)<valley
@@ -115,22 +113,22 @@ for i=1:length(x)
                 peaklist = [peaklist peak];
                 peakidx = [peakidx i];
         else
-            baseline = (peak+valley)/2;
+            baseline = (peak-valley)*3/5+valley;
         end
     end
     
-    if ((state == 3) && (msTimCnt - step_timeout>3000)) || ((state == 2) && (msTimCnt - step_timeout>3000))
+    if ((state == 3) && (msTimCnt - step_timeout>2000)) || ((state == 2) && (msTimCnt - step_timeout>1000))
 			state = 0;
             flg_firststep = 1;
-			baseline = 0;
+			baseline = mean(x(i-25:i));
 			threshold = 0.05;
 			step_period = 2000*ones(1,5);
-            outSR = 0;
+            outHR = 0;
     end
     
     prev_x = x(i);
     
-    outSRlist(i) = outSR;
+    outHRlist(i) = outHR;
     
     msTimCnt = msTimCnt + 20;
 end
@@ -143,7 +141,10 @@ plot(valleyidx, valleylist,'.')
 plot(baselinelist,':')
 plot(thresholdlist,':')
 
+%%
 figure
-plot(outSRlist,'+')
+hold on
+plot(outHRlist(1:50:end), '.')
+plot(outSRlist(1:50:end), '.')
 % plot(lowerthresholdidx, lowerthresholdlist,'.')
 % plot(upperthresholdidx, upperthresholdlist,'.')

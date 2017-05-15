@@ -5,7 +5,7 @@ Fs = 50;
 %%
 rawHeart = expdata1(:,1);
 rawStep = expdata1(:,2)-mean(expdata1(:,2));
-outHR = expdata1(1:30000,3);
+outHR = expdata1(:,3);
 outSR = expdata1(:,4);
 threshH = expdata1(:,5);
 threshS = expdata1(:,6);
@@ -13,6 +13,7 @@ N = length(rawHeart);
 h_heart = firls(50,[0 2.5 4 25]/50*2,[1 1 0 0]);
 h_step = firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
 filtStep = conv(h_step, rawStep);
+filtStep = filtStep(1:N);
 filtHeart = conv(h_heart, rawHeart);
 
 %%
@@ -22,32 +23,6 @@ raw_ppt_tresh = rawHeart(7140:7260);
 hold on 
 % plot(raw_ppt_tresh)
 plot_thresh((1:121)/50, [thresh_ppt_tresh,filt_ppt_tresh])
-
-
-%% plot rawdata only
-plot_rawdata((0:200)/50, [rawStep(900:1100)])
-legend('raw')
-
-%% plot raw spectrum only
-plot_rawfft((1:N)*Fs/N-Fs/2,abs(fftshift(fft(rawStep))))
-xlim([-Fs/2, Fs/2])
-
-%% plot rawdata and filtered data
-plot_rawdata((0:200)/50, [rawStep(1100:1300), filtStep(1100:1300)])
-legend('raw','filtered')
-
-%% plot raw and filtered spectrum
-hold on
-plot_rawfft((1:N)*Fs/N-Fs/2,[abs(fftshift(fft(rawStep))),abs(fftshift(fft(filtStep)))])
-xlim([-Fs/2, Fs/2])
-
-%%
-x = csvread('../step28.csv', 0, 2);
-rawStep = x-mean(x);
-filtStep = conv(rawStep, h_step);
-rawStep = rawStep(1100:1300);
-
-filtStep = filtStep(1150:1300);
 
 
 %%
