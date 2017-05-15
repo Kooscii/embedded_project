@@ -448,8 +448,8 @@ int main(void)
 		if (!(step_state & STEP_IDLE)) {
 			arm_std_f32(flitStep_queue, STEP_WINDOW_LEN, &step_threshold);
 			step_threshold *= STEP_THRESH_DYN;
-			if (step_threshold < 0.05)
-				step_threshold = 0.05;
+			if (step_threshold < 0.03)
+				step_threshold = 0.03;
 		}
 
 		/*
