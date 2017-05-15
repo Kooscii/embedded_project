@@ -1,7 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-f = open('log-0515062147','rb')
+# files = ['log-0515152051','log-0515152507','log-0515152712','log-0515152815','log-0515153542']
+
+# log = open('log-0515152050', 'wb')
+
+# for fname in files:
+#     f = open(fname, 'rb')
+
+#     for line in f:
+#         log.write(line)
+
+#     f.close()
+
+# log.close()
+
+f = open('log-0515145605', 'rb')
 
 index = []
 rawHR = []
@@ -40,6 +54,8 @@ f.close()
 rawStep_rms = list(map(lambda x, y, z: (x**2+y**2+z**2)**(1/2), rawStep_x, rawStep_y, rawStep_z))
 t = np.array(list(range(len(index))))/50
 
+print(len(t))
+
 # plt.figure(figsize=(13, 8),sharex=True)
 f, ax = plt.subplots(3, figsize=(13, 8),sharex=True)
 
@@ -58,9 +74,9 @@ ax[2].set_xlabel('Time (s)')
 plt.tight_layout()
 plt.show()
 
-# f = open('expdata.csv', 'w')
+f = open('exp_lin.csv', 'w')
 
-# for i in range(len(index)):
-#     f.write('%d, %d, %d, %d, %d, %d, \n'%(rawHR[i], rawStep_rms[i], outHR[i], outSR[i], threshHR[i], threshStep[i]))
+for i in range(len(index)):
+    f.write('%d, %d, %d, %d, %d, %d, \n'%(rawHR[i], rawStep_rms[i], outHR[i], outSR[i], threshHR[i], threshStep[i]))
 
-# f.close()
+f.close()
