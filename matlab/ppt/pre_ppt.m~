@@ -1,0 +1,52 @@
+%% load 
+load rawdata.csv
+Fs = 50;
+
+%% 
+rawHeart = rawdata(:,1);
+rawStep = rawdata(:,2)-mean(rawdata(:,2));
+outHR = rawdata(:,3);
+outSR = rawdata(:,4);
+N = length(rawHeart);
+h_step = firls(50,[0 2 4 25]/50*2,[1 1 0 0]);
+% filtStep = filtStep(1:N);
+
+%% plot rawdata only
+plot_rawdata((0:200)/50, [rawStep(900:1100)])
+legend('raw')
+
+%% plot raw spectrum only
+plot_rawfft((1:N)*Fs/N-Fs/2,abs(fftshift(fft(rawStep))))
+xlim([-Fs/2, Fs/2])
+
+%% plot rawdata and filtered data
+plot_rawdata((0:200)/50, [rawStep(1100:1300), filtStep(1100:1300)])
+legend('raw','filtered')
+
+%% plot raw and filtered spectrum
+hold on
+plot_rawfft((1:N)*Fs/N-Fs/2,[abs(fftshift(fft(rawStep))),abs(fftshift(fft(filtStep)))])
+xlim([-Fs/2, Fs/2])
+
+%%
+x = csvread('../step28.csv', 0, 2);
+rawStep = x-mean(x);
+filtStep = conv(rawStep, h_step);
+rawStep = rawStep(1100:1300);
+
+filtStep = filtStep(1150:1300);
+
+%%
+load expdata1.csv
+rawHeart = expdata1(:,1);
+rawStep = expdata1(:,2)-mean(expdata1(:,2));
+outHR = expdata1(:,3);
+outSR = expdata1(:,4);
+N = length(rawHeart);
+h_avg = ones(1,10)/10;
+
+
+%%
+for i=1:length(outHR)
+    if a = 60
+end

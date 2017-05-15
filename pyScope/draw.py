@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-f = open('log-0513002516','rb')
+f = open('log-0514153103','rb')
 
 index = []
 rawHR = []
@@ -33,7 +33,7 @@ for line in f:
 
 f.close()
 
-rawStep_rms = list(map(lambda x,y,z:(x**2+y**2+z**2)**(1/2), rawStep_x, rawStep_y, rawStep_z))
+rawStep_rms = list(map(lambda x, y, z: (x**2+y**2+z**2)**(1/2), rawStep_x, rawStep_y, rawStep_z))
 t = np.array(list(range(len(index))))/50
 
 plt.figure(figsize=(13, 8))
@@ -57,3 +57,10 @@ plt.xlabel('Time (s)')
 
 plt.tight_layout()
 plt.show()
+
+f = open('expdata.csv', 'w')
+
+for i in range(len(index)):
+    f.write('%d, %d, %d, %d, %d, %d, \n'%(rawHR[i], rawStep_rms[i], outHR[i], outSR[i], threshHR[i], threshStep[i]))
+
+f.close()
